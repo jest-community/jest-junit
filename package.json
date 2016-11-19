@@ -1,0 +1,9 @@
+{
+  "name": "jest-junit",
+  "version": "1.0.0",
+  "description": "A jest result processor that generates junit xml files",
+  "main": "index.js",
+  "repository": "https://github.com/palmerj3/jest-junit",
+  "author": "Jason Palmer",
+  "license": "Apache 2.0"
+}
