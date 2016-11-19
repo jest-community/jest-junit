@@ -5,5 +5,9 @@
   "main": "index.js",
   "repository": "https://github.com/palmerj3/jest-junit",
   "author": "Jason Palmer",
-  "license": "Apache 2.0"
+  "license": "Apache 2.0",
+  "dependencies": {
+    "mkdirp": "^0.5.1",
+    "xml": "^1.0.1"
+  }
 }

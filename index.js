@@ -1,7 +1,6 @@
 'use strict';
 
 const xml = require('xml');
-const jsyaml = require('js-yaml');
 const mkdirp = require('mkdirp');
 const fs = require('fs');
 const path = require('path');
