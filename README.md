@@ -2,7 +2,9 @@
 A Jest testResultsProcessor that creates compatible junit xml files
 
 ## Installation
+```shell
 yarn add --dev jest-junit
+```
 
 ## Usage
 In your jest config add the following entry:

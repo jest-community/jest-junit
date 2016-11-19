@@ -9,6 +9,9 @@
   "engines": {
     "node": ">=5.0.0"
   },
+  "files": [
+    "index.js"
+  ],
   "dependencies": {
     "mkdirp": "^0.5.1",
     "xml": "^1.0.1"
