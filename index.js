@@ -94,4 +94,7 @@ module.exports = (report) => {
 
   // Write data to file
   fs.writeFileSync(OUTPUT_PATH, xml(jsonResults, { indent: '  '}));
+
+  // Jest 18 compatibility
+  return report;
 };
