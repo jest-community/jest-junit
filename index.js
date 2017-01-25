@@ -56,7 +56,7 @@ module.exports = (report) => {
           _attr: {
             classname: tc.fullName,
             name: tc.fullName,
-            time: tc.duration
+            time: tc.duration / 1000
           }
         }]
       };
