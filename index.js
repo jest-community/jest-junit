@@ -34,6 +34,11 @@ module.exports = (report) => {
 
   // Iterate through outer testResults (test suites)
   report.testResults.forEach((suite) => {
+    // Skip empty test suites
+    if (!suite.testResults[0]) {
+      return;
+    }
+
     // Add <testsuite /> properties
     let testSuite = {
       'testsuite': [{
