@@ -35,7 +35,7 @@ module.exports = (report) => {
   // Iterate through outer testResults (test suites)
   report.testResults.forEach((suite) => {
     // Skip empty test suites
-    if (!suite.testResults[0]) {
+    if (suite.testResults.length <= 0) {
       return;
     }
 
