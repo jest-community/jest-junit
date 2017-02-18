@@ -59,8 +59,8 @@ module.exports = (report) => {
       let testCase = {
         'testcase': [{
           _attr: {
-            classname: tc.fullName,
-            name: tc.fullName,
+            classname: tc.ancestorTitles.join(' '),
+            name: tc.title,
             time: tc.duration / 1000
           }
         }]
