@@ -5,9 +5,21 @@ const mkdirp = require('mkdirp');
 const fs = require('fs');
 const path = require('path');
 
+// Look for these when replacing template vars
+const CLASSNAME_VAR = '{classname}';
+const TITLE_VAR = '{title}';
+
 const SUITE_NAME = process.env.JEST_SUITE_NAME || 'jest tests';
 const OUTPUT_PATH = process.env.JEST_JUNIT_OUTPUT ||
                     path.join(process.cwd(), './junit.xml');
+const CLASSNAME_TEMPLATE = process.env.JEST_JUNIT_CLASSNAME || '{classname} {title}';
+const TITLE_TEMPLATE = process.env.JEST_JUNIT_TITLE || '{classname} {title}';
+
+const replaceVars = function (str, classname, title) {
+  return str
+    .replace(CLASSNAME_VAR, classname)
+    .replace(TITLE_VAR, title);
+};
 
 /*
   At the end of ALL of the test suites this method is called
@@ -56,11 +68,14 @@ module.exports = (report) => {
 
     // Iterate through test cases
     suite.testResults.forEach((tc) => {
+      const classname = tc.ancestorTitles.join(' ');
+      const title = tc.title;
+
       let testCase = {
         'testcase': [{
           _attr: {
-            classname: tc.fullName,
-            name: tc.fullName,
+            classname: replaceVars(CLASSNAME_TEMPLATE, classname, title),
+            name: replaceVars(TITLE_TEMPLATE, classname, title),
             time: tc.duration / 1000
           }
         }]
