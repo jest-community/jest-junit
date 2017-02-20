@@ -1,5 +1,5 @@
 # jest-junit
-A Jest testResultsProcessor that creates compatible junit xml files
+A Jest reporter that creates compatible junit xml files
 
 ## Installation
 ```shell
