@@ -7,7 +7,7 @@
   "author": "Jason Palmer",
   "license": "Apache 2.0",
   "engines": {
-    "node": ">=5.0.0"
+    "node": ">=4.0.0"
   },
   "files": [
     "index.js"
