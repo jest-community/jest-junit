@@ -1,5 +1,8 @@
 'use strict';
 
+const readPkg = require('read-pkg').sync;
+const pkg = (readPkg(process.cwd()) || {})['jest-junit'] || {};
+
 const xml = require('xml');
 const mkdirp = require('mkdirp');
 const fs = require('fs');
@@ -9,11 +12,11 @@ const path = require('path');
 const CLASSNAME_VAR = '{classname}';
 const TITLE_VAR = '{title}';
 
-const SUITE_NAME = process.env.JEST_SUITE_NAME || 'jest tests';
-const OUTPUT_PATH = process.env.JEST_JUNIT_OUTPUT ||
+const SUITE_NAME = process.env.JEST_SUITE_NAME || pkg.suiteName || 'jest tests';
+const OUTPUT_PATH = process.env.JEST_JUNIT_OUTPUT || pkg.output ||
                     path.join(process.cwd(), './junit.xml');
-const CLASSNAME_TEMPLATE = process.env.JEST_JUNIT_CLASSNAME || '{classname} {title}';
-const TITLE_TEMPLATE = process.env.JEST_JUNIT_TITLE || '{classname} {title}';
+const CLASSNAME_TEMPLATE = process.env.JEST_JUNIT_CLASSNAME || pkg.classNameTemplate || '{classname} {title}';
+const TITLE_TEMPLATE = process.env.JEST_JUNIT_TITLE || pkg.titleTemplate || '{classname} {title}';
 
 const replaceVars = function (str, classname, title) {
   return str
