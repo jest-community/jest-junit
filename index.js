@@ -1,7 +1,16 @@
 'use strict';
 
 const readPkg = require('read-pkg').sync;
-const pkg = (readPkg(process.cwd()) || {})['jest-junit'] || {};
+
+const pkg = {};
+try {
+  const config = (readPkg(process.cwd()) || {})['jest-junit'];
+  if (config) {
+    Object.assign(pgk, config);
+  }
+} catch (e) {
+  //don't blowup if there was an error...just skip
+}
 
 const xml = require('xml');
 const mkdirp = require('mkdirp');
