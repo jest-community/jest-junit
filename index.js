@@ -13,7 +13,7 @@ const cfg = {};
 try {
   const config = (require(path.join(process.cwd(), 'package.json')) || {})['jest-junit'];
   if (config) {
-    Object.assign(pgk, config);
+    Object.assign(cfg, config);
   }
 } catch (e) {
   //don't blowup if there was an error...just skip
