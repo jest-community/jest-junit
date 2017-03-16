@@ -14,7 +14,6 @@
   ],
   "dependencies": {
     "mkdirp": "^0.5.1",
-    "read-pkg": "^2.0.0",
     "xml": "^1.0.1"
   }
 }
