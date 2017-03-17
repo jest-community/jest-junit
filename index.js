@@ -9,11 +9,21 @@ const path = require('path');
 const CLASSNAME_VAR = '{classname}';
 const TITLE_VAR = '{title}';
 
-const SUITE_NAME = process.env.JEST_SUITE_NAME || 'jest tests';
-const OUTPUT_PATH = process.env.JEST_JUNIT_OUTPUT ||
+const cfg = {};
+try {
+  const config = (require(path.join(process.cwd(), 'package.json')) || {})['jest-junit'];
+  if (config) {
+    Object.assign(cfg, config);
+  }
+} catch (e) {
+  //don't blowup if there was an error...just skip
+}
+
+const SUITE_NAME = process.env.JEST_SUITE_NAME || cfg.suiteName || 'jest tests';
+const OUTPUT_PATH = process.env.JEST_JUNIT_OUTPUT || cfg.output ||
                     path.join(process.cwd(), './junit.xml');
-const CLASSNAME_TEMPLATE = process.env.JEST_JUNIT_CLASSNAME || '{classname} {title}';
-const TITLE_TEMPLATE = process.env.JEST_JUNIT_TITLE || '{classname} {title}';
+const CLASSNAME_TEMPLATE = process.env.JEST_JUNIT_CLASSNAME || cfg.classNameTemplate || '{classname} {title}';
+const TITLE_TEMPLATE = process.env.JEST_JUNIT_TITLE || cfg.titleTemplate || '{classname} {title}';
 
 const replaceVars = function (str, classname, title) {
   return str

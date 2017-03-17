@@ -38,6 +38,20 @@ Example:
 JEST_SUITE_NAME="Jest JUnit Unit Tests" JEST_JUNIT_OUTPUT="./artifacts/junit.xml" jest
 ```
 
+You can also define a 'jest-junit' key in your package.json.
+
+```
+{
+    ...
+    "jest-junit": {
+        "suiteName": "jest tests",
+        "output": "./junit.xml",
+        "classNameTemplate": "{classname}-{title}",
+        "titleTemplate": "{classname}-{title}"
+    }
+}
+```
+
 Example output:
 ```xml
 <testsuites name="Jest JUnit Unit Tests">
