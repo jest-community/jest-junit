@@ -12,8 +12,15 @@
   "files": [
     "index.js"
   ],
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
     "mkdirp": "^0.5.1",
     "xml": "^1.0.1"
+  },
+  "devDependencies": {
+    "jest": "^19.0.2",
+    "libxmljs": "^0.18.4"
   }
 }
