@@ -1,6 +1,8 @@
 # jest-junit
 A Jest reporter that creates compatible junit xml files
 
+sample change - will not merge
+
 ## Installation
 ```shell
 yarn add --dev jest-junit
