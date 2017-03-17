@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/palmerj3/jest-junit.svg?branch=master)](https://travis-ci.org/palmerj3/jest-junit)
+
 # jest-junit
 A Jest reporter that creates compatible junit xml files
 
