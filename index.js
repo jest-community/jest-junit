@@ -5,6 +5,8 @@ const mkdirp = require('mkdirp');
 const fs = require('fs');
 const path = require('path');
 
+const APP_DIRECTORY = fs.realpathSync(process.cwd());
+
 // Look for these when replacing template vars
 const CLASSNAME_VAR = '{classname}';
 const TITLE_VAR = '{title}';
@@ -24,6 +26,7 @@ const OUTPUT_PATH = process.env.JEST_JUNIT_OUTPUT || cfg.output ||
                     path.join(process.cwd(), './junit.xml');
 const CLASSNAME_TEMPLATE = process.env.JEST_JUNIT_CLASSNAME || cfg.classNameTemplate || '{classname} {title}';
 const TITLE_TEMPLATE = process.env.JEST_JUNIT_TITLE || cfg.titleTemplate || '{classname} {title}';
+const USE_PATH_FOR_SUITE_NAME = process.env.JEST_USE_PATH_FOR_SUITE_NAME || cfg.usePathForSuiteName || "false";
 
 const replaceVars = function (str, classname, title) {
   return str
@@ -65,7 +68,9 @@ module.exports = (report) => {
     let testSuite = {
       'testsuite': [{
         _attr: {
-          name: suite.testResults[0].ancestorTitles[0],
+          name: USE_PATH_FOR_SUITE_NAME === "true" ?
+              suite.testFilePath.replace(APP_DIRECTORY, '') :
+              suite.testResults[0].ancestorTitles[0],
           tests: suite.numFailingTests + suite.numPassingTests + suite.numPendingTests,
           errors: 0,  // not supported
           failures: suite.numFailingTests,
