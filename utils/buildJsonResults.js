@@ -1,3 +1,5 @@
+'use strict';
+
 const constants = require('../constants/index');
 
 const replaceVars = function (str, classname, title) {

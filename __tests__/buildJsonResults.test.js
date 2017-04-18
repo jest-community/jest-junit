@@ -1,3 +1,5 @@
+'use strict';
+
 const buildJsonResults = require('../utils/buildJsonResults');
 const constants = require('../constants/index');
 

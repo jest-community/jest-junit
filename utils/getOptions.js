@@ -1,3 +1,5 @@
+'use strict';
+
 const path = require('path');
 
 const constants = require('../constants/index');
