@@ -24,7 +24,7 @@ jest
 
 ## Configuration
 
-jest-junit offers four configurations based on environment variables.
+jest-junit offers five configurations based on environment variables.  All are **string** values.
 
 ```JEST_SUITE_NAME```: Default "jest tests"
 
@@ -34,13 +34,15 @@ jest-junit offers four configurations based on environment variables.
 
 ```JEST_JUNIT_TITLE```: Default "{classname}-{title}"
 
+```JEST_USE_PATH_FOR_SUITE_NAME```: Default "false"
+
 Example:
 
 ```shell
 JEST_SUITE_NAME="Jest JUnit Unit Tests" JEST_JUNIT_OUTPUT="./artifacts/junit.xml" jest
 ```
 
-You can also define a 'jest-junit' key in your package.json.
+You can also define a `jest-junit` key in your package.json.  All are **string** values.
 
 ```
 {
@@ -49,7 +51,8 @@ You can also define a 'jest-junit' key in your package.json.
         "suiteName": "jest tests",
         "output": "./junit.xml",
         "classNameTemplate": "{classname}-{title}",
-        "titleTemplate": "{classname}-{title}"
+        "titleTemplate": "{classname}-{title}",
+        "usePathForSuiteName": "true"
     }
 }
 ```
