@@ -2,6 +2,7 @@
 
 # jest-junit
 A Jest reporter that creates compatible junit xml files
+sample change
 
 ## Installation
 ```shell
