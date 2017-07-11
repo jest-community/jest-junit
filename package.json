@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "mkdirp": "^0.5.1",
+    "strip-ansi": "^4.0.0",
     "xml": "^1.0.1"
   },
   "devDependencies": {
