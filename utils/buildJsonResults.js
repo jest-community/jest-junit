@@ -1,6 +1,7 @@
 'use strict';
 
 const constants = require('../constants/index');
+const stripAnsi = require('strip-ansi');
 
 const replaceVars = function (str, classname, title) {
   return str
@@ -64,11 +65,7 @@ module.exports = function (report, appDirectory, options) {
       if (tc.status === 'failed') {
         tc.failureMessages.forEach((failure) => {
           testCase.testcase.push({
-            'failure': [{
-              _attr: {
-                message: failure || ''
-              }
-            }]
+            'failure': stripAnsi(failure || '')
           });
         })
       }
