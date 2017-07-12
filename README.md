@@ -32,6 +32,7 @@ jest
 | `JEST_JUNIT_OUTPUT` | `"./junit.xml"` |
 | `JEST_JUNIT_CLASSNAME` | `"{classname} {title}"` |
 | `JEST_JUNIT_TITLE` | `"{classname} {title}"` |
+| `JEST_JUNIT_ANCESTOR_SEPARATOR` | `" "` |
 | `JEST_USE_PATH_FOR_SUITE_NAME` | `"false"` |
 
 Example:
@@ -50,6 +51,7 @@ You can also define a `jest-junit` key in your `package.json`.  All are **string
         "output": "./junit.xml",
         "classNameTemplate": "{classname}-{title}",
         "titleTemplate": "{classname}-{title}",
+        "ancestorSeparator": " › ",
         "usePathForSuiteName": "true"
     }
 }
