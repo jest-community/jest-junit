@@ -25,6 +25,20 @@ describe('buildJsonResults', () => {
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('/__tests__/foo.test.js');
   });
 
+  it('should return the proper classname when ancestorSeparator is default', () => {
+    const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
+    const jsonResults = buildJsonResults(noFailingTestsReport, '',
+      Object.assign({}, constants.DEFAULT_OPTIONS));
+    expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.classname).toBe('foo baz should bar');
+  });
+
+  it('should return the proper classname when ancestorSeparator is customized', () => {
+    const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
+    const jsonResults = buildJsonResults(noFailingTestsReport, '',
+      Object.assign({}, constants.DEFAULT_OPTIONS, { ancestorSeparator: " › " }));
+    expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.classname).toBe('foo › baz should bar');
+  });
+
   it('should parse failure messages for failing tests', () => {
     const failingTestsReport = require('../__mocks__/failing-tests.json');
     const jsonResults = buildJsonResults(failingTestsReport, '/path/to/test', constants.DEFAULT_OPTIONS);

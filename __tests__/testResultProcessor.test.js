@@ -41,4 +41,4 @@ describe('jest-junit', () => {
     const xmlDoc = libxmljs.parseXml(fs.writeFileSync.mock.calls[0][1]);
     expect(xmlDoc).toBeTruthy();
   });
-})
+});

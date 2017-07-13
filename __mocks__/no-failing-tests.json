@@ -46,11 +46,12 @@
       "testResults": [
         {
           "ancestorTitles": [
-            "foo"
+            "foo",
+            "baz"
           ],
           "duration": 1,
           "failureMessages": [],
-          "fullName": "foo should bar",
+          "fullName": "foo baz should bar",
           "numPassingAsserts": 0,
           "status": "passed",
           "title": "should bar"

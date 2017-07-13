@@ -47,7 +47,7 @@ module.exports = function (report, appDirectory, options) {
 
     // Iterate through test cases
     suite.testResults.forEach((tc) => {
-      const classname = tc.ancestorTitles.join(' ');
+      const classname = tc.ancestorTitles.join(options.ancestorSeparator);
       const title = tc.title;
 
       let testCase = {
