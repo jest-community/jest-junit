@@ -24,9 +24,9 @@ jest
 
 ## Configuration
 
-`jest-junit` offers five configurations based on environment variables or a `jest-junit` key defined in `package.json`. All configuration values should **strings**.
+`jest-junit` offers five configurations based on environment variables or a `jest-junit` key defined in `package.json`. All configuration values should be **strings**.
 
-| Variable Name | Explanation | Default |
+| Variable Name | Description | Default |
 |--|--|--|
 | `JEST_SUITE_NAME` | `name` attribute of `<testsuites>` | `"jest tests"` |
 | `JEST_JUNIT_OUTPUT` | File path to save the output. | `"./junit.xml"` |
