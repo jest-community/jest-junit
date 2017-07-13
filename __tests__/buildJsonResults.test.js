@@ -24,4 +24,15 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, { usePathForSuiteName: "true" }));
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('/__tests__/foo.test.js');
   });
+
+  it('should parse failure messages for failing tests', () => {
+    const failingTestsReport = require('../__mocks__/failing-tests.json');
+    const jsonResults = buildJsonResults(failingTestsReport, '/path/to/test', constants.DEFAULT_OPTIONS);
+
+    const failureMsg = jsonResults.testsuites[1].testsuite[1].testcase[1].failure;
+
+    // Make sure no escape codes are there that exist in the mock
+    expect(failureMsg.includes('\u001b')).toBe(false);
+
+  });
 });
