@@ -46,13 +46,15 @@
       "testResults": [
         {
           "ancestorTitles": [
-            "Sample Failing Test"
+            "Sample Failing Test",
+            "Inner",
+            "Inner Inner"
           ],
           "duration": 3930,
           "failureMessages": [
-            "\u001b[1m\u001b[31m  \u001b[1m● \u001b[1mSample Failing Test › Should fail\u001b[39m\u001b[22m\n\n    foobar\n\u001b[2m      \n      \u001b[2mat _callee$ (\u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:26:15)\u001b[2m\n      \u001b[2mat tryCatch (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:64:40)\u001b[2m\n      \u001b[2mat GeneratorFunctionPrototype.invoke [as _invoke] (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:299:22)\u001b[2m\n      \u001b[2mat GeneratorFunctionPrototype.prototype.(anonymous function) [as next] (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:116:21)\u001b[2m\n      \u001b[2mat step (\u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:2:394)\u001b[2m\n      \u001b[2mat \u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:2:554\u001b[2m\u001b[22m\n"
+            "\u001b[1m\u001b[31m  \u001b[1m● \u001b[1mSample Failing Test › Inner › Inner Inner › Should fail\u001b[39m\u001b[22m\n\n    foobar\n\u001b[2m      \n      \u001b[2mat _callee$ (\u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:26:15)\u001b[2m\n      \u001b[2mat tryCatch (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:64:40)\u001b[2m\n      \u001b[2mat GeneratorFunctionPrototype.invoke [as _invoke] (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:299:22)\u001b[2m\n      \u001b[2mat GeneratorFunctionPrototype.prototype.(anonymous function) [as next] (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:116:21)\u001b[2m\n      \u001b[2mat step (\u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:2:394)\u001b[2m\n      \u001b[2mat \u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:2:554\u001b[2m\u001b[22m\n"
           ],
-          "fullName": "Sample Failing Test Should fail",
+          "fullName": "Sample Failing Test Inner Inner Inner Should fail",
           "numPassingAsserts": 0,
           "status": "failed",
           "title": "Should fail"

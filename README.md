@@ -24,16 +24,16 @@ jest
 
 ## Configuration
 
-`jest-junit` offers five configurations based on environment variables.  All are **string** values
+`jest-junit` offers five configurations based on environment variables or a `jest-junit` key defined in `package.json`. All configuration values should **strings**.
 
-| Variable Name | Default |
-|--|--|
-| `JEST_SUITE_NAME` | `"jest tests"` |
-| `JEST_JUNIT_OUTPUT` | `"./junit.xml"` |
-| `JEST_JUNIT_CLASSNAME` | `"{classname} {title}"` |
-| `JEST_JUNIT_TITLE` | `"{classname} {title}"` |
-| `JEST_JUNIT_ANCESTOR_SEPARATOR` | `" "` |
-| `JEST_USE_PATH_FOR_SUITE_NAME` | `"false"` |
+| Variable Name | Explanation | Default |
+|--|--|--|
+| `JEST_SUITE_NAME` | `name` attribute of `<testsuites>` | `"jest tests"` |
+| `JEST_JUNIT_OUTPUT` | File path to save the output. | `"./junit.xml"` |
+| `JEST_JUNIT_CLASSNAME` | Template string for the `classname` attribute of `<testcase>`. | `"{classname} {title}"` |
+| `JEST_JUNIT_TITLE` | Template string for the `name` attribute of `<testcase>`. | `"{classname} {title}"` |
+| `JEST_JUNIT_ANCESTOR_SEPARATOR` | Character(s) used to join the `describe` blocks. | `" "` |
+| `JEST_USE_PATH_FOR_SUITE_NAME` | Use file path as the `name` attribute of `<testsuite>` | `"false"` |
 
 Example:
 
