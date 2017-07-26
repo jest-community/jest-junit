@@ -22,6 +22,11 @@ Then simply run:
 jest
 ```
 
+For your Continuous Integration you can simply do:
+```shell
+jest --ci --testResultsProcessor="./node_modules/jest-junit
+```
+
 ## Configuration
 
 `jest-junit` offers five configurations based on environment variables or a `jest-junit` key defined in `package.json`. All configuration values should be **strings**.
