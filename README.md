@@ -12,7 +12,7 @@ yarn add --dev jest-junit
 In your jest config add the following entry:
 ```JSON
 {
-  "testResultsProcessor": "./node_modules/jest-junit"
+  "testResultsProcessor": "jest-junit"
 }
 ```
 
@@ -24,7 +24,7 @@ jest
 
 For your Continuous Integration you can simply do:
 ```shell
-jest --ci --testResultsProcessor="./node_modules/jest-junit
+jest --ci --testResultsProcessor="jest-junit"
 ```
 
 ## Configuration
