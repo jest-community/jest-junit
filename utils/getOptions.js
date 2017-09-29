@@ -20,8 +20,12 @@ function getEnvOptions() {
 function getAppOptions(pathToResolve) {
   const initialPath = pathToResolve;
 
+  let traversing = true;
+
   // Find nearest package.json by traversing up directories until /
-  while(pathToResolve !== path.sep) {
+  while(traversing) {
+    traversing = pathToResolve !== path.sep;
+
     const pkgpath = path.join(pathToResolve, 'package.json');
 
     if (fs.existsSync(pkgpath)) {
@@ -40,6 +44,10 @@ function getAppOptions(pathToResolve) {
   throw new Error(`Unable to locate package.json starting at ${initialPath}`);
 }
 
-module.exports = function () {
-  return Object.assign({}, constants.DEFAULT_OPTIONS, getAppOptions(process.cwd()), getEnvOptions());
+module.exports = {
+  options: function () {
+    return Object.assign({}, constants.DEFAULT_OPTIONS, getAppOptions(process.cwd()), getEnvOptions());
+  },
+  getAppOptions: getAppOptions,
+  getEnvOptions: getEnvOptions
 };

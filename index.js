@@ -20,7 +20,7 @@ const getOptions = require('./utils/getOptions');
   http://help.catchsoftware.com/display/ET/JUnit+Format
 */
 module.exports = (report) => {
-  const options = getOptions();
+  const options = getOptions.options();
   const jsonResults = buildJsonResults(report, fs.realpathSync(process.cwd()), options);
 
   // Ensure output path exists
