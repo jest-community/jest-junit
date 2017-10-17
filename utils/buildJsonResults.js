@@ -2,6 +2,7 @@
 
 const stripAnsi = require('strip-ansi');
 const constants = require('../constants/index');
+const path = require('path');
 
 // Takes a string and a Map of 'tag' values to replacement values
 const replaceVars = function (str, replacementMap) {
@@ -34,7 +35,7 @@ module.exports = function (report, appDirectory, options) {
     // If the usePathForSuiteName option is true and the
     // suiteNameTemplate value is set to the default, overrides
     // the suiteNameTemplate.
-    if(options.usePathForSuiteName === "true"
+    if(options.usePathForSuiteName === 'true'
       && options.suiteNameTemplate === constants.TITLE_VAR) {
 
       options.suiteNameTemplate = constants.FILEPATH_VAR;
@@ -42,7 +43,7 @@ module.exports = function (report, appDirectory, options) {
 
     // Build variables for suite name
     const filepath = suite.testFilePath.replace(appDirectory, '');
-    const filename = filepath.split('\\').pop().split('/').pop();
+    const filename = path.basename(filepath);
     const suiteTitle = suite.testResults[0].ancestorTitles[0];
 
     // Build replacement map
