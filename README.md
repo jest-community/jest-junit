@@ -31,22 +31,24 @@ jest --ci --testResultsProcessor="jest-junit"
 
 `jest-junit` offers five configurations based on environment variables or a `jest-junit` key defined in `package.json`. All configuration values should be **strings**.
 
-| Variable Name | Description | Default |
-|--|--|--|
-| `JEST_SUITE_NAME` | `name` attribute of `<testsuites>` | `"jest tests"` |
-| `JEST_JUNIT_OUTPUT` | File path to save the output. | `"./junit.xml"` |
-| `JEST_JUNIT_CLASSNAME` | Template string for the `classname` attribute of `<testcase>`. | `"{classname} {title}"` |
-| `JEST_JUNIT_TITLE` | Template string for the `name` attribute of `<testcase>`. | `"{classname} {title}"` |
-| `JEST_JUNIT_ANCESTOR_SEPARATOR` | Character(s) used to join the `describe` blocks. | `" "` |
-| `JEST_USE_PATH_FOR_SUITE_NAME` | Use file path as the `name` attribute of `<testsuite>` | `"false"` |
+| Variable Name | Description | Default | Possible Injection Values
+|--|--|--|--|
+| `JEST_SUITE_NAME` | `name` attribute of `<testsuites>` | `"jest tests"` | N/A
+| `JEST_JUNIT_OUTPUT` | File path to save the output. | `"./junit.xml"` | N/A
+| `JEST_JUNIT_SUITE_NAME` | Template string for `name` attribute of the `<testsuite>`. | `"{title}"` | `{title}`, `{filepath}`, `{filename}`
+| `JEST_JUNIT_CLASSNAME` | Template string for the `classname` attribute of `<testcase>`. | `"{classname} {title}"` | `{classname}`, `{title}`
+| `JEST_JUNIT_TITLE` | Template string for the `name` attribute of `<testcase>`. | `"{classname} {title}"` | `{classname}`, `{title}`
+| `JEST_JUNIT_ANCESTOR_SEPARATOR` | Character(s) used to join the `describe` blocks. | `" "` | N/A
+| `JEST_USE_PATH_FOR_SUITE_NAME` | **DEPRECATED. Use `suiteNameTemplate` instead.** Use file path as the `name` attribute of `<testsuite>` | `"false"` | N/A
 
-Example:
+
+You can configure these options via the command line as seen below:
 
 ```shell
 JEST_SUITE_NAME="Jest JUnit Unit Tests" JEST_JUNIT_OUTPUT="./artifacts/junit.xml" jest
 ```
 
-You can also define a `jest-junit` key in your `package.json`.  All are **string** values.
+Or you can also define a `jest-junit` key in your `package.json`.  All are **string** values.
 
 ```
 {
@@ -62,8 +64,14 @@ You can also define a `jest-junit` key in your `package.json`.  All are **string
 }
 ```
 
-For the following test:
+### Configuration Precedence
+If using the `usePathForSuiteName` and `suiteNameTemplate`, the `usePathForSuiteName` value will take precedence. ie: if `usePathForSuiteName=true` and `suiteNameTemplate="{filename}"`, the filepath will be used as the `name` attribute of the `<testsuite>` in the rendered `jest-junit.xml`).
 
+### Examples
+
+Below are some example configuration values and the rendered `.xml` to created by `jest-junit`.
+
+The following test defined in the file `/__tests__/addition.test.js` will be used for all examples:
 ```js
 describe('addition', () => {
   describe('positive numbers', () => {
@@ -74,6 +82,7 @@ describe('addition', () => {
 });
 ```
 
+#### Example 1
 The default output:
 
 ```xml
@@ -85,11 +94,14 @@ The default output:
 </testsuites>
 ```
 
-Changing the `classNameTemplate` and `titleTemplate`:
+#### Example 2
+Using the `classNameTemplate` and `titleTemplate`:
 
 ```shell
 JEST_JUNIT_CLASSNAME="{classname}" JEST_JUNIT_TITLE="{title}" jest
 ```
+
+renders
 
 ```xml
 <testsuites name="jest tests">
@@ -100,16 +112,34 @@ JEST_JUNIT_CLASSNAME="{classname}" JEST_JUNIT_TITLE="{title}" jest
 </testsuites>
 ```
 
-Changing just the `ancestorSeparator`:
+#### Example 3
+Using the `ancestorSeparator`:
 
 ```shell
 JEST_JUNIT_ANCESTOR_SEPARATOR=" › " jest
 ```
+renders
 
 ```xml
 <testsuites name="jest tests">
   <testsuite name="addition" tests="1" errors="0" failures="0" skipped="0" timestamp="2017-07-13T09:47:12" time="0.162">
     <testcase classname="addition › positive numbers should add up" name="addition › positive numbers should add up" time="0.004">
+    </testcase>
+  </testsuite>
+</testsuites>
+```
+
+#### Example 4
+Using the `suiteNameTemplate`:
+
+```shell
+JEST_JUNIT_SUIT_NAME ="{filename}" jest
+```
+
+```xml
+<testsuites name="jest tests">
+  <testsuite name="addition.test.js" tests="1" errors="0" failures="0" skipped="0" timestamp="2017-07-13T09:42:28" time="0.161">
+    <testcase classname="addition positive numbers should add up" name="addition positive numbers should add up" time="0.004">
     </testcase>
   </testsuite>
 </testsuites>
