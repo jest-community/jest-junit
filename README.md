@@ -65,7 +65,7 @@ Or you can also define a `jest-junit` key in your `package.json`.  All are **str
 ```
 
 ### Configuration Precedence
-If using the `usePathForSuiteName` and `suiteNameTemplate`, the `suiteNameTemplate` value will take precedence. (ie, if `usePathForSuiteName=true` and `suiteNameTemplate="{filename}"`, the filename will be used as the `name` attribute of the `<testsuite>` in the rendered `jest-junit.xml`). `usePathForSuiteName=true` will still use the filepath of the jest test suite for the `name` attribute of the `<testsuite>` if the `suiteNameTemplate` value is never defined _or_ is defined as the default value of `"{title}"`.
+If using the `usePathForSuiteName` and `suiteNameTemplate`, the `usePathForSuiteName` value will take precedence. ie: if `usePathForSuiteName=true` and `suiteNameTemplate="{filename}"`, the filepath will be used as the `name` attribute of the `<testsuite>` in the rendered `jest-junit.xml`).
 
 ### Examples
 
