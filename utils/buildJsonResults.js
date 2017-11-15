@@ -61,7 +61,8 @@ module.exports = function (report, appDirectory, options) {
           failures: suite.numFailingTests,
           skipped: suite.numPendingTests,
           timestamp: (new Date(suite.perfStats.start)).toISOString().slice(0, -5),
-          time: (suite.perfStats.end - suite.perfStats.start) / 1000
+          time: (suite.perfStats.end - suite.perfStats.start) / 1000,
+          tests: suite.numFailingTests + suite.numPassingTests + suite.numPendingTests
         }
       }]
     };
