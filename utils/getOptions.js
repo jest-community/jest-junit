@@ -41,7 +41,7 @@ function getAppOptions(pathToResolve) {
     }
   }
 
-  throw new Error(`Unable to locate package.json starting at ${initialPath}`);
+  return {};
 }
 
 module.exports = {
