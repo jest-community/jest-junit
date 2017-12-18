@@ -25,6 +25,20 @@ describe('buildJsonResults', () => {
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('foo.test.js');
   });
 
+  it('should return the proper filename when classNameTemplate is "{filename}"', () => {
+    const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
+    const jsonResults = buildJsonResults(noFailingTestsReport, '',
+      Object.assign({}, constants.DEFAULT_OPTIONS, { classNameTemplate: "{filename}" }));
+    expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.classname).toBe('foo.test.js');
+  });
+
+  it('should return the proper filepath when titleTemplate is "{filepath}"', () => {
+    const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
+    const jsonResults = buildJsonResults(noFailingTestsReport, '',
+      Object.assign({}, constants.DEFAULT_OPTIONS, { titleTemplate: "{filepath}" }));
+    expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.name).toBe('/path/to/test/__tests__/foo.test.js');
+  });
+
   it('should return the proper filepath when suiteNameTemplate is "{filepath}" and usePathForSuiteName is "false"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     const jsonResults = buildJsonResults(noFailingTestsReport, '',

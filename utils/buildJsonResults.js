@@ -74,6 +74,8 @@ module.exports = function (report, appDirectory, options) {
 
       // Build replacement map
       let testReplacementMap = {};
+      testReplacementMap[constants.FILEPATH_VAR] = filepath;
+      testReplacementMap[constants.FILENAME_VAR] = filename;
       testReplacementMap[constants.CLASSNAME_VAR] = classname;
       testReplacementMap[constants.TITLE_VAR] = testTitle;
 
