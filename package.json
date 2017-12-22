@@ -7,7 +7,7 @@
   "author": "Jason Palmer",
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=6.0.0"
   },
   "files": [
     "index.js",
@@ -15,7 +15,9 @@
     "constants"
   ],
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "pretest:ci": "npm install jest@$JEST_VERSION",
+    "test:ci": "jest && jest --config ./integration-tests/jest.config.js"
   },
   "dependencies": {
     "mkdirp": "^0.5.1",
@@ -23,7 +25,6 @@
     "xml": "^1.0.1"
   },
   "devDependencies": {
-    "jest": "20.0.4",
     "libxmljs": "^0.18.4"
   }
 }
