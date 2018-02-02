@@ -19,7 +19,10 @@ module.exports = function (report, appDirectory, options) {
     'testsuites': [
       {
         '_attr': {
-          'name': options.suiteName
+          'name': options.suiteName,
+          'tests': 0,
+          'failures': 0,
+          'time': 0
         }
       }
     ]
@@ -53,6 +56,9 @@ module.exports = function (report, appDirectory, options) {
     suiteReplacementMap[constants.TITLE_VAR] = suiteTitle;
 
     // Add <testsuite /> properties
+    const suiteNumTests = suite.numFailingTests + suite.numPassingTests + suite.numPendingTests;
+    const suiteExecutionTime = (suite.perfStats.end - suite.perfStats.start) / 1000;
+
     let testSuite = {
       'testsuite': [{
         _attr: {
@@ -61,11 +67,16 @@ module.exports = function (report, appDirectory, options) {
           failures: suite.numFailingTests,
           skipped: suite.numPendingTests,
           timestamp: (new Date(suite.perfStats.start)).toISOString().slice(0, -5),
-          time: (suite.perfStats.end - suite.perfStats.start) / 1000,
-          tests: suite.numFailingTests + suite.numPassingTests + suite.numPendingTests
+          time: suiteExecutionTime,
+          tests: suiteNumTests
         }
       }]
     };
+
+    // Update top level testsuites properties
+    jsonResults.testsuites[0]._attr.failures += suite.numFailingTests;
+    jsonResults.testsuites[0]._attr.tests += suiteNumTests;
+    jsonResults.testsuites[0]._attr.time += suiteExecutionTime;
 
     // Iterate through test cases
     suite.testResults.forEach((tc) => {

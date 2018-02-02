@@ -1,6 +1,6 @@
 {
   "name": "jest-junit",
-  "version": "3.4.1",
+  "version": "3.5.0",
   "description": "A jest result processor that generates junit xml files",
   "main": "index.js",
   "repository": "https://github.com/palmerj3/jest-junit",
