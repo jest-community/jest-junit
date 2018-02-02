@@ -11,6 +11,13 @@ describe('buildJsonResults', () => {
     expect(jsonResults.testsuites[1].testsuite[0]._attr.tests).toBe(1);
   });
 
+  it('should contain number of tests in testSuites', () => {
+    const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
+    const jsonResults = buildJsonResults(noFailingTestsReport, '', constants.DEFAULT_OPTIONS);
+
+    expect(jsonResults.testsuites[0]._attr.tests).toBe(1);
+  });
+
   it('should return the proper name from ancestorTitles when usePathForSuiteName is "false"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     const jsonResults = buildJsonResults(noFailingTestsReport, '', constants.DEFAULT_OPTIONS);
