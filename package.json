@@ -17,7 +17,7 @@
   "scripts": {
     "test": "jest",
     "pretest:ci": "npm install jest@$JEST_VERSION",
-    "test:ci": "jest && jest --config ./integration-tests/jest.config.js"
+    "test:ci": "jest --ci && jest --ci --config ./integration-tests/jest.config.js"
   },
   "dependencies": {
     "mkdirp": "^0.5.1",
