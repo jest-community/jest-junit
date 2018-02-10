@@ -1,0 +1,109 @@
+{
+  "numFailedTestSuites": 0,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 2,
+  "numPassedTests": 2,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTotalTestSuites": 2,
+  "numTotalTests": 2,
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeys": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1518274350624,
+  "success": true,
+  "testResults": [
+    {
+      "console": [],
+      "failureMessage": null,
+      "numFailingTests": 0,
+      "numPassingTests": 1,
+      "numPendingTests": 0,
+      "perfStats": {
+        "end": 1518274351263,
+        "start": 1518274351100
+      },
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "unmatched": 0,
+        "updated": 0,
+        "uncheckedKeys": []
+      },
+      "testFilePath": "/path/to/project1/__tests__/test1.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "a thing"
+          ],
+          "duration": 3,
+          "failureMessages": [],
+          "fullName": "a thing should foo",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "should foo"
+        }
+      ],
+      "sourceMaps": {},
+      "skipped": false,
+      "displayName": "project1",
+      "leaks": false
+    },
+    {
+      "console": [],
+      "failureMessage": null,
+      "numFailingTests": 0,
+      "numPassingTests": 1,
+      "numPendingTests": 0,
+      "perfStats": {
+        "end": 1518274351347,
+        "start": 1518274351274
+      },
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "unmatched": 0,
+        "updated": 0,
+        "uncheckedKeys": []
+      },
+      "testFilePath": "/path/to/project2/__tests__/test2.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "another thing"
+          ],
+          "duration": 1,
+          "failureMessages": [],
+          "fullName": "another thing should foo",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "should foo"
+        }
+      ],
+      "sourceMaps": {},
+      "skipped": false,
+      "displayName": "project2",
+      "leaks": false
+    }
+  ],
+  "wasInterrupted": false
+}

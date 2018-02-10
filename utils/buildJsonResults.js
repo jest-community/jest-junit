@@ -48,12 +48,14 @@ module.exports = function (report, appDirectory, options) {
     const filepath = suite.testFilePath.replace(appDirectory, '');
     const filename = path.basename(filepath);
     const suiteTitle = suite.testResults[0].ancestorTitles[0];
+    const displayName = suite.displayName;
 
     // Build replacement map
     let suiteReplacementMap = {};
     suiteReplacementMap[constants.FILEPATH_VAR] = filepath;
     suiteReplacementMap[constants.FILENAME_VAR] = filename;
     suiteReplacementMap[constants.TITLE_VAR] = suiteTitle;
+    suiteReplacementMap[constants.DISPLAY_NAME_VAR] = displayName;
 
     // Add <testsuite /> properties
     const suiteNumTests = suite.numFailingTests + suite.numPassingTests + suite.numPendingTests;
@@ -89,6 +91,7 @@ module.exports = function (report, appDirectory, options) {
       testReplacementMap[constants.FILENAME_VAR] = filename;
       testReplacementMap[constants.CLASSNAME_VAR] = classname;
       testReplacementMap[constants.TITLE_VAR] = testTitle;
+      testReplacementMap[constants.DISPLAY_NAME_VAR] = displayName;
 
       let testCase = {
         'testcase': [{

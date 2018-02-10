@@ -99,4 +99,15 @@ describe('buildJsonResults', () => {
 
   });
 
+  it('should support displayName template var for jest multi-project', () => {
+    const multiProjectNoFailingTestsReport = require('../__mocks__/multi-project-no-failing-tests.json');
+
+    const jsonResults = buildJsonResults(multiProjectNoFailingTestsReport, '',
+    Object.assign({}, constants.DEFAULT_OPTIONS, {
+      suiteNameTemplate: "{displayName}-foo",
+      titleTemplate: "{displayName}-foo"
+    }));
+
+    expect(jsonResults).toMatchSnapshot();
+  });
 });
