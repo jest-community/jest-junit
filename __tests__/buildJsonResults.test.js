@@ -88,6 +88,25 @@ describe('buildJsonResults', () => {
     expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.classname).toBe('foo › baz should bar');
   });
 
+  it('should contain error messages for error tests', () => {
+    const errorTestsReport = require('../__mocks__/error-tests.json');
+    const jsonResults = buildJsonResults(errorTestsReport, '/path/to/test', constants.DEFAULT_OPTIONS);
+    expect(jsonResults.testsuites[0]._attr.errors).toBe(1);
+  });
+
+  it('should not contain error messages for error tests when outputSuiteError is "false"', () => {
+    const errorTestsReport = require('../__mocks__/error-tests.json');
+    const jsonResults = buildJsonResults(errorTestsReport, '/path/to/test', 
+      Object.assign({}, constants.DEFAULT_OPTIONS, { outputSuiteError: "false" }));
+    expect(jsonResults.testsuites[0]._attr.errors).toBe(0);
+  });
+
+  it('should display an error for error tests', () => {
+    const errorTestsReport = require('../__mocks__/error-tests.json');
+    const jsonResults = buildJsonResults(errorTestsReport, '/path/to/test', constants.DEFAULT_OPTIONS);
+    expect(jsonResults.testsuites[1].testsuite[1].error).toBeDefined();
+  });
+
   it('should parse failure messages for failing tests', () => {
     const failingTestsReport = require('../__mocks__/failing-tests.json');
     const jsonResults = buildJsonResults(failingTestsReport, '/path/to/test', constants.DEFAULT_OPTIONS);

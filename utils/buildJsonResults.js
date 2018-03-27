@@ -22,6 +22,7 @@ module.exports = function (report, appDirectory, options) {
           'name': options.suiteName,
           'tests': 0,
           'failures': 0,
+          'errors': 0,
           'time': 0
         }
       }
@@ -30,8 +31,12 @@ module.exports = function (report, appDirectory, options) {
 
   // Iterate through outer testResults (test suites)
   report.testResults.forEach((suite) => {
-    // Skip empty test suites
-    if (suite.testResults.length <= 0) {
+    //Detect suite errors. This is ignored if outputSuiteFailure setting is false
+    //Consider failure messages withoiut test cases to be an error
+    const testSuiteError = options.outputSuiteError  === 'true' && suite.testExecError;
+    
+    // Skip empty test suites which did not error out
+    if (!testSuiteError && suite.testResults.length <= 0) {
       return;
     }
 
@@ -47,7 +52,8 @@ module.exports = function (report, appDirectory, options) {
     // Build variables for suite name
     const filepath = suite.testFilePath.replace(appDirectory, '');
     const filename = path.basename(filepath);
-    const suiteTitle = suite.testResults[0].ancestorTitles[0];
+    //Use filepath as suite title if suite errored, as they would not have any tests
+    const suiteTitle = testSuiteError ? filepath : suite.testResults[0].ancestorTitles[0];
     const displayName = suite.displayName;
 
     // Build replacement map
@@ -65,7 +71,7 @@ module.exports = function (report, appDirectory, options) {
       'testsuite': [{
         _attr: {
           name: replaceVars(options.suiteNameTemplate, suiteReplacementMap),
-          errors: 0,  // not supported
+          errors: testSuiteError ? 1 : 0,
           failures: suite.numFailingTests,
           skipped: suite.numPendingTests,
           timestamp: (new Date(suite.perfStats.start)).toISOString().slice(0, -5),
@@ -78,8 +84,16 @@ module.exports = function (report, appDirectory, options) {
     // Update top level testsuites properties
     jsonResults.testsuites[0]._attr.failures += suite.numFailingTests;
     jsonResults.testsuites[0]._attr.tests += suiteNumTests;
+	  jsonResults.testsuites[0]._attr.errors += testSuiteError ? 1 : 0;
     jsonResults.testsuites[0]._attr.time += suiteExecutionTime;
-
+	
+    //Push test message and increment failures and test count by one
+    if (testSuiteError){
+      testSuite.testsuite.push({
+        'error': stripAnsi(suite.failureMessage)
+      });
+    }
+	
     // Iterate through test cases
     suite.testResults.forEach((tc) => {
       const classname = tc.ancestorTitles.join(options.ancestorSeparator);
