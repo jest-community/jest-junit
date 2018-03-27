@@ -33,9 +33,7 @@ module.exports = function (report, appDirectory, options) {
   report.testResults.forEach((suite) => {
     //Detect suite errors. This is ignored if outputSuiteFailure setting is false
     //Consider failure messages withoiut test cases to be an error
-    const testSuiteError = options.outputSuiteError  === 'true' 
-      && (typeof suite.failureMessage === "string" && suite.failureMessage.length > 0) 
-      && suite.testResults.length <= 0;
+    const testSuiteError = options.outputSuiteError  === 'true' && suite.testExecError;
     
     // Skip empty test suites which did not error out
     if (!testSuiteError && suite.testResults.length <= 0) {
