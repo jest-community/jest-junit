@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "pretest:ci": "npm install jest@$JEST_VERSION",
+    "pretest:ci": "npm install jest@$JEST_VERSION --no-save",
     "test:ci": "jest --ci && jest --ci --config ./integration-tests/jest.config.js"
   },
   "dependencies": {
