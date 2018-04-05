@@ -25,6 +25,7 @@
     "xml": "^1.0.1"
   },
   "devDependencies": {
+    "jest": "^22.4.3",
     "libxmljs": "^0.18.4"
   }
 }
