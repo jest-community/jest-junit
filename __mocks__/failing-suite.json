@@ -1,0 +1,60 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 2,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 1,
+  "numTotalTestSuites": 2,
+  "numTotalTests": 0,
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeys": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1522918930075,
+  "success": false,
+  "testResults": [
+    {
+      "console": null,
+      "displayName": "",
+      "failureMessage": "Test suite failed to run\n\nCannot find module './math' from 'failure.js",
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 0,
+      "numPendingTests": 0,
+      "perfStats": {
+        "end": 0,
+        "start": 0
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "sourceMaps": {},
+      "testExecError": {
+        "code": "MODULE_NOT_FOUND"
+      },
+      "testFilePath": "/path/to/test/__tests__/failure.test.js",
+      "testResults": []
+    }
+  ],
+  "wasInterrupted": false
+}
