@@ -13,6 +13,10 @@ const replaceVars = function (str, replacementMap) {
   return str;
 };
 
+const executionTime = function (startTime, endTime) {
+  return (endTime - startTime) / 1000;
+}
+
 module.exports = function (report, appDirectory, options) {
   // Generate a single XML file for all jest tests
   let jsonResults = {
@@ -22,7 +26,10 @@ module.exports = function (report, appDirectory, options) {
           'name': options.suiteName,
           'tests': 0,
           'failures': 0,
-          'time': 0
+          // Overall execution time:
+          // Since tests are typically executed in parallel this time can be significantly smaller
+          // than the sum of the individual test suites
+          'time': executionTime(report.startTime, Date.now())
         }
       }
     ]
@@ -59,7 +66,7 @@ module.exports = function (report, appDirectory, options) {
 
     // Add <testsuite /> properties
     const suiteNumTests = suite.numFailingTests + suite.numPassingTests + suite.numPendingTests;
-    const suiteExecutionTime = (suite.perfStats.end - suite.perfStats.start) / 1000;
+    const suiteExecutionTime = executionTime(suite.perfStats.start, suite.perfStats.end);
 
     let testSuite = {
       'testsuite': [{
@@ -78,7 +85,6 @@ module.exports = function (report, appDirectory, options) {
     // Update top level testsuites properties
     jsonResults.testsuites[0]._attr.failures += suite.numFailingTests;
     jsonResults.testsuites[0]._attr.tests += suiteNumTests;
-    jsonResults.testsuites[0]._attr.time += suiteExecutionTime;
 
     // Iterate through test cases
     suite.testResults.forEach((tc) => {
