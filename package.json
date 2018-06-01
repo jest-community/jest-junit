@@ -1,9 +1,9 @@
 {
   "name": "jest-junit",
-  "version": "4.0.0",
-  "description": "A jest result processor that generates junit xml files",
+  "version": "5.0.0",
+  "description": "A jest reporter that generates junit xml files",
   "main": "index.js",
-  "repository": "https://github.com/palmerj3/jest-junit",
+  "repository": "https://github.com/jest-community/jest-junit",
   "author": "Jason Palmer",
   "license": "Apache-2.0",
   "engines": {
@@ -11,7 +11,6 @@
   },
   "files": [
     "index.js",
-    "reporter.js",
     "utils",
     "constants"
   ],
