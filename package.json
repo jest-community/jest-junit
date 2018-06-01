@@ -11,15 +11,17 @@
   },
   "files": [
     "index.js",
+    "reporter.js",
     "utils",
     "constants"
   ],
   "scripts": {
     "test": "jest",
     "pretest:ci": "npm install jest@$JEST_VERSION --no-save",
-    "test:ci": "jest --ci && jest --ci --config ./integration-tests/jest.config.js"
+    "test:ci": "jest --ci"
   },
   "dependencies": {
+    "jest-validate": "^23.0.1",
     "mkdirp": "^0.5.1",
     "strip-ansi": "^4.0.0",
     "xml": "^1.0.1"
