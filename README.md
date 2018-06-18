@@ -46,7 +46,9 @@ jest --ci --testResultsProcessor="jest-junit"
 
 ## Configuration
 
-`jest-junit` offers seven configurations based on environment variables or a `jest-junit` key defined in `package.json` or a reporter option. All configuration values should be **strings**.
+`jest-junit` offers seven configurations based on environment variables or a `jest-junit` key defined in `package.json` or a reporter option. 
+Environement variable and package.json configuration should be **strings**.
+Reporter options should also be strings exception for suiteNameTemplate, classNameTemplate, titleNameTemplate that can also accept a function returning a string.
 
 | Variable Name | Description | Default | Possible Injection Values
 |--|--|--|--|
@@ -92,6 +94,7 @@ Or you can define your options in your reporter configuration.
   ]
 }
 ```
+
 
 ### Configuration Precedence
 If using the `usePathForSuiteName` and `suiteNameTemplate`, the `usePathForSuiteName` value will take precedence. ie: if `usePathForSuiteName=true` and `suiteNameTemplate="{filename}"`, the filepath will be used as the `name` attribute of the `<testsuite>` in the rendered `jest-junit.xml`).
@@ -169,6 +172,38 @@ JEST_JUNIT_SUIT_NAME ="{filename}" jest
 <testsuites name="jest tests">
   <testsuite name="addition.test.js" tests="1" errors="0" failures="0" skipped="0" timestamp="2017-07-13T09:42:28" time="0.161">
     <testcase classname="addition positive numbers should add up" name="addition positive numbers should add up" time="0.004">
+    </testcase>
+  </testsuite>
+</testsuites>
+```
+
+
+#### Example 5
+Using `classNameTemplate` as a function in reporter options
+
+```js
+// jest.config.js
+{
+  reporters: [
+    "default",
+      [
+        "jest-junit",
+        {
+          classNameTemplate: (vars) => {
+            return vars.classname.toUpperCase();
+          }
+        }
+      ]
+  ]
+}
+```
+
+renders
+
+```xml
+<testsuites name="jest tests">
+  <testsuite name="addition" tests="1" errors="0" failures="0" skipped="0" timestamp="2017-07-13T09:42:28" time="0.161">
+    <testcase classname="ADDITION POSITIVE NUMBERS" name="addition positive numbers should add up" time="0.004">
     </testcase>
   </testsuite>
 </testsuites>
