@@ -4,13 +4,30 @@ const stripAnsi = require('strip-ansi');
 const constants = require('../constants/index');
 const path = require('path');
 
-// Takes a string and a Map of 'tag' values to replacement values
-const replaceVars = function (str, replacementMap) {
-  Object.keys(replacementMap).forEach((key) => {
-    str = str.replace(key, replacementMap[key]);
-  });
 
-  return str;
+// Wrap the varName with template tags
+const toTemplateTag = function (varName) {
+  return "{" + varName + "}";
+}
+
+// Replaces var using a template string or a function.
+// When strOrFunc is a template string replaces {varname} with the value from the variables map.
+// When strOrFunc is a function it returns the result of the function to which the variables are passed.
+const replaceVars = function (strOrFunc, variables) {
+  if (typeof strOrFunc === 'string') {
+    let str = strOrFunc;
+    Object.keys(variables).forEach((varName) => {
+      str = str.replace(toTemplateTag(varName), variables[varName]);
+    });
+    return str;
+  } else {
+    const func = strOrFunc;
+    const resolvedStr = func(variables);
+    if (typeof resolvedStr !== 'string') {
+      throw new Error('Template function should return a string');
+    }
+    return resolvedStr;
+  }
 };
 
 const executionTime = function (startTime, endTime) {
@@ -20,19 +37,17 @@ const executionTime = function (startTime, endTime) {
 module.exports = function (report, appDirectory, options) {
   // Generate a single XML file for all jest tests
   let jsonResults = {
-    'testsuites': [
-      {
-        '_attr': {
-          'name': options.suiteName,
-          'tests': 0,
-          'failures': 0,
-          // Overall execution time:
-          // Since tests are typically executed in parallel this time can be significantly smaller
-          // than the sum of the individual test suites
-          'time': executionTime(report.startTime, Date.now())
-        }
+    'testsuites': [{
+      '_attr': {
+        'name': options.suiteName,
+        'tests': 0,
+        'failures': 0,
+        // Overall execution time:
+        // Since tests are typically executed in parallel this time can be significantly smaller
+        // than the sum of the individual test suites
+        'time': executionTime(report.startTime, Date.now())
       }
-    ]
+    }]
   };
 
   // Iterate through outer testResults (test suites)
@@ -45,10 +60,10 @@ module.exports = function (report, appDirectory, options) {
     // If the usePathForSuiteName option is true and the
     // suiteNameTemplate value is set to the default, overrides
     // the suiteNameTemplate.
-    if(options.usePathForSuiteName === 'true'
-      && options.suiteNameTemplate === constants.TITLE_VAR) {
+    if (options.usePathForSuiteName === 'true' &&
+      options.suiteNameTemplate === toTemplateTag(constants.TITLE_VAR)) {
 
-      options.suiteNameTemplate = constants.FILEPATH_VAR;
+      options.suiteNameTemplate = toTemplateTag(constants.FILEPATH_VAR);
     }
 
     // Build variables for suite name
@@ -58,11 +73,11 @@ module.exports = function (report, appDirectory, options) {
     const displayName = suite.displayName;
 
     // Build replacement map
-    let suiteReplacementMap = {};
-    suiteReplacementMap[constants.FILEPATH_VAR] = filepath;
-    suiteReplacementMap[constants.FILENAME_VAR] = filename;
-    suiteReplacementMap[constants.TITLE_VAR] = suiteTitle;
-    suiteReplacementMap[constants.DISPLAY_NAME_VAR] = displayName;
+    let suiteNameVariables = {};
+    suiteNameVariables[constants.FILEPATH_VAR] = filepath;
+    suiteNameVariables[constants.FILENAME_VAR] = filename;
+    suiteNameVariables[constants.TITLE_VAR] = suiteTitle;
+    suiteNameVariables[constants.DISPLAY_NAME_VAR] = displayName;
 
     // Add <testsuite /> properties
     const suiteNumTests = suite.numFailingTests + suite.numPassingTests + suite.numPendingTests;
@@ -71,8 +86,8 @@ module.exports = function (report, appDirectory, options) {
     let testSuite = {
       'testsuite': [{
         _attr: {
-          name: replaceVars(options.suiteNameTemplate, suiteReplacementMap),
-          errors: 0,  // not supported
+          name: replaceVars(options.suiteNameTemplate, suiteNameVariables),
+          errors: 0, // not supported
           failures: suite.numFailingTests,
           skipped: suite.numPendingTests,
           timestamp: (new Date(suite.perfStats.start)).toISOString().slice(0, -5),
@@ -92,18 +107,18 @@ module.exports = function (report, appDirectory, options) {
       const testTitle = tc.title;
 
       // Build replacement map
-      let testReplacementMap = {};
-      testReplacementMap[constants.FILEPATH_VAR] = filepath;
-      testReplacementMap[constants.FILENAME_VAR] = filename;
-      testReplacementMap[constants.CLASSNAME_VAR] = classname;
-      testReplacementMap[constants.TITLE_VAR] = testTitle;
-      testReplacementMap[constants.DISPLAY_NAME_VAR] = displayName;
+      let testVariables = {};
+      testVariables[constants.FILEPATH_VAR] = filepath;
+      testVariables[constants.FILENAME_VAR] = filename;
+      testVariables[constants.CLASSNAME_VAR] = classname;
+      testVariables[constants.TITLE_VAR] = testTitle;
+      testVariables[constants.DISPLAY_NAME_VAR] = displayName;
 
       let testCase = {
         'testcase': [{
           _attr: {
-            classname: replaceVars(options.classNameTemplate, testReplacementMap),
-            name: replaceVars(options.titleTemplate, testReplacementMap),
+            classname: replaceVars(options.classNameTemplate, testVariables),
+            name: replaceVars(options.titleTemplate, testVariables),
             time: tc.duration / 1000
           }
         }]

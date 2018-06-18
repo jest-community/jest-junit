@@ -28,49 +28,87 @@ describe('buildJsonResults', () => {
   it('should return the proper filename when suiteNameTemplate is "{filename}"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     const jsonResults = buildJsonResults(noFailingTestsReport, '',
-      Object.assign({}, constants.DEFAULT_OPTIONS, { suiteNameTemplate: "{filename}" }));
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        suiteNameTemplate: "{filename}"
+      }));
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('foo.test.js');
+  });
+
+  it('should support suiteNameTemplate as function', () => {
+    const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
+    const jsonResults = buildJsonResults(noFailingTestsReport, '',
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        suiteNameTemplate: (vars) => {
+          return 'function called with vars: ' + Object.keys(vars).join(', ');
+        }
+      }));
+    expect(jsonResults.testsuites[1].testsuite[0]._attr.name)
+      .toBe('function called with vars: filepath, filename, title, displayName');
   });
 
   it('should return the proper filename when classNameTemplate is "{filename}"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     const jsonResults = buildJsonResults(noFailingTestsReport, '',
-      Object.assign({}, constants.DEFAULT_OPTIONS, { classNameTemplate: "{filename}" }));
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        classNameTemplate: "{filename}"
+      }));
     expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.classname).toBe('foo.test.js');
+  });
+
+  it('should support return the function result when classNameTemplate is a function', () => {
+    const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
+    const jsonResults = buildJsonResults(noFailingTestsReport, '',
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        classNameTemplate: (vars) => {
+          return 'function called with vars: ' + Object.keys(vars).join(', ');
+        }
+      }));
+    expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.classname)
+      .toBe('function called with vars: filepath, filename, classname, title, displayName');
   });
 
   it('should return the proper filepath when titleTemplate is "{filepath}"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     const jsonResults = buildJsonResults(noFailingTestsReport, '',
-      Object.assign({}, constants.DEFAULT_OPTIONS, { titleTemplate: "{filepath}" }));
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        titleTemplate: "{filepath}"
+      }));
     expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.name).toBe('/path/to/test/__tests__/foo.test.js');
   });
 
   it('should return the proper filepath when suiteNameTemplate is "{filepath}" and usePathForSuiteName is "false"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     const jsonResults = buildJsonResults(noFailingTestsReport, '',
-      Object.assign({}, constants.DEFAULT_OPTIONS, { suiteNameTemplate: "{filepath}" }));
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        suiteNameTemplate: "{filepath}"
+      }));
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('/path/to/test/__tests__/foo.test.js');
   });
 
   it('should return the proper name from ancestorTitles when suiteNameTemplate is set to "{title}" and usePathForSuiteName is "true"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     const jsonResults = buildJsonResults(noFailingTestsReport, '',
-      Object.assign({}, constants.DEFAULT_OPTIONS, { usePathForSuiteName: "true" }));
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        usePathForSuiteName: "true"
+      }));
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('/path/to/test/__tests__/foo.test.js');
   });
 
   it('should return the proper name from testFilePath when usePathForSuiteName is "true"; no appDirectory set', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     const jsonResults = buildJsonResults(noFailingTestsReport, '',
-      Object.assign({}, constants.DEFAULT_OPTIONS, { usePathForSuiteName: "true" }));
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        usePathForSuiteName: "true"
+      }));
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('/path/to/test/__tests__/foo.test.js');
   });
 
   it('should return the proper name from testFilePath when usePathForSuiteName is "true"; with appDirectory set', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     const jsonResults = buildJsonResults(noFailingTestsReport, '/path/to/test',
-      Object.assign({}, constants.DEFAULT_OPTIONS, { usePathForSuiteName: "true" }));
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        usePathForSuiteName: "true"
+      }));
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('/__tests__/foo.test.js');
   });
 
@@ -84,7 +122,9 @@ describe('buildJsonResults', () => {
   it('should return the proper classname when ancestorSeparator is customized', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     const jsonResults = buildJsonResults(noFailingTestsReport, '',
-      Object.assign({}, constants.DEFAULT_OPTIONS, { ancestorSeparator: " › " }));
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        ancestorSeparator: " › "
+      }));
     expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.classname).toBe('foo › baz should bar');
   });
 
@@ -107,11 +147,12 @@ describe('buildJsonResults', () => {
     spyOn(Date, 'now').and.returnValue(startDate.getTime() + 1234);
 
     const jsonResults = buildJsonResults(multiProjectNoFailingTestsReport, '',
-    Object.assign({}, constants.DEFAULT_OPTIONS, {
-      suiteNameTemplate: "{displayName}-foo",
-      titleTemplate: "{displayName}-foo"
-    }));
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        suiteNameTemplate: "{displayName}-foo",
+        titleTemplate: "{displayName}-foo"
+      }));
 
     expect(jsonResults).toMatchSnapshot();
   });
+
 });
