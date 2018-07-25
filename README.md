@@ -25,6 +25,11 @@ Then simply run:
 jest
 ```
 
+For your Continuous Integration you can simply do:
+```shell
+jest --ci --reporters=default --reporters=jest-junit
+```
+
 ## Usage as testResultsProcessor
 In your jest config add the following entry:
 ```JSON
