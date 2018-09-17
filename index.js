@@ -16,11 +16,13 @@ const processor = (report, reporterOptions = {}) => {
 
   const jsonResults = buildJsonResults(report, fs.realpathSync(process.cwd()), options);
 
+  // Set output to use new outputDirectory and fallback on original output
+  const output = options.outputDirectory === null ? options.output :  path.join(options.outputDirectory, options.outputName);
   // Ensure output path exists
-  mkdirp.sync(path.dirname(options.output));
+  mkdirp.sync(path.dirname(output));
 
   // Write data to file
-  fs.writeFileSync(options.output, xml(jsonResults, { indent: '  '}));
+  fs.writeFileSync(output, xml(jsonResults, { indent: '  '}));
 
   // Jest 18 compatibility
   return report;
