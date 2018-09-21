@@ -6,6 +6,8 @@ module.exports = {
   ENVIRONMENT_CONFIG_MAP: {
     JEST_SUITE_NAME: 'suiteName',
     JEST_JUNIT_OUTPUT: 'output',
+    JEST_JUNIT_OUTPUT_DIR: 'outputDirectory',
+    JEST_JUNIT_OUTPUT_NAME: 'outputName',
     JEST_JUNIT_CLASSNAME: 'classNameTemplate',
     JEST_JUNIT_SUITE_NAME: 'suiteNameTemplate',
     JEST_JUNIT_TITLE: 'titleTemplate',
@@ -15,6 +17,8 @@ module.exports = {
   DEFAULT_OPTIONS: {
     suiteName: 'jest tests',
     output: path.join(process.cwd(), './junit.xml'),
+    outputDirectory: null,
+    outputName: 'junit.xml',
     classNameTemplate: '{classname} {title}',
     suiteNameTemplate: '{title}',
     titleTemplate: '{classname} {title}',

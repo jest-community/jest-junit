@@ -51,7 +51,7 @@ jest --ci --testResultsProcessor="jest-junit"
 
 ## Configuration
 
-`jest-junit` offers seven configurations based on environment variables or a `jest-junit` key defined in `package.json` or a reporter option. 
+`jest-junit` offers seven configurations based on environment variables or a `jest-junit` key defined in `package.json` or a reporter option.
 Environement variable and package.json configuration should be **strings**.
 Reporter options should also be strings exception for suiteNameTemplate, classNameTemplate, titleNameTemplate that can also accept a function returning a string.
 
@@ -59,6 +59,8 @@ Reporter options should also be strings exception for suiteNameTemplate, classNa
 |--|--|--|--|
 | `JEST_SUITE_NAME` | `name` attribute of `<testsuites>` | `"jest tests"` | N/A
 | `JEST_JUNIT_OUTPUT` | File path to save the output. | `"./junit.xml"` | N/A
+| `JEST_JUNIT_OUTPUT_DIR` | Directory to save the output. | `null` | N/A
+| `JEST_JUNIT_OUTPUT_NAME` | File name for the output. | `"./junit.xml"` | N/A
 | `JEST_JUNIT_SUITE_NAME` | Template string for `name` attribute of the `<testsuite>`. | `"{title}"` | `{title}`, `{filepath}`, `{filename}`, `{displayName}`
 | `JEST_JUNIT_CLASSNAME` | Template string for the `classname` attribute of `<testcase>`. | `"{classname} {title}"` | `{classname}`, `{title}`, `{filepath}`, `{filename}`, `{displayName}`
 | `JEST_JUNIT_TITLE` | Template string for the `name` attribute of `<testcase>`. | `"{classname} {title}"` | `{classname}`, `{title}`, `{filepath}`, `{filename}`, `{displayName}`
@@ -79,7 +81,8 @@ Or you can also define a `jest-junit` key in your `package.json`.  All are **str
   ...
   "jest-junit": {
     "suiteName": "jest tests",
-    "output": "./junit.xml",
+    "outputDirectory": ".",
+    "outputName": "./junit.xml",
     "classNameTemplate": "{classname}-{title}",
     "titleTemplate": "{classname}-{title}",
     "ancestorSeparator": " › ",
