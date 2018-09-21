@@ -7,6 +7,7 @@ module.exports = {
         '<rootDir>/node_modules/',
         '<rootDir>/__tests__/lib'
       ],
+      testEnvironment: 'node'
     },
     "<rootDir>/integration-tests/testResultsProcessor/",
     "<rootDir>/integration-tests/reporter/"

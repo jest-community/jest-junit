@@ -1,4 +1,5 @@
 module.exports = {
   displayName: 'Reporter Integration Tests',
-  reporters: [ '../../' ]
+  reporters: [ '../../' ],
+  testEnvironment: 'node'
 };
