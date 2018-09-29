@@ -40,8 +40,8 @@ describe('replace <rootDir>', () => {
 
     // Result of replaceRootDirInOutput will also contain the drive letter and path slashes (different format depending on OS).
     // So instead assert that the rootDir is in the result and the placeholder (<rootDir>) is not.
-    expect(newOutput.indexOf(rootDir) !== 0).toBe(true);
-    expect(newOutput.indexOf('<rootDir>') === -1).toBe(true);
+    expect(newOutput).toContain(rootDir);
+    expect(newOutput).not.toContain('<rootDir>');
   });
 
   it('should not replace when output has no <rootDir>', () => {
