@@ -9,7 +9,7 @@ const jestValidate = require('jest-validate');
 const buildJsonResults = require('./utils/buildJsonResults');
 const getOptions = require('./utils/getOptions');
 
-const processor = (report, reporterOptions = {}) => {
+const processor = (report, reporterOptions = {}, jestRootDir = null) => {
   // If jest-junit is used as a reporter allow for reporter options
   // to be used. Env and package.json will override.
   const options = getOptions.options(reporterOptions);
@@ -18,11 +18,14 @@ const processor = (report, reporterOptions = {}) => {
 
   // Set output to use new outputDirectory and fallback on original output
   const output = options.outputDirectory === null ? options.output :  path.join(options.outputDirectory, options.outputName);
+
+  const finalOutput = getOptions.replaceRootDirInOutput(jestRootDir, output);
+
   // Ensure output path exists
-  mkdirp.sync(path.dirname(output));
+  mkdirp.sync(path.dirname(finalOutput));
 
   // Write data to file
-  fs.writeFileSync(output, xml(jsonResults, { indent: '  '}));
+  fs.writeFileSync(finalOutput, xml(jsonResults, { indent: '  ' }));
 
   // Jest 18 compatibility
   return report;
@@ -62,7 +65,7 @@ function JestJUnit (globalConfig, options) {
   this._options = options;
 
   this.onRunComplete = (contexts, results) => {
-    processor(results, this._options);
+    processor(results, this._options, this._globalConfig.rootDir);
   };
 }
 

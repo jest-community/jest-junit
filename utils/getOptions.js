@@ -5,6 +5,8 @@ const fs = require('fs');
 
 const constants = require('../constants/index');
 
+const { replaceRootDirInPath } = require('jest-config');
+
 function getEnvOptions() {
   const options = {};
 
@@ -44,10 +46,15 @@ function getAppOptions(pathToResolve) {
   return {};
 }
 
+function replaceRootDirInOutput(rootDir, output) {
+  return rootDir !== null ? replaceRootDirInPath(rootDir, output) : output;
+}
+
 module.exports = {
   options: (reporterOptions = {}) => {
     return Object.assign({}, constants.DEFAULT_OPTIONS, reporterOptions, getAppOptions(process.cwd()), getEnvOptions());
   },
   getAppOptions: getAppOptions,
-  getEnvOptions: getEnvOptions
+  getEnvOptions: getEnvOptions,
+  replaceRootDirInOutput: replaceRootDirInOutput
 };

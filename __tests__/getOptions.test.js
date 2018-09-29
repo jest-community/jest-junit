@@ -30,3 +30,34 @@ describe('getOptions', () => {
 
   });
 });
+
+describe('replace <rootDir>', () => {
+  it('should replace <rootDir> in output path', () => {
+    const rootDir = 'testRootDir';
+    const outputPath = '<rootDir>/test/result/output.xml';
+
+    const newOutput = getOptions.replaceRootDirInOutput(rootDir, outputPath);
+
+    // Result of replaceRootDirInOutput will also contain the drive letter and path slashes (different format depending on OS).
+    // So instead assert that the rootDir is in the result and the placeholder (<rootDir>) is not.
+    expect(newOutput.indexOf(rootDir) !== 0).toBe(true);
+    expect(newOutput.indexOf('<rootDir>') === -1).toBe(true);
+  });
+
+  it('should not replace when output has no <rootDir>', () => {
+    const rootDir = 'testRootDir';
+    const outputPath = 'testDir/test/result/output.xml';
+
+    const newOutput = getOptions.replaceRootDirInOutput(rootDir, outputPath);
+
+    expect(newOutput).toBe(outputPath);
+  });
+
+  it('should not replace when rootDir is null', () => {
+    const outputPath = 'testDir/test/result/output.xml';
+
+    const newOutput = getOptions.replaceRootDirInOutput(null, outputPath);
+
+    expect(newOutput).toBe(outputPath);
+  });
+});
