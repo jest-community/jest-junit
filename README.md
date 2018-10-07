@@ -52,7 +52,7 @@ jest --ci --testResultsProcessor="jest-junit"
 ## Configuration
 
 `jest-junit` offers seven configurations based on environment variables or a `jest-junit` key defined in `package.json` or a reporter option.
-Environement variable and package.json configuration should be **strings**.
+Environment variable and package.json configuration should be **strings**.
 Reporter options should also be strings exception for suiteNameTemplate, classNameTemplate, titleNameTemplate that can also accept a function returning a string.
 
 | Variable Name | Description | Default | Possible Injection Values
