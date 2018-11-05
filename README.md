@@ -173,7 +173,7 @@ renders
 Using the `suiteNameTemplate`:
 
 ```shell
-JEST_JUNIT_SUIT_NAME ="{filename}" jest
+JEST_JUNIT_SUITE_NAME ="{filename}" jest
 ```
 
 ```xml
