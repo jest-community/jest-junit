@@ -66,7 +66,6 @@ Reporter options should also be strings exception for suiteNameTemplate, classNa
 | `JEST_JUNIT_TITLE` | Template string for the `name` attribute of `<testcase>`. | `"{classname} {title}"` | `{classname}`, `{title}`, `{filepath}`, `{filename}`, `{displayName}`
 | `JEST_JUNIT_ANCESTOR_SEPARATOR` | Character(s) used to join the `describe` blocks. | `" "` | N/A
 | `JEST_USE_PATH_FOR_SUITE_NAME` | **DEPRECATED. Use `suiteNameTemplate` instead.** Use file path as the `name` attribute of `<testsuite>` | `"false"` | N/A
-| `JEST_JUNIT_INCLUDE_XML_PROLOG` | Determines if the XML output contains the Prolog | `"false"` | N/A
 
 
 You can configure these options via the command line as seen below:
@@ -87,8 +86,7 @@ Or you can also define a `jest-junit` key in your `package.json`.  All are **str
     "classNameTemplate": "{classname}-{title}",
     "titleTemplate": "{classname}-{title}",
     "ancestorSeparator": " › ",
-    "usePathForSuiteName": "true",
-    "includeXmlProlog": "false"
+    "usePathForSuiteName": "true"
   }
 }
 ```
