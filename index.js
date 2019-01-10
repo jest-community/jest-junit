@@ -5,6 +5,7 @@ const mkdirp = require('mkdirp');
 const fs = require('fs');
 const path = require('path');
 const jestValidate = require('jest-validate');
+const constants = require('./constants');
 
 const buildJsonResults = require('./utils/buildJsonResults');
 const getOptions = require('./utils/getOptions');
@@ -25,7 +26,7 @@ const processor = (report, reporterOptions = {}, jestRootDir = null) => {
   mkdirp.sync(path.dirname(finalOutput));
 
   // Write data to file
-  fs.writeFileSync(finalOutput, xml(jsonResults, { indent: '  ' }));
+  fs.writeFileSync(finalOutput,(constants.XML_PROLOG === 'true')? constants.XML_PROLOG_STRING : '' + xml(jsonResults, { indent: '  ' }));
 
   // Jest 18 compatibility
   return report;
@@ -70,4 +71,3 @@ function JestJUnit (globalConfig, options) {
 }
 
 module.exports = JestJUnit;
-
