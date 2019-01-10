@@ -26,7 +26,7 @@ const processor = (report, reporterOptions = {}, jestRootDir = null) => {
   mkdirp.sync(path.dirname(finalOutput));
 
   // Write data to file
-  fs.writeFileSync(finalOutput,(constants.XML_PROLOG === 'true')? constants.XML_PROLOG_STRING : '' + xml(jsonResults, { indent: '  ' }));
+  fs.writeFileSync(finalOutput,((options.includeXmlProlog === 'true')? constants.XML_PROLOG_STRING : '') + xml(jsonResults, { indent: '  ' }));
 
   // Jest 18 compatibility
   return report;
