@@ -13,7 +13,6 @@ module.exports = {
     JEST_JUNIT_TITLE: 'titleTemplate',
     JEST_JUNIT_ANCESTOR_SEPARATOR: 'ancestorSeparator',
     JEST_USE_PATH_FOR_SUITE_NAME: 'usePathForSuiteName',
-    JEST_JUNIT_INCLUDE_XML_PROLOG:'includeXmlProlog',
   },
   DEFAULT_OPTIONS: {
     suiteName: 'jest tests',
@@ -25,7 +24,6 @@ module.exports = {
     titleTemplate: '{classname} {title}',
     ancestorSeparator: ' ',
     usePathForSuiteName: 'false',
-    includeXmlProlog: 'false',
   },
   CLASSNAME_VAR: 'classname',
   FILENAME_VAR: 'filename',
