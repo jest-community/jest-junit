@@ -29,7 +29,6 @@ Object {
             Object {
               "_attr": Object {
                 "classname": "a thing should foo",
-                "file": "path/to/project1/__tests__/test1.test.js",
                 "name": "project1-foo",
                 "time": 0.003,
               },
@@ -56,7 +55,6 @@ Object {
             Object {
               "_attr": Object {
                 "classname": "another thing should foo",
-                "file": "path/to/project2/__tests__/test2.test.js",
                 "name": "project2-foo",
                 "time": 0.001,
               },
