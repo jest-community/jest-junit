@@ -119,8 +119,7 @@ module.exports = function (report, appDirectory, options) {
           _attr: {
             classname: replaceVars(options.classNameTemplate, testVariables),
             name: replaceVars(options.titleTemplate, testVariables),
-            time: tc.duration / 1000,
-            file: filepath
+            time: tc.duration / 1000
           }
         }]
       };
