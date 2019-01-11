@@ -30,5 +30,4 @@ module.exports = {
   FILEPATH_VAR: 'filepath',
   TITLE_VAR: 'title',
   DISPLAY_NAME_VAR: 'displayName',
-  XML_PROLOG_STRING: '<?xml version="1.0" encoding="UTF-8"?>',
 };
