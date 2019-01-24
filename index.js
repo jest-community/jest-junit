@@ -25,7 +25,7 @@ const processor = (report, reporterOptions = {}, jestRootDir = null) => {
   mkdirp.sync(path.dirname(finalOutput));
 
   // Write data to file
-  fs.writeFileSync(finalOutput, xml(jsonResults, { indent: '  ' }));
+  fs.writeFileSync(finalOutput, xml(jsonResults, { indent: '  ', declaration: true }));
 
   // Jest 18 compatibility
   return report;
@@ -70,4 +70,3 @@ function JestJUnit (globalConfig, options) {
 }
 
 module.exports = JestJUnit;
-
