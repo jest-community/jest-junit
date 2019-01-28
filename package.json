@@ -1,6 +1,6 @@
 {
   "name": "jest-junit",
-  "version": "6.1.0",
+  "version": "6.2.0",
   "description": "A jest reporter that generates junit xml files",
   "main": "index.js",
   "repository": "https://github.com/jest-community/jest-junit",
@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "test": "jest",
-    "pretest:ci": "npm uninstall jest babel-jest && npm install jest@$JEST_VERSION",
+    "pretest:ci": "npm install jest@$JEST_VERSION",
     "test:ci": "jest --ci"
   },
   "dependencies": {
