@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const constants = require('../constants/index');
 
-const { replaceRootDirInPath } = require('jest-config');
+const { replaceRootDirInPath } = require('./replaceRootDirInPath');
 
 function getEnvOptions() {
   const options = {};
