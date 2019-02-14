@@ -124,6 +124,10 @@ module.exports = function (report, appDirectory, options) {
         }]
       };
 
+      if (options.addFileAttribute === 'true') {
+        testCase.testcase[0]._attr.file = filepath;
+      }
+
       // Write out all failure messages as <failure> tags
       // Nested underneath <testcase> tag
       if (tc.status === 'failed') {

@@ -155,4 +155,19 @@ describe('buildJsonResults', () => {
     expect(jsonResults).toMatchSnapshot();
   });
 
+  it('should not return the file name by default', () => {
+    const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
+    const jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
+    expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.file).toBe(undefined);
+  });
+
+  it('should return the file name when addFileAttribute is "true"', () => {
+    const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
+    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        addFileAttribute: "true"
+      }));
+    expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.file).toBe('path/to/test/__tests__/foo.test.js');
+  });
+
 });

@@ -65,6 +65,7 @@ Reporter options should also be strings exception for suiteNameTemplate, classNa
 | `JEST_JUNIT_CLASSNAME` | Template string for the `classname` attribute of `<testcase>`. | `"{classname} {title}"` | `{classname}`, `{title}`, `{filepath}`, `{filename}`, `{displayName}`
 | `JEST_JUNIT_TITLE` | Template string for the `name` attribute of `<testcase>`. | `"{classname} {title}"` | `{classname}`, `{title}`, `{filepath}`, `{filename}`, `{displayName}`
 | `JEST_JUNIT_ANCESTOR_SEPARATOR` | Character(s) used to join the `describe` blocks. | `" "` | N/A
+| `JEST_JUNIT_ADD_FILE_ATTRIBUTE` | Add file attribute to the output. This config is primarily for Circle CI. This setting provides richer details but may break on other CI platforms. | `false` | N/A
 | `JEST_USE_PATH_FOR_SUITE_NAME` | **DEPRECATED. Use `suiteNameTemplate` instead.** Use file path as the `name` attribute of `<testsuite>` | `"false"` | N/A
 
 
