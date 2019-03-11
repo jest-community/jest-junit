@@ -1,0 +1,128 @@
+{
+  "numFailedTestSuites": 0,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 2,
+  "numPassedTests": 2,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 2,
+  "numTotalTests": 2,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1552322034304,
+  "success": false,
+  "testResults": [
+    {
+      "console": [
+        {
+          "message": "I am bar",
+          "origin": "/path/to/my/test/__tests__/bar.test.js:5",
+          "type": "log"
+        },
+        {
+          "message": "Some output here from a lib",
+          "origin": "/path/to/my/test/sample.js:3",
+          "type": "log"
+        }
+      ],
+      "failureMessage": null,
+      "numFailingTests": 0,
+      "numPassingTests": 1,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "perfStats": {
+        "end": 1552322035185,
+        "start": 1552322034769
+      },
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "unmatched": 0,
+        "updated": 0,
+        "uncheckedKeys": []
+      },
+      "testFilePath": "/path/to/my/test/__tests__/bar.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "bar"
+          ],
+          "duration": 5,
+          "failureMessages": [],
+          "fullName": "bar should bar",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "should bar"
+        }
+      ],
+      "sourceMaps": {},
+      "skipped": false,
+      "leaks": false
+    },
+    {
+      "console": [
+        {
+          "message": "I am foo",
+          "origin": "/path/to/my/test/__tests__/foo.test.js:3",
+          "type": "log"
+        }
+      ],
+      "failureMessage": null,
+      "numFailingTests": 0,
+      "numPassingTests": 1,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "perfStats": {
+        "end": 1552322035238,
+        "start": 1552322035196
+      },
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "unmatched": 0,
+        "updated": 0,
+        "uncheckedKeys": []
+      },
+      "testFilePath": "/path/to/my/test/__tests__/foo.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "foo"
+          ],
+          "duration": 1,
+          "failureMessages": [],
+          "fullName": "foo should foo",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "should foo"
+        }
+      ],
+      "sourceMaps": {},
+      "skipped": false,
+      "leaks": false
+    }
+  ],
+  "wasInterrupted": false
+}

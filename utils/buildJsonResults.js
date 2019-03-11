@@ -101,6 +101,20 @@ module.exports = function (report, appDirectory, options) {
     jsonResults.testsuites[0]._attr.failures += suite.numFailingTests;
     jsonResults.testsuites[0]._attr.tests += suiteNumTests;
 
+    // Write stdout console output if available
+    if (options.includeConsoleOutput === 'true' && suite.console && suite.console.length) {
+      // Stringify the entire console object
+      // Easier this way because formatting in a readable way is tough with XML
+      // And this can be parsed more easily
+      let testSuiteConsole = {
+        'system-out': {
+          _cdata: JSON.stringify(suite.console, null, 2)
+        }
+      };
+
+      testSuite.testsuite.push(testSuiteConsole);
+    }
+
     // Iterate through test cases
     suite.testResults.forEach((tc) => {
       const classname = tc.ancestorTitles.join(options.ancestorSeparator);
