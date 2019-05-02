@@ -13,6 +13,7 @@ module.exports = {
     JEST_JUNIT_TITLE: 'titleTemplate',
     JEST_JUNIT_ANCESTOR_SEPARATOR: 'ancestorSeparator',
     JEST_JUNIT_ADD_FILE_ATTRIBUTE: 'addFileAttribute',
+    JEST_JUNIT_INCLUDE_CONSOLE_OUTPUT: 'includeConsoleOutput',
     JEST_USE_PATH_FOR_SUITE_NAME: 'usePathForSuiteName',
   },
   DEFAULT_OPTIONS: {
@@ -26,6 +27,7 @@ module.exports = {
     ancestorSeparator: ' ',
     usePathForSuiteName: 'false',
     addFileAttribute: 'false',
+    includeConsoleOutput: 'false',
   },
   CLASSNAME_VAR: 'classname',
   FILENAME_VAR: 'filename',

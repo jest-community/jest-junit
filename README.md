@@ -9,7 +9,7 @@ yarn add --dev jest-junit
 ```
 
 ## Important Notice
-In an upcoming major version 5.x jest-junit will no longer function as a testResultProcessor. It will only work as a jest reporter. See the docs just below this for how to transition your project.
+In an upcoming major version 7.x jest-junit will no longer function as a testResultProcessor. It will only work as a jest reporter. See the docs just below this for how to transition your project.
 
 ## Usage
 In your jest config add the following entry:
@@ -51,22 +51,23 @@ jest --ci --testResultsProcessor="jest-junit"
 
 ## Configuration
 
-`jest-junit` offers seven configurations based on environment variables or a `jest-junit` key defined in `package.json` or a reporter option.
+`jest-junit` offers several configurations based on environment variables or a `jest-junit` key defined in `package.json` or a reporter option.
 Environment variable and package.json configuration should be **strings**.
 Reporter options should also be strings exception for suiteNameTemplate, classNameTemplate, titleNameTemplate that can also accept a function returning a string.
 
-| Variable Name | Description | Default | Possible Injection Values
-|--|--|--|--|
-| `JEST_SUITE_NAME` | `name` attribute of `<testsuites>` | `"jest tests"` | N/A
-| `JEST_JUNIT_OUTPUT` | File path to save the output. | `"./junit.xml"` | N/A
-| `JEST_JUNIT_OUTPUT_DIR` | Directory to save the output. | `null` | N/A
-| `JEST_JUNIT_OUTPUT_NAME` | File name for the output. | `"./junit.xml"` | N/A
-| `JEST_JUNIT_SUITE_NAME` | Template string for `name` attribute of the `<testsuite>`. | `"{title}"` | `{title}`, `{filepath}`, `{filename}`, `{displayName}`
-| `JEST_JUNIT_CLASSNAME` | Template string for the `classname` attribute of `<testcase>`. | `"{classname} {title}"` | `{classname}`, `{title}`, `{filepath}`, `{filename}`, `{displayName}`
-| `JEST_JUNIT_TITLE` | Template string for the `name` attribute of `<testcase>`. | `"{classname} {title}"` | `{classname}`, `{title}`, `{filepath}`, `{filename}`, `{displayName}`
-| `JEST_JUNIT_ANCESTOR_SEPARATOR` | Character(s) used to join the `describe` blocks. | `" "` | N/A
-| `JEST_JUNIT_ADD_FILE_ATTRIBUTE` | Add file attribute to the output. This config is primarily for Circle CI. This setting provides richer details but may break on other CI platforms. | `false` | N/A
-| `JEST_USE_PATH_FOR_SUITE_NAME` | **DEPRECATED. Use `suiteNameTemplate` instead.** Use file path as the `name` attribute of `<testsuite>` | `"false"` | N/A
+| Environment Variable Name | Reporter Config Name| Description | Default | Possible Injection Values
+|--|--|--|--|--|
+| `JEST_SUITE_NAME` | `suiteName` | `name` attribute of `<testsuites>` | `"jest tests"` | N/A
+| `JEST_JUNIT_OUTPUT` | `output` | File path to save the output. | `"./junit.xml"` | N/A
+| `JEST_JUNIT_OUTPUT_DIR` | `outputDirectory` | Directory to save the output. | `null` | N/A
+| `JEST_JUNIT_OUTPUT_NAME` | `outputName` | File name for the output. | `"./junit.xml"` | N/A
+| `JEST_JUNIT_SUITE_NAME` | `suiteNameTemplate` | Template string for `name` attribute of the `<testsuite>`. | `"{title}"` | `{title}`, `{filepath}`, `{filename}`, `{displayName}`
+| `JEST_JUNIT_CLASSNAME` | `classNameTemplate` | Template string for the `classname` attribute of `<testcase>`. | `"{classname} {title}"` | `{classname}`, `{title}`, `{filepath}`, `{filename}`, `{displayName}`
+| `JEST_JUNIT_TITLE` | `titleTemplate` | Template string for the `name` attribute of `<testcase>`. | `"{classname} {title}"` | `{classname}`, `{title}`, `{filepath}`, `{filename}`, `{displayName}`
+| `JEST_JUNIT_ANCESTOR_SEPARATOR` | `ancestorSeparator` | Character(s) used to join the `describe` blocks. | `" "` | N/A
+| `JEST_JUNIT_ADD_FILE_ATTRIBUTE` | `addFileAttribute` | Add file attribute to the output. This config is primarily for Circle CI. This setting provides richer details but may break on other CI platforms. | `false` | N/A
+| `JEST_JUNIT_INCLUDE_CONSOLE_OUTPUT` | `includeConsoleOutput` | Adds console output to any testSuite that generates stdout during a test run. | `false` | N/A
+| `JEST_USE_PATH_FOR_SUITE_NAME` | `usePathForSuiteName` | **DEPRECATED. Use `suiteNameTemplate` instead.** Use file path as the `name` attribute of `<testsuite>` | `"false"` | N/A
 
 
 You can configure these options via the command line as seen below:

@@ -170,4 +170,23 @@ describe('buildJsonResults', () => {
     expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.file).toBe('path/to/test/__tests__/foo.test.js');
   });
 
+  it('should show output of console if includeConsoleOutput is true', () => {
+    const reportWithConsoleOutput = require('../__mocks__/test-with-console-output.json');
+    const jsonResults = buildJsonResults(reportWithConsoleOutput, '/',
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        includeConsoleOutput: "true"
+      }));
+
+    expect(jsonResults.testsuites[1].testsuite[1]['system-out']).toBeDefined();
+  });
+
+  it('should NOT show output of console if includeConsoleOutput is not set or false', () => {
+    const reportWithConsoleOutput = require('../__mocks__/test-with-console-output.json');
+    const jsonResults = buildJsonResults(reportWithConsoleOutput, '/',
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        includeConsoleOutput: "false"
+      }));
+
+    expect(jsonResults.testsuites[1].testsuite[1]['system-out']).not.toBeDefined();
+  });
 });
