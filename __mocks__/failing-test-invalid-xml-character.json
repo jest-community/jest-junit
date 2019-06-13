@@ -1,0 +1,70 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 1,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 4,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 5,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1560467511567,
+  "success": false,
+  "testResults": [
+    {
+      "console": null,
+      "failureMessage": "\u001b[1m\u001b[31m  \u001b[1m● \u001b[1mState API :: Markets :: getMarketsInfo\u001b[39m\u001b[22m\n\n    \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).toMatchObject(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m)\u001b[22m\n\n    Expected value to match object:\n      \u001b[32m[{\"author\": \"0x8fFf40Efec989Fc938bBA8b19584dA08ead986eE\", \"category\": \" \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\", \"consensus\": null, \"cumulativeScale\": \"1\", \"details\": null, \"finalizationTime\": null, \"marketType\": \"yesNo\", \"maxPrice\": \"1\", \"minPrice\": \"0\", \"needsMigration\": false, \"numOutcomes\": 3, \"numTicks\": \"100\", \"openInterest\": \"1500000000000000\", \"outcomes\": [{\"description\": \"Invalid\", \"id\": 0, \"price\": \"22\"}, {\"description\": \"No\", \"id\": 1, \"price\": \"22\"}, {\"description\": \"Yes\", \"id\": 2, \"price\": \"0.5\"}], \"reportingState\": \"FORKING\", \"resolutionSource\": null, \"scalarDenomination\": null, \"tickSize\": \"0.01\", \"universe\": \"0x4112a78f07D155884b239A29e378D1f853Edd128\", \"volume\": \"1000000000000000\"}, {\"author\": \"0x8fFf40Efec989Fc938bBA8b19584dA08ead986eE\", \"category\": \" \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\", \"consensus\": [\"100\", \"0\", \"0\", \"0\"], \"cumulativeScale\": \"1\", \"details\": null, \"marketType\": \"categorical\", \"maxPrice\": \"1\", \"minPrice\": \"0\", \"needsMigration\": false, \"numOutcomes\": 4, \"numTicks\": \"100\", \"openInterest\": \"1500000000000000\", \"outcomes\": [{\"description\": \"Invalid\", \"id\": 0, \"price\": \"22\"}, {\"description\": \"A\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\", \"id\": 1, \"price\": \"22\"}, {\"description\": \"B\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\", \"id\": 2, \"price\": \"0.5\"}, {\"description\": \"C\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\", \"id\": 3, \"price\": \"0.5\"}], \"reportingState\": \"FINALIZED\", \"resolutionSource\": null, \"scalarDenomination\": null, \"tickSize\": \"0.01\", \"universe\": \"0x4112a78f07D155884b239A29e378D1f853Edd128\", \"volume\": \"610000000000000\"}, {\"author\": \"0x8fFf40Efec989Fc938bBA8b19584dA08ead986eE\", \"category\": \" \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\", \"consensus\": null, \"cumulativeScale\": \"200\", \"details\": null, \"finalizationTime\": null, \"marketType\": \"scalar\", \"maxPrice\": \"250\", \"minPrice\": \"50\", \"needsMigration\": true, \"numOutcomes\": 3, \"numTicks\": \"20000\", \"openInterest\": \"300000000000000000\", \"outcomes\": [{\"description\": \"Invalid\", \"id\": 0, \"price\": \"22\"}, {\"description\": \"scalar denom 1\", \"id\": 1, \"price\": \"22\"}, {\"description\": \"scalar denom 1\", \"id\": 2, \"price\": \"100\"}], \"reportingState\": \"AWAITING_FORK_MIGRATION\", \"resolutionSource\": null, \"scalarDenomination\": \"scalar denom 1\", \"tickSize\": \"0.01\", \"universe\": \"0x4112a78f07D155884b239A29e378D1f853Edd128\", \"volume\": \"100110000000000000\"}]\u001b[39m\n    Received:\n      \u001b[31m[{\"author\": \"0x8fFf40Efec989Fc938bBA8b19584dA08ead986eE\", \"category\": \" \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\", \"consensus\": null, \"creationBlock\": 203, \"cumulativeScale\": \"1\", \"description\": undefined, \"details\": null, \"endTime\": 1563155986, \"finalizationBlockNumber\": null, \"finalizationTime\": null, \"id\": \"0xed41C78f3B011419D3EBd4549ba42DCa7d7A26C9\", \"marketType\": \"yesNo\", \"maxPrice\": \"1\", \"minPrice\": \"0\", \"needsMigration\": false, \"numOutcomes\": 3, \"numTicks\": \"100\", \"openInterest\": \"1500000000000000\", \"outcomes\": [{\"description\": \"Invalid\", \"id\": 0, \"price\": \"22\"}, {\"description\": \"No\", \"id\": 1, \"price\": \"22\"}, {\"description\": \"Yes\", \"id\": 2, \"price\": \"0.5\"}], \"reportingState\": \"FORKING\", \"resolutionSource\": null, \"scalarDenomination\": null, \"tickSize\": \"0.00000000000000000001\", \"universe\": \"0x4112a78f07D155884b239A29e378D1f853Edd128\", \"volume\": \"1000000000000000\"}, {\"author\": \"0x8fFf40Efec989Fc938bBA8b19584dA08ead986eE\", \"category\": \" \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\", \"consensus\": [\"100\", \"0\", \"0\", \"0\"], \"creationBlock\": 205, \"cumulativeScale\": \"1\", \"description\": undefined, \"details\": null, \"endTime\": 1563155986, \"finalizationBlockNumber\": 289, \"finalizationTime\": \"1569203987\", \"id\": \"0xe10E66991bdc6C1C1Ba7c2eCB72503b118EB2337\", \"marketType\": \"categorical\", \"maxPrice\": \"1\", \"minPrice\": \"0\", \"needsMigration\": false, \"numOutcomes\": 4, \"numTicks\": \"100\", \"openInterest\": \"1500000000000000\", \"outcomes\": [{\"description\": \"Invalid\", \"id\": 0, \"price\": \"22\"}, {\"description\": \"A\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\", \"id\": 1, \"price\": \"22\"}, {\"description\": \"B\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\", \"id\": 2, \"price\": \"0.5\"}, {\"description\": \"C\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\", \"id\": 3, \"price\": \"0.5\"}], \"reportingState\": \"FINALIZED\", \"resolutionSource\": null, \"scalarDenomination\": null, \"tickSize\": \"0.00000000000000000001\", \"universe\": \"0x4112a78f07D155884b239A29e378D1f853Edd128\", \"volume\": \"610000000000000\"}, {\"author\": \"0x8fFf40Efec989Fc938bBA8b19584dA08ead986eE\", \"category\": \" \u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\", \"consensus\": null, \"creationBlock\": 207, \"cumulativeScale\": \"200\", \"description\": undefined, \"details\": null, \"endTime\": 1563155986, \"finalizationBlockNumber\": null, \"finalizationTime\": null, \"id\": \"0xC08327efCBeEDCe76AF07A25C443a388cbC50Def\", \"marketType\": \"scalar\", \"maxPrice\": \"250\", \"minPrice\": \"50\", \"needsMigration\": true, \"numOutcomes\": 3, \"numTicks\": \"20000\", \"openInterest\": \"300000000000000000\", \"outcomes\": [{\"description\": \"Invalid\", \"id\": 0, \"price\": \"22\"}, {\"description\": \"scalar denom 1\", \"id\": 1, \"price\": \"22\"}, {\"description\": \"scalar denom 1\", \"id\": 2, \"price\": \"100\"}], \"reportingState\": \"AWAITING_FORK_MIGRATION\", \"resolutionSource\": null, \"scalarDenomination\": \"scalar denom 1\", \"tickSize\": \"0.00000000000000000001\", \"universe\": \"0x4112a78f07D155884b239A29e378D1f853Edd128\", \"volume\": \"100110000000000000\"}]\u001b[39m\n    Difference:\n    \u001b[32m- Expected\u001b[39m\n    \u001b[31m+ Received\u001b[39m\n\n    \u001b[33m@@ -31,11 +31,11 @@\u001b[39m\n    \u001b[2m        },\u001b[22m\n    \u001b[2m      ],\u001b[22m\n    \u001b[2m      \"reportingState\": \"FORKING\",\u001b[22m\n    \u001b[2m      \"resolutionSource\": null,\u001b[22m\n    \u001b[2m      \"scalarDenomination\": null,\u001b[22m\n    \u001b[32m-     \"tickSize\": \"0.01\",\u001b[39m\n    \u001b[31m+     \"tickSize\": \"0.00000000000000000001\",\u001b[39m\n    \u001b[2m      \"universe\": \"0x4112a78f07D155884b239A29e378D1f853Edd128\",\u001b[22m\n    \u001b[2m      \"volume\": \"1000000000000000\",\u001b[22m\n    \u001b[2m    },\u001b[22m\n    \u001b[2m    Object {\u001b[22m\n    \u001b[2m      \"author\": \"0x8fFf40Efec989Fc938bBA8b19584dA08ead986eE\",\u001b[22m\n    \u001b[33m@@ -78,11 +78,11 @@\u001b[39m\n    \u001b[2m        },\u001b[22m\n    \u001b[2m      ],\u001b[22m\n    \u001b[2m      \"reportingState\": \"FINALIZED\",\u001b[22m\n    \u001b[2m      \"resolutionSource\": null,\u001b[22m\n    \u001b[2m      \"scalarDenomination\": null,\u001b[22m\n    \u001b[32m-     \"tickSize\": \"0.01\",\u001b[39m\n    \u001b[31m+     \"tickSize\": \"0.00000000000000000001\",\u001b[39m\n    \u001b[2m      \"universe\": \"0x4112a78f07D155884b239A29e378D1f853Edd128\",\u001b[22m\n    \u001b[2m      \"volume\": \"610000000000000\",\u001b[22m\n    \u001b[2m    },\u001b[22m\n    \u001b[2m    Object {\u001b[22m\n    \u001b[2m      \"author\": \"0x8fFf40Efec989Fc938bBA8b19584dA08ead986eE\",\u001b[22m\n    \u001b[33m@@ -116,10 +116,10 @@\u001b[39m\n    \u001b[2m        },\u001b[22m\n    \u001b[2m      ],\u001b[22m\n    \u001b[2m      \"reportingState\": \"AWAITING_FORK_MIGRATION\",\u001b[22m\n    \u001b[2m      \"resolutionSource\": null,\u001b[22m\n    \u001b[2m      \"scalarDenomination\": \"scalar denom 1\",\u001b[22m\n    \u001b[32m-     \"tickSize\": \"0.01\",\u001b[39m\n    \u001b[31m+     \"tickSize\": \"0.00000000000000000001\",\u001b[39m\n    \u001b[2m      \"universe\": \"0x4112a78f07D155884b239A29e378D1f853Edd128\",\u001b[22m\n    \u001b[2m      \"volume\": \"100110000000000000\",\u001b[22m\n    \u001b[2m    },\u001b[22m\n    \u001b[2m  ]\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.<anonymous> (\u001b[2m\u001b[0m\u001b[36msrc/tests/state/getter/Markets.test.ts\u001b[39m\u001b[0m\u001b[2m:1125:33)\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat step (\u001b[2m\u001b[0m\u001b[36msrc/tests/state/getter/Markets.test.ts\u001b[39m\u001b[0m\u001b[2m:32:23)\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat Object.next (\u001b[2m\u001b[0m\u001b[36msrc/tests/state/getter/Markets.test.ts\u001b[39m\u001b[0m\u001b[2m:13:53)\u001b[2m\u001b[22m\n\u001b[2m      \u001b[2mat fulfilled (\u001b[2m\u001b[0m\u001b[36msrc/tests/state/getter/Markets.test.ts\u001b[39m\u001b[0m\u001b[2m:4:58)\u001b[2m\u001b[22m\n",
+      "numFailingTests": 1,
+      "numPassingTests": 4,
+      "numPendingTests": 0,
+      "perfStats": {
+        "end": 1560467675762,
+        "start": 1560467512017
+      },
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "unmatched": 0,
+        "updated": 0,
+        "uncheckedKeys": []
+      },
+      "testFilePath": "/path/to/failing.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [],
+          "duration": 63951,
+          "failureMessages": [
+            "\u0000\u0000\u0000"
+          ],
+          "fullName": "Sample Failing Test",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "failed",
+          "title": "Sample Failing Test"
+        }
+      ],
+      "sourceMaps": {},
+      "skipped": false,
+      "leaks": false
+    }
+  ],
+  "wasInterrupted": false
+}
