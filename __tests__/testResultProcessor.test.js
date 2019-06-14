@@ -56,8 +56,6 @@ describe('jest-junit', () => {
     // Ensure file would have been generated
     expect(fs.writeFileSync).toHaveBeenLastCalledWith(path.resolve('junit.xml'), expect.any(String));
 
-    console.log(fs.writeFileSync.mock.calls[0][1]);
-
     // Ensure generated file is valid xml
     const xmlDoc = libxmljs.parseXml(fs.writeFileSync.mock.calls[0][1]);
     expect(xmlDoc).toBeTruthy();
