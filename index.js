@@ -9,10 +9,18 @@ const jestValidate = require('jest-validate');
 const buildJsonResults = require('./utils/buildJsonResults');
 const getOptions = require('./utils/getOptions');
 
+// Store console results from onTestResult to later
+// append to result
+const consoleBuffer = {};
+
 const processor = (report, reporterOptions = {}, jestRootDir = null) => {
   // If jest-junit is used as a reporter allow for reporter options
   // to be used. Env and package.json will override.
   const options = getOptions.options(reporterOptions);
+
+  report.testResults.forEach((t, i) => {
+    t.console = consoleBuffer[t.testFilePath];
+  });
 
   const jsonResults = buildJsonResults(report, fs.realpathSync(process.cwd()), options);
 
@@ -63,6 +71,12 @@ function JestJUnit (globalConfig, options) {
 
   this._globalConfig = globalConfig;
   this._options = options;
+
+  this.onTestResult = (test, testResult, aggregatedResult) => {
+    if (testResult.console && testResult.console.length > 0) {
+      consoleBuffer[testResult.testFilePath] = testResult.console;
+    }
+  };
 
   this.onRunComplete = (contexts, results) => {
     processor(results, this._options, this._globalConfig.rootDir);
