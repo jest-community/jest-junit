@@ -9,7 +9,7 @@ yarn add --dev jest-junit
 ```
 
 ## Important Notice
-In an upcoming major version 7.x jest-junit will no longer function as a testResultProcessor. It will only work as a jest reporter. See the docs just below this for how to transition your project.
+Soon jest-junit will no longer function as a testResultProcessor. It will only work as a jest reporter. See the docs just below this for how to transition your project.
 
 ## Usage
 In your jest config add the following entry:
