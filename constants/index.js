@@ -5,7 +5,6 @@ const path = require('path');
 module.exports = {
   ENVIRONMENT_CONFIG_MAP: {
     JEST_SUITE_NAME: 'suiteName',
-    JEST_JUNIT_OUTPUT: 'output',
     JEST_JUNIT_OUTPUT_DIR: 'outputDirectory',
     JEST_JUNIT_OUTPUT_NAME: 'outputName',
     JEST_JUNIT_CLASSNAME: 'classNameTemplate',
@@ -18,8 +17,7 @@ module.exports = {
   },
   DEFAULT_OPTIONS: {
     suiteName: 'jest tests',
-    output: path.join(process.cwd(), './junit.xml'),
-    outputDirectory: null,
+    outputDirectory: process.cwd(),
     outputName: 'junit.xml',
     classNameTemplate: '{classname} {title}',
     suiteNameTemplate: '{title}',
