@@ -58,9 +58,8 @@ Reporter options should also be strings exception for suiteNameTemplate, classNa
 | Environment Variable Name | Reporter Config Name| Description | Default | Possible Injection Values
 |--|--|--|--|--|
 | `JEST_SUITE_NAME` | `suiteName` | `name` attribute of `<testsuites>` | `"jest tests"` | N/A
-| `JEST_JUNIT_OUTPUT` | `output` | File path to save the output. | `"./junit.xml"` | N/A
-| `JEST_JUNIT_OUTPUT_DIR` | `outputDirectory` | Directory to save the output. | `null` | N/A
-| `JEST_JUNIT_OUTPUT_NAME` | `outputName` | File name for the output. | `"./junit.xml"` | N/A
+| `JEST_JUNIT_OUTPUT_DIR` | `outputDirectory` | Directory to save the output. | `process.cwd()` | N/A
+| `JEST_JUNIT_OUTPUT_NAME` | `outputName` | File name for the output. | `"junit.xml"` | N/A
 | `JEST_JUNIT_SUITE_NAME` | `suiteNameTemplate` | Template string for `name` attribute of the `<testsuite>`. | `"{title}"` | `{title}`, `{filepath}`, `{filename}`, `{displayName}`
 | `JEST_JUNIT_CLASSNAME` | `classNameTemplate` | Template string for the `classname` attribute of `<testcase>`. | `"{classname} {title}"` | `{classname}`, `{title}`, `{filepath}`, `{filename}`, `{displayName}`
 | `JEST_JUNIT_TITLE` | `titleTemplate` | Template string for the `name` attribute of `<testcase>`. | `"{classname} {title}"` | `{classname}`, `{title}`, `{filepath}`, `{filename}`, `{displayName}`
@@ -73,7 +72,7 @@ Reporter options should also be strings exception for suiteNameTemplate, classNa
 You can configure these options via the command line as seen below:
 
 ```shell
-JEST_SUITE_NAME="Jest JUnit Unit Tests" JEST_JUNIT_OUTPUT="./artifacts/junit.xml" jest
+JEST_SUITE_NAME="Jest JUnit Unit Tests" JEST_JUNIT_OUTPUT_DIR="./artifacts" jest
 ```
 
 Or you can also define a `jest-junit` key in your `package.json`.  All are **string** values.
@@ -84,7 +83,7 @@ Or you can also define a `jest-junit` key in your `package.json`.  All are **str
   "jest-junit": {
     "suiteName": "jest tests",
     "outputDirectory": ".",
-    "outputName": "./junit.xml",
+    "outputName": "junit.xml",
     "classNameTemplate": "{classname}-{title}",
     "titleTemplate": "{classname}-{title}",
     "ancestorSeparator": " › ",

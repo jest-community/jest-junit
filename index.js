@@ -25,7 +25,7 @@ const processor = (report, reporterOptions = {}, jestRootDir = null) => {
   const jsonResults = buildJsonResults(report, fs.realpathSync(process.cwd()), options);
 
   // Set output to use new outputDirectory and fallback on original output
-  const output = options.outputDirectory === null ? options.output :  path.join(options.outputDirectory, options.outputName);
+  const output = path.join(options.outputDirectory, options.outputName);
 
   const finalOutput = getOptions.replaceRootDirInOutput(jestRootDir, output);
 
