@@ -31,6 +31,9 @@ const replaceVars = function (strOrFunc, variables) {
 };
 
 const executionTime = function (startTime, endTime) {
+  if (endTime < startTime) {
+    return 0;
+  }
   return (endTime - startTime) / 1000;
 }
 
