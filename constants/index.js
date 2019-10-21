@@ -1,6 +1,6 @@
 'use strict';
 
-const path = require('path');
+const uuid = require('uuid/v1');
 
 module.exports = {
   ENVIRONMENT_CONFIG_MAP: {
@@ -18,7 +18,7 @@ module.exports = {
   DEFAULT_OPTIONS: {
     suiteName: 'jest tests',
     outputDirectory: process.cwd(),
-    outputName: 'junit.xml',
+    outputName: () => `junit-${uuid()}.xml`,
     classNameTemplate: '{classname} {title}',
     suiteNameTemplate: '{title}',
     titleTemplate: '{classname} {title}',
