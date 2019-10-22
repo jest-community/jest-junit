@@ -59,7 +59,8 @@ Reporter options should also be strings exception for suiteNameTemplate, classNa
 |--|--|--|--|--|
 | `JEST_SUITE_NAME` | `suiteName` | `name` attribute of `<testsuites>` | `"jest tests"` | N/A
 | `JEST_JUNIT_OUTPUT_DIR` | `outputDirectory` | Directory to save the output. | `process.cwd()` | N/A
-| `JEST_JUNIT_OUTPUT_NAME` | `outputName` | File name for the output. | `"junit-${uuid}.xml"` | N/A
+| `JEST_JUNIT_OUTPUT_NAME` | `outputName` | File name for the output. | `"junit.xml"` | N/A
+| `JEST_JUNIT_UNIQUE_OUTPUT_NAME` | `uniqueOutputName` | Create unique file name for the output `junit-${uuid}.xml`, overrides `outputName` | `false` | N/A
 | `JEST_JUNIT_SUITE_NAME` | `suiteNameTemplate` | Template string for `name` attribute of the `<testsuite>`. | `"{title}"` | `{title}`, `{filepath}`, `{filename}`, `{displayName}`
 | `JEST_JUNIT_CLASSNAME` | `classNameTemplate` | Template string for the `classname` attribute of `<testcase>`. | `"{classname} {title}"` | `{classname}`, `{title}`, `{filepath}`, `{filename}`, `{displayName}`
 | `JEST_JUNIT_TITLE` | `titleTemplate` | Template string for the `name` attribute of `<testcase>`. | `"{classname} {title}"` | `{classname}`, `{title}`, `{filepath}`, `{filename}`, `{displayName}`
@@ -84,6 +85,7 @@ Or you can also define a `jest-junit` key in your `package.json`.  All are **str
     "suiteName": "jest tests",
     "outputDirectory": ".",
     "outputName": "junit.xml",
+    "uniqueOutputName": "false"
     "classNameTemplate": "{classname}-{title}",
     "titleTemplate": "{classname}-{title}",
     "ancestorSeparator": " › ",
