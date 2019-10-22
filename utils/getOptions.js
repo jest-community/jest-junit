@@ -2,6 +2,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const uuid = require('uuid/v1');
 
 const constants = require('../constants/index');
 
@@ -50,11 +51,16 @@ function replaceRootDirInOutput(rootDir, output) {
   return rootDir !== null ? replaceRootDirInPath(rootDir, output) : output;
 }
 
+function getUniqueOutputName() {
+  return `junit-${uuid()}.xml`
+}
+
 module.exports = {
   options: (reporterOptions = {}) => {
     return Object.assign({}, constants.DEFAULT_OPTIONS, reporterOptions, getAppOptions(process.cwd()), getEnvOptions());
   },
   getAppOptions: getAppOptions,
   getEnvOptions: getEnvOptions,
-  replaceRootDirInOutput: replaceRootDirInOutput
+  replaceRootDirInOutput: replaceRootDirInOutput,
+  getUniqueOutputName: getUniqueOutputName
 };

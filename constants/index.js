@@ -1,12 +1,11 @@
 'use strict';
 
-const path = require('path');
-
 module.exports = {
   ENVIRONMENT_CONFIG_MAP: {
     JEST_SUITE_NAME: 'suiteName',
     JEST_JUNIT_OUTPUT_DIR: 'outputDirectory',
     JEST_JUNIT_OUTPUT_NAME: 'outputName',
+    JEST_JUNIT_UNIQUE_OUTPUT_NAME: 'uniqueOutputName',
     JEST_JUNIT_CLASSNAME: 'classNameTemplate',
     JEST_JUNIT_SUITE_NAME: 'suiteNameTemplate',
     JEST_JUNIT_TITLE: 'titleTemplate',
@@ -19,6 +18,7 @@ module.exports = {
     suiteName: 'jest tests',
     outputDirectory: process.cwd(),
     outputName: 'junit.xml',
+    uniqueOutputName: 'false',
     classNameTemplate: '{classname} {title}',
     suiteNameTemplate: '{title}',
     titleTemplate: '{classname} {title}',

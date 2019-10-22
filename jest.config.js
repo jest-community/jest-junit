@@ -12,5 +12,5 @@ module.exports = {
     "<rootDir>/integration-tests/testResultsProcessor/",
     "<rootDir>/integration-tests/reporter/"
   ],
-  setupTestFrameworkScriptFile: "<rootDir>/__tests__/lib/setupTests.js"
+  setupFilesAfterEnv: ["<rootDir>/__tests__/lib/setupTests.js"]
 };
