@@ -189,4 +189,24 @@ describe('buildJsonResults', () => {
 
     expect(jsonResults.testsuites[1].testsuite[1]['system-out']).not.toBeDefined();
   });
+  
+  it('should show short console output if includeShortConsoleOutput is true', () => {
+    const reportWithShortConsoleOutput = require('../__mocks__/test-with-console-output.json');
+    const jsonResults = buildJsonResults(reportWithShortConsoleOutput, '/',
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        includeShortConsoleOutput: "true"
+      }));
+
+    expect(jsonResults.testsuites[1].testsuite[1]['system-out']._cdata).toEqual("[\n  \"I am bar\",\n  \"Some output here from a lib\"\n]");
+  });
+
+  it('should NOT show short console output if includeShortConsoleOutput is not set or false', () => {
+    const reportWithShortConsoleOutput = require('../__mocks__/test-with-console-output.json');
+    const jsonResults = buildJsonResults(reportWithShortConsoleOutput, '/',
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        includeShortConsoleOutput: "false"
+      }));
+      
+    expect(jsonResults.testsuites[1].testsuite[1]['system-out']).not.toBeDefined();
+  });
 });
