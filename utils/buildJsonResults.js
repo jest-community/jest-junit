@@ -114,6 +114,20 @@ module.exports = function (report, appDirectory, options) {
 
       testSuite.testsuite.push(testSuiteConsole);
     }
+    
+    // Write short stdout console output if available
+    if (options.includeShortConsoleOutput === 'true' && suite.console && suite.console.length) {
+      // Extract and then Stringify the console message value
+      // Easier this way because formatting in a readable way is tough with XML
+      // And this can be parsed more easily
+      let testSuiteConsole = {
+        'system-out': {
+          _cdata: JSON.stringify(suite.console.map(item => item.message), null, 2)
+        }
+      };
+
+      testSuite.testsuite.push(testSuiteConsole);
+    }
 
     // Iterate through test cases
     suite.testResults.forEach((tc) => {
