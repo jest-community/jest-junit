@@ -20,7 +20,7 @@
     "test:ci": "jest --ci"
   },
   "dependencies": {
-    "jest-validate": "^24.9.0",
+    "jest-validate": "^25.1.0",
     "mkdirp": "^0.5.1",
     "strip-ansi": "^5.2.0",
     "uuid": "^3.3.3",
