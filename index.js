@@ -1,7 +1,7 @@
 'use strict';
 
 const xml = require('xml');
-const mkdirp = require('mkdirp');
+const makeDirRecursive = require('./utils/makeDir').makeDirRecursive;
 const fs = require('fs');
 const path = require('path');
 const jestValidate = require('jest-validate');
@@ -31,7 +31,7 @@ const processor = (report, reporterOptions = {}, jestRootDir = null) => {
   const finalOutput = getOptions.replaceRootDirInOutput(jestRootDir, output);
 
   // Ensure output path exists
-  mkdirp.sync(path.dirname(finalOutput));
+  makeDirRecursive(path.dirname(finalOutput));
 
   // Write data to file
   fs.writeFileSync(finalOutput, xml(jsonResults, { indent: '  ', declaration: true }));

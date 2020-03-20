@@ -21,13 +21,13 @@
   },
   "dependencies": {
     "jest-validate": "^24.9.0",
-    "mkdirp": "^0.5.1",
     "strip-ansi": "^5.2.0",
     "uuid": "^3.3.3",
     "xml": "^1.0.1"
   },
   "devDependencies": {
     "jest": "^24.9.0",
-    "libxmljs": "^0.19.7"
+    "libxmljs": "^0.19.7",
+    "rimraf": "^3.0.2"
   }
 }

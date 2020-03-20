@@ -1,11 +1,11 @@
 'use strict';
 
-jest.mock('mkdirp', () => {
+jest.mock('../utils/makeDir', () => {
   return Object.assign(
     {},
-    require.requireActual('mkdirp'),
+    require.requireActual('../utils/makeDir'),
     {
-      sync: jest.fn()
+      makeDirRecursive: jest.fn()
     }
   )
 });
