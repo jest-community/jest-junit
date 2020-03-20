@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const rimraf = require('rimraf');
 
-const makeDirRecursive = require('../utils/makeDir').makeDirRecursive;
+const { makeDirRecursive } = require('../utils/makeDir');
 
 describe('makeDir', () => {
   it ('should create non-nested directory', () => {
