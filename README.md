@@ -3,6 +3,8 @@
 # jest-junit
 A Jest reporter that creates compatible junit xml files
 
+Note: as of jest-junit 11.0.0 NodeJS >= 10.12.0 is required.
+
 ## Installation
 ```shell
 yarn add --dev jest-junit
@@ -213,6 +215,31 @@ renders
 <testsuites name="jest tests">
   <testsuite name="addition" tests="1" errors="0" failures="0" skipped="0" timestamp="2017-07-13T09:42:28" time="0.161">
     <testcase classname="ADDITION POSITIVE NUMBERS" name="addition positive numbers should add up" time="0.004">
+    </testcase>
+  </testsuite>
+</testsuites>
+```
+
+#### Adding custom testsuite properties
+New feature as of jest-junit 11.0.0!
+
+Create a file in your project root directory named junitProperties.js:
+```js
+module.exports = () => {
+    return {
+       key: "value"
+    }
+});
+```
+
+Will render
+```xml
+<testsuites name="jest tests">
+  <testsuite name="addition" tests="1" errors="0" failures="0" skipped="0" timestamp="2017-07-13T09:42:28" time="0.161">
+    <properties>
+        <property name="key" value="value" />
+    </properties>
+    <testcase classname="addition positive numbers should add up" name="addition positive numbers should add up" time="0.004">
     </testcase>
   </testsuite>
 </testsuites>

@@ -3,7 +3,7 @@
 jest.mock('mkdirp', () => {
   return Object.assign(
     {},
-    require.requireActual('mkdirp'),
+    jest.requireActual('mkdirp'),
     {
       sync: jest.fn()
     }
@@ -13,7 +13,7 @@ jest.mock('mkdirp', () => {
 jest.mock('fs', () => {
   return Object.assign(
     {},
-    require.requireActual('fs'),
+    jest.requireActual('fs'),
     {
       writeFileSync: jest.fn()
     }

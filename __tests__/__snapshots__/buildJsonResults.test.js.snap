@@ -25,6 +25,18 @@ Object {
           },
         },
         Object {
+          "properties": Array [
+            Object {
+              "property": Object {
+                "_attr": Object {
+                  "name": "best-tester",
+                  "value": "Jason Palmer",
+                },
+              },
+            },
+          ],
+        },
+        Object {
           "testcase": Array [
             Object {
               "_attr": Object {
@@ -49,6 +61,18 @@ Object {
             "time": 0.073,
             "timestamp": "2018-02-10T14:52:31",
           },
+        },
+        Object {
+          "properties": Array [
+            Object {
+              "property": Object {
+                "_attr": Object {
+                  "name": "best-tester",
+                  "value": "Jason Palmer",
+                },
+              },
+            },
+          ],
         },
         Object {
           "testcase": Array [

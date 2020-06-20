@@ -6,7 +6,7 @@ const getOptions = require('../utils/getOptions.js');
 jest.mock('fs', () => {
   return Object.assign(
     {},
-    require.requireActual('fs'),
+    jest.requireActual('fs'),
     {
       existsSync: jest.fn().mockReturnValue(true)
     }

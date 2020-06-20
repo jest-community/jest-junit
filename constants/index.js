@@ -14,6 +14,7 @@ module.exports = {
     JEST_JUNIT_INCLUDE_CONSOLE_OUTPUT: 'includeConsoleOutput',
     JEST_JUNIT_INCLUDE_SHORT_CONSOLE_OUTPUT: 'includeShortConsoleOutput',
     JEST_USE_PATH_FOR_SUITE_NAME: 'usePathForSuiteName',
+    JEST_JUNIT_TEST_SUITE_PROPERTIES_JSON_FILE: 'testSuitePropertiesFile'
   },
   DEFAULT_OPTIONS: {
     suiteName: 'jest tests',
@@ -27,7 +28,8 @@ module.exports = {
     usePathForSuiteName: 'false',
     addFileAttribute: 'false',
     includeConsoleOutput: 'false',
-    includeShortConsoleOutput: 'false'
+    includeShortConsoleOutput: 'false',
+    testSuitePropertiesFile: 'junitProperties.js'
   },
   CLASSNAME_VAR: 'classname',
   FILENAME_VAR: 'filename',
