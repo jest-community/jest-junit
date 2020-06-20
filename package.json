@@ -1,13 +1,13 @@
 {
   "name": "jest-junit",
-  "version": "10.0.0",
+  "version": "11.0.0",
   "description": "A jest reporter that generates junit xml files",
   "main": "index.js",
   "repository": "https://github.com/jest-community/jest-junit",
   "author": "Jason Palmer",
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=10.12.0"
   },
   "files": [
     "index.js",
@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "jest-validate": "^24.9.0",
-    "mkdirp": "^0.5.1",
+    "mkdirp": "^1.0.4",
     "strip-ansi": "^5.2.0",
     "uuid": "^3.3.3",
     "xml": "^1.0.1"

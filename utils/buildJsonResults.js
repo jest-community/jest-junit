@@ -3,7 +3,7 @@
 const stripAnsi = require('strip-ansi');
 const constants = require('../constants/index');
 const path = require('path');
-
+const fs = require('fs');
 
 // Wrap the varName with template tags
 const toTemplateTag = function (varName) {
@@ -35,6 +35,10 @@ const executionTime = function (startTime, endTime) {
 }
 
 module.exports = function (report, appDirectory, options) {
+  // Check if there is a junitProperties.js (or whatever they called it)
+  const junitSuitePropertiesFilePath = path.join(process.cwd(), options.testSuitePropertiesFile);
+  let ignoreSuitePropertiesCheck = !fs.existsSync(junitSuitePropertiesFilePath);
+
   // Generate a single XML file for all jest tests
   let jsonResults = {
     'testsuites': [{
@@ -114,7 +118,7 @@ module.exports = function (report, appDirectory, options) {
 
       testSuite.testsuite.push(testSuiteConsole);
     }
-    
+
     // Write short stdout console output if available
     if (options.includeShortConsoleOutput === 'true' && suite.console && suite.console.length) {
       // Extract and then Stringify the console message value
@@ -127,6 +131,30 @@ module.exports = function (report, appDirectory, options) {
       };
 
       testSuite.testsuite.push(testSuiteConsole);
+    }
+
+    if (!ignoreSuitePropertiesCheck) {
+      let junitSuiteProperties = require(junitSuitePropertiesFilePath)(suite);
+
+      // Add any test suite properties
+      let testSuitePropertyMain = {
+        'properties': []
+      };
+
+      Object.keys(junitSuiteProperties).forEach((p) => {
+        let testSuiteProperty = {
+          'property': {
+            _attr: {
+              name: p,
+              value: replaceVars(junitSuiteProperties[p], suiteNameVariables)
+            }
+          }
+        };
+
+        testSuitePropertyMain.properties.push(testSuiteProperty);
+      });
+
+      testSuite.testsuite.push(testSuitePropertyMain);
     }
 
     // Iterate through test cases

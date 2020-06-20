@@ -52,7 +52,8 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         classNameTemplate: "{filename}"
       }));
-    expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.classname).toBe('foo.test.js');
+
+    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('foo.test.js');
   });
 
   it('should support return the function result when classNameTemplate is a function', () => {
@@ -63,7 +64,7 @@ describe('buildJsonResults', () => {
           return 'function called with vars: ' + Object.keys(vars).join(', ');
         }
       }));
-    expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.classname)
+    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname)
       .toBe('function called with vars: filepath, filename, classname, title, displayName');
   });
 
@@ -73,7 +74,7 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         titleTemplate: "{filepath}"
       }));
-    expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.name).toBe('path/to/test/__tests__/foo.test.js');
+    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.name).toBe('path/to/test/__tests__/foo.test.js');
   });
 
   it('should return the proper filepath when suiteNameTemplate is "{filepath}" and usePathForSuiteName is "false"', () => {
@@ -116,7 +117,7 @@ describe('buildJsonResults', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     const jsonResults = buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS));
-    expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.classname).toBe('foo baz should bar');
+    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('foo baz should bar');
   });
 
   it('should return the proper classname when ancestorSeparator is customized', () => {
@@ -125,14 +126,14 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         ancestorSeparator: " › "
       }));
-    expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.classname).toBe('foo › baz should bar');
+    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('foo › baz should bar');
   });
 
   it('should parse failure messages for failing tests', () => {
     const failingTestsReport = require('../__mocks__/failing-tests.json');
     const jsonResults = buildJsonResults(failingTestsReport, '/path/to/test', constants.DEFAULT_OPTIONS);
 
-    const failureMsg = jsonResults.testsuites[1].testsuite[1].testcase[1].failure;
+    const failureMsg = jsonResults.testsuites[1].testsuite[2].testcase[1].failure;
 
     // Make sure no escape codes are there that exist in the mock
     expect(failureMsg.includes('\u001b')).toBe(false);
@@ -158,7 +159,7 @@ describe('buildJsonResults', () => {
   it('should not return the file name by default', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     const jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
-    expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.file).toBe(undefined);
+    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.file).toBe(undefined);
   });
 
   it('should return the file name when addFileAttribute is "true"', () => {
@@ -167,7 +168,7 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         addFileAttribute: "true"
       }));
-    expect(jsonResults.testsuites[1].testsuite[1].testcase[0]._attr.file).toBe('path/to/test/__tests__/foo.test.js');
+    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.file).toBe('path/to/test/__tests__/foo.test.js');
   });
 
   it('should show output of console if includeConsoleOutput is true', () => {
@@ -189,7 +190,7 @@ describe('buildJsonResults', () => {
 
     expect(jsonResults.testsuites[1].testsuite[1]['system-out']).not.toBeDefined();
   });
-  
+
   it('should show short console output if includeShortConsoleOutput is true', () => {
     const reportWithShortConsoleOutput = require('../__mocks__/test-with-console-output.json');
     const jsonResults = buildJsonResults(reportWithShortConsoleOutput, '/',
@@ -206,7 +207,7 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         includeShortConsoleOutput: "false"
       }));
-      
-    expect(jsonResults.testsuites[1].testsuite[1]['system-out']).not.toBeDefined();
+
+    expect(jsonResults.testsuites[1].testsuite[2]['system-out']).not.toBeDefined();
   });
 });
