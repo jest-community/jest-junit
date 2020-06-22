@@ -85,7 +85,7 @@ Or you can also define a `jest-junit` key in your `package.json`.  All are **str
     "suiteName": "jest tests",
     "outputDirectory": ".",
     "outputName": "junit.xml",
-    "uniqueOutputName": "false"
+    "uniqueOutputName": "false",
     "classNameTemplate": "{classname}-{title}",
     "titleTemplate": "{classname}-{title}",
     "ancestorSeparator": " › ",
