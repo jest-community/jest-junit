@@ -4,7 +4,6 @@ const xml = require('xml');
 const mkdirp = require('mkdirp');
 const fs = require('fs');
 const path = require('path');
-const jestValidate = require('jest-validate');
 
 const buildJsonResults = require('./utils/buildJsonResults');
 const getOptions = require('./utils/getOptions');
@@ -66,7 +65,6 @@ function JestJUnit (globalConfig, options) {
       reporters: ['jest-junit']
     }, null, 2);
 
-    jestValidate.logValidationWarning('testResultsProcessor support is deprecated. Please use jest reporter. See https://github.com/jest-community/jest-junit#usage', newConfig);
     return processor(globalConfig);
   }
 
