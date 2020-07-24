@@ -46,6 +46,36 @@ describe('buildJsonResults', () => {
       .toBe('function called with vars: filepath, filename, title, displayName');
   });
 
+  it('should return the proper classname when classNameTemplate is "{classname}"', () => {
+    const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
+    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+        Object.assign({}, constants.DEFAULT_OPTIONS, {
+          classNameTemplate: "{classname}"
+        }));
+
+    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('foo baz');
+  });
+
+  it('should return the proper title when classNameTemplate is "{title}"', () => {
+    const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
+    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+        Object.assign({}, constants.DEFAULT_OPTIONS, {
+          classNameTemplate: "{title}"
+        }));
+
+    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('should bar');
+  });
+
+  it('should return the proper filepath when classNameTemplate is "{filepath}"', () => {
+    const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
+    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+        Object.assign({}, constants.DEFAULT_OPTIONS, {
+          classNameTemplate: "{filepath}"
+        }));
+
+    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('path/to/test/__tests__/foo.test.js');
+  });
+
   it('should return the proper filename when classNameTemplate is "{filename}"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     const jsonResults = buildJsonResults(noFailingTestsReport, '/',
@@ -54,6 +84,27 @@ describe('buildJsonResults', () => {
       }));
 
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('foo.test.js');
+  });
+
+  it('should return the proper displayName when classNameTemplate is {displayName}', () => {
+    const multiProjectNoFailingTestsReport = require('../__mocks__/multi-project-no-failing-tests.json');
+
+    const jsonResults = buildJsonResults(multiProjectNoFailingTestsReport, '/',
+        Object.assign({}, constants.DEFAULT_OPTIONS, {
+          classNameTemplate: "{displayName}"
+        }));
+
+    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('project1');
+  });
+
+  it('should return the proper suitename when classNameTemplate is "{suitename}"', () => {
+    const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
+    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+        Object.assign({}, constants.DEFAULT_OPTIONS, {
+          classNameTemplate: "{suitename}"
+        }));
+
+    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('foo');
   });
 
   it('should support return the function result when classNameTemplate is a function', () => {
@@ -65,7 +116,7 @@ describe('buildJsonResults', () => {
         }
       }));
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname)
-      .toBe('function called with vars: filepath, filename, classname, title, displayName');
+      .toBe('function called with vars: filepath, filename, suitename, classname, title, displayName');
   });
 
   it('should return the proper filepath when titleTemplate is "{filepath}"', () => {
