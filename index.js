@@ -45,7 +45,7 @@ const processor = (report, reporterOptions = {}, jestRootDir = null) => {
   Represents the status of the test runs
 
   Expected input and workflow documentation here:
-  https://facebook.github.io/jest/docs/configuration.html#testresultsprocessor-string
+  https://jestjs.io/docs/en/configuration#testresultsprocessor-string
 
   Intended output (junit XML) documentation here:
   http://help.catchsoftware.com/display/ET/JUnit+Format

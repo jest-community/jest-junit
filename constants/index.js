@@ -31,6 +31,7 @@ module.exports = {
     includeShortConsoleOutput: 'false',
     testSuitePropertiesFile: 'junitProperties.js'
   },
+  SUITENAME_VAR: 'suitename',
   CLASSNAME_VAR: 'classname',
   FILENAME_VAR: 'filename',
   FILEPATH_VAR: 'filepath',

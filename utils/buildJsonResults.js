@@ -166,6 +166,7 @@ module.exports = function (report, appDirectory, options) {
       let testVariables = {};
       testVariables[constants.FILEPATH_VAR] = filepath;
       testVariables[constants.FILENAME_VAR] = filename;
+      testVariables[constants.SUITENAME_VAR] = suiteTitle;
       testVariables[constants.CLASSNAME_VAR] = classname;
       testVariables[constants.TITLE_VAR] = testTitle;
       testVariables[constants.DISPLAY_NAME_VAR] = displayName;
