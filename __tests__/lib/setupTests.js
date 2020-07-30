@@ -7,7 +7,7 @@ const schemaPath = path.join(__dirname, 'junit.xsd');
 const schemaStr = fs.readFileSync(schemaPath);
 const schema = libxmljs.parseXmlString(schemaStr);
 
-expect.extend({
+global.expect.extend({
   toConvertToXmlAndPassXsd(jsonResults) {
     const xmlStr = xml(jsonResults, { indent: '  '});
 

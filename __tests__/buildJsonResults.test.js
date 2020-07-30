@@ -3,12 +3,53 @@
 const buildJsonResults = require('../utils/buildJsonResults');
 const constants = require('../constants/index');
 
+// Extend expect so we can test generated xml will be valid to the jenkins
+// junit spec
+const xml = require('xml');
+const path = require('path');
+const fs = require('fs');
+const libxmljs = require('libxmljs');
+
+const schemaPath = path.join(process.cwd(), '__tests__', 'lib', 'junit.xsd');
+const schemaStr = fs.readFileSync(schemaPath);
+const schema = libxmljs.parseXmlString(schemaStr);
+
+global.expect.extend({
+  toConvertToXmlAndPassXsd(jsonResults) {
+    const xmlStr = xml(jsonResults, { indent: '  '});
+
+    const libxmljsObj = libxmljs.parseXmlString(xmlStr);
+    const isValid = libxmljsObj.validate(schema);
+
+    if (!isValid) {
+      return {
+        message: () => {
+          return `
+            ${libxmljsObj.validationErrors.join('\n')}
+            ======= XML OUTPUT =======
+            ${xmlStr}
+          `;
+        },
+        pass: false
+      }
+    } else {
+      return {
+        message: () => `expected not to validate against junit xsd`,
+        pass: true
+      }
+    }
+  }
+});
+
 describe('buildJsonResults', () => {
   it('should contain number of tests in testSuite', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     const jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
 
     expect(jsonResults.testsuites[1].testsuite[0]._attr.tests).toBe(1);
+
+    // Test that generated xml from json results passes jenkins junit xsd
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should contain number of tests in testSuites', () => {
@@ -16,6 +57,7 @@ describe('buildJsonResults', () => {
     const jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
 
     expect(jsonResults.testsuites[0]._attr.tests).toBe(1);
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should return the proper name from ancestorTitles when usePathForSuiteName is "false"', () => {
@@ -23,6 +65,7 @@ describe('buildJsonResults', () => {
     const jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
 
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('foo');
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should return the proper filename when suiteNameTemplate is "{filename}"', () => {
@@ -32,6 +75,7 @@ describe('buildJsonResults', () => {
         suiteNameTemplate: "{filename}"
       }));
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('foo.test.js');
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should support suiteNameTemplate as function', () => {
@@ -44,6 +88,7 @@ describe('buildJsonResults', () => {
       }));
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name)
       .toBe('function called with vars: filepath, filename, title, displayName');
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should return the proper classname when classNameTemplate is "{classname}"', () => {
@@ -54,6 +99,7 @@ describe('buildJsonResults', () => {
         }));
 
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('foo baz');
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should return the proper title when classNameTemplate is "{title}"', () => {
@@ -64,6 +110,7 @@ describe('buildJsonResults', () => {
         }));
 
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('should bar');
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should return the proper filepath when classNameTemplate is "{filepath}"', () => {
@@ -74,6 +121,7 @@ describe('buildJsonResults', () => {
         }));
 
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('path/to/test/__tests__/foo.test.js');
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should return the proper filename when classNameTemplate is "{filename}"', () => {
@@ -84,6 +132,7 @@ describe('buildJsonResults', () => {
       }));
 
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('foo.test.js');
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should return the proper displayName when classNameTemplate is {displayName}', () => {
@@ -95,6 +144,7 @@ describe('buildJsonResults', () => {
         }));
 
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('project1');
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should return the proper suitename when classNameTemplate is "{suitename}"', () => {
@@ -105,6 +155,7 @@ describe('buildJsonResults', () => {
         }));
 
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('foo');
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should support return the function result when classNameTemplate is a function', () => {
@@ -117,6 +168,7 @@ describe('buildJsonResults', () => {
       }));
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname)
       .toBe('function called with vars: filepath, filename, suitename, classname, title, displayName');
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should return the proper filepath when titleTemplate is "{filepath}"', () => {
@@ -126,6 +178,7 @@ describe('buildJsonResults', () => {
         titleTemplate: "{filepath}"
       }));
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.name).toBe('path/to/test/__tests__/foo.test.js');
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should return the proper filepath when suiteNameTemplate is "{filepath}" and usePathForSuiteName is "false"', () => {
@@ -135,6 +188,7 @@ describe('buildJsonResults', () => {
         suiteNameTemplate: "{filepath}"
       }));
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('path/to/test/__tests__/foo.test.js');
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should return the proper name from ancestorTitles when suiteNameTemplate is set to "{title}" and usePathForSuiteName is "true"', () => {
@@ -144,6 +198,7 @@ describe('buildJsonResults', () => {
         usePathForSuiteName: "true"
       }));
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('path/to/test/__tests__/foo.test.js');
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should return the proper name from testFilePath when usePathForSuiteName is "true"; no appDirectory set', () => {
@@ -153,6 +208,7 @@ describe('buildJsonResults', () => {
         usePathForSuiteName: "true"
       }));
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('path/to/test/__tests__/foo.test.js');
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should return the proper name from testFilePath when usePathForSuiteName is "true"; with appDirectory set', () => {
@@ -162,6 +218,7 @@ describe('buildJsonResults', () => {
         usePathForSuiteName: "true"
       }));
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('__tests__/foo.test.js');
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should return the proper classname when ancestorSeparator is default', () => {
@@ -169,6 +226,7 @@ describe('buildJsonResults', () => {
     const jsonResults = buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS));
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('foo baz should bar');
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should return the proper classname when ancestorSeparator is customized', () => {
@@ -178,6 +236,7 @@ describe('buildJsonResults', () => {
         ancestorSeparator: " › "
       }));
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('foo › baz should bar');
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should parse failure messages for failing tests', () => {
@@ -188,7 +247,7 @@ describe('buildJsonResults', () => {
 
     // Make sure no escape codes are there that exist in the mock
     expect(failureMsg.includes('\u001b')).toBe(false);
-
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should support displayName template var for jest multi-project', () => {
@@ -205,12 +264,14 @@ describe('buildJsonResults', () => {
       }));
 
     expect(jsonResults).toMatchSnapshot();
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should not return the file name by default', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     const jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.file).toBe(undefined);
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should return the file name when addFileAttribute is "true"', () => {
@@ -220,6 +281,9 @@ describe('buildJsonResults', () => {
         addFileAttribute: "true"
       }));
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.file).toBe('path/to/test/__tests__/foo.test.js');
+    // Generates unsupported junit according to jenkins xsd
+    // But we keep it for those that use CircleCI
+    //expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should show output of console if includeConsoleOutput is true', () => {
@@ -229,7 +293,8 @@ describe('buildJsonResults', () => {
         includeConsoleOutput: "true"
       }));
 
-    expect(jsonResults.testsuites[1].testsuite[1]['system-out']).toBeDefined();
+    expect(jsonResults.testsuites[1].testsuite[2]['testcase'][1]['system-out']).toBeDefined();
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should NOT show output of console if includeConsoleOutput is not set or false', () => {
@@ -239,7 +304,8 @@ describe('buildJsonResults', () => {
         includeConsoleOutput: "false"
       }));
 
-    expect(jsonResults.testsuites[1].testsuite[1]['system-out']).not.toBeDefined();
+    expect(jsonResults.testsuites[1].testsuite[2]['testcase'][1]).not.toBeDefined();
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should show short console output if includeShortConsoleOutput is true', () => {
@@ -249,7 +315,8 @@ describe('buildJsonResults', () => {
         includeShortConsoleOutput: "true"
       }));
 
-    expect(jsonResults.testsuites[1].testsuite[1]['system-out']._cdata).toEqual("[\n  \"I am bar\",\n  \"Some output here from a lib\"\n]");
+    expect(jsonResults.testsuites[1].testsuite[2]['testcase'][1]['system-out']._cdata).toEqual("[\n  \"I am bar\",\n  \"Some output here from a lib\"\n]");
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 
   it('should NOT show short console output if includeShortConsoleOutput is not set or false', () => {
@@ -260,5 +327,6 @@ describe('buildJsonResults', () => {
       }));
 
     expect(jsonResults.testsuites[1].testsuite[2]['system-out']).not.toBeDefined();
+    expect(jsonResults).toConvertToXmlAndPassXsd();
   });
 });

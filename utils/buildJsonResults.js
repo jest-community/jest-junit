@@ -105,34 +105,6 @@ module.exports = function (report, appDirectory, options) {
     jsonResults.testsuites[0]._attr.failures += suite.numFailingTests;
     jsonResults.testsuites[0]._attr.tests += suiteNumTests;
 
-    // Write stdout console output if available
-    if (options.includeConsoleOutput === 'true' && suite.console && suite.console.length) {
-      // Stringify the entire console object
-      // Easier this way because formatting in a readable way is tough with XML
-      // And this can be parsed more easily
-      let testSuiteConsole = {
-        'system-out': {
-          _cdata: JSON.stringify(suite.console, null, 2)
-        }
-      };
-
-      testSuite.testsuite.push(testSuiteConsole);
-    }
-
-    // Write short stdout console output if available
-    if (options.includeShortConsoleOutput === 'true' && suite.console && suite.console.length) {
-      // Extract and then Stringify the console message value
-      // Easier this way because formatting in a readable way is tough with XML
-      // And this can be parsed more easily
-      let testSuiteConsole = {
-        'system-out': {
-          _cdata: JSON.stringify(suite.console.map(item => item.message), null, 2)
-        }
-      };
-
-      testSuite.testsuite.push(testSuiteConsole);
-    }
-
     if (!ignoreSuitePropertiesCheck) {
       let junitSuiteProperties = require(junitSuitePropertiesFilePath)(suite);
 
@@ -201,6 +173,34 @@ module.exports = function (report, appDirectory, options) {
         testCase.testcase.push({
           skipped: {}
         });
+      }
+
+      // Write stdout console output if available
+      if (options.includeConsoleOutput === 'true' && suite.console && suite.console.length) {
+        // Stringify the entire console object
+        // Easier this way because formatting in a readable way is tough with XML
+        // And this can be parsed more easily
+        let testSuiteConsole = {
+          'system-out': {
+            _cdata: JSON.stringify(suite.console, null, 2)
+          }
+        };
+
+        testCase.testcase.push(testSuiteConsole);
+      }
+
+      // Write short stdout console output if available
+      if (options.includeShortConsoleOutput === 'true' && suite.console && suite.console.length) {
+        // Extract and then Stringify the console message value
+        // Easier this way because formatting in a readable way is tough with XML
+        // And this can be parsed more easily
+        let testSuiteConsole = {
+          'system-out': {
+            _cdata: JSON.stringify(suite.console.map(item => item.message), null, 2)
+          }
+        };
+
+        testCase.testcase.push(testSuiteConsole);
       }
 
       testSuite.testsuite.push(testCase);
