@@ -9,6 +9,6 @@ env:
   - JEST_VERSION=^23.0.0
   - JEST_VERSION=^24.0.0
   - JEST_VERSION=^25.0.0
-  - JEST_VERSION=^26.0.0
+  - JEST_VERSION=^26.2.1
 script:
   - npm run test:ci
