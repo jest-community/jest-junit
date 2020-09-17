@@ -9,6 +9,7 @@ Object {
         "name": "jest tests",
         "tests": 2,
         "time": 1.234,
+        "todos": 0,
       },
     },
     Object {
@@ -22,6 +23,7 @@ Object {
             "tests": 1,
             "time": 0.163,
             "timestamp": "2018-02-10T14:52:31",
+            "todos": 0,
           },
         },
         Object {
@@ -60,6 +62,7 @@ Object {
             "tests": 1,
             "time": 0.073,
             "timestamp": "2018-02-10T14:52:31",
+            "todos": 0,
           },
         },
         Object {

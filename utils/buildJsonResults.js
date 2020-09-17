@@ -46,6 +46,7 @@ module.exports = function (report, appDirectory, options) {
         'name': options.suiteName,
         'tests': 0,
         'failures': 0,
+        'todos': 0,
         // Overall execution time:
         // Since tests are typically executed in parallel this time can be significantly smaller
         // than the sum of the individual test suites
@@ -84,7 +85,7 @@ module.exports = function (report, appDirectory, options) {
     suiteNameVariables[constants.DISPLAY_NAME_VAR] = displayName;
 
     // Add <testsuite /> properties
-    const suiteNumTests = suite.numFailingTests + suite.numPassingTests + suite.numPendingTests;
+    const suiteNumTests = suite.numFailingTests + suite.numPassingTests + suite.numPendingTests + suite.numTodoTests;
     const suiteExecutionTime = executionTime(suite.perfStats.start, suite.perfStats.end);
 
     let testSuite = {
@@ -94,6 +95,7 @@ module.exports = function (report, appDirectory, options) {
           errors: 0, // not supported
           failures: suite.numFailingTests,
           skipped: suite.numPendingTests,
+          todos: suite.numTodoTests,
           timestamp: (new Date(suite.perfStats.start)).toISOString().slice(0, -5),
           time: suiteExecutionTime,
           tests: suiteNumTests
@@ -103,6 +105,7 @@ module.exports = function (report, appDirectory, options) {
 
     // Update top level testsuites properties
     jsonResults.testsuites[0]._attr.failures += suite.numFailingTests;
+    jsonResults.testsuites[0]._attr.todos += suite.numTodoTests;
     jsonResults.testsuites[0]._attr.tests += suiteNumTests;
 
     // Write stdout console output if available
