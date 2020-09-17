@@ -84,7 +84,7 @@ module.exports = function (report, appDirectory, options) {
     suiteNameVariables[constants.DISPLAY_NAME_VAR] = displayName;
 
     // Add <testsuite /> properties
-    const suiteNumTests = suite.numFailingTests + suite.numPassingTests + suite.numPendingTests;
+    const suiteNumTests = suite.numFailingTests + suite.numPassingTests + suite.numPendingTests + suite.numTodoTests;
     const suiteExecutionTime = executionTime(suite.perfStats.start, suite.perfStats.end);
 
     let testSuite = {
