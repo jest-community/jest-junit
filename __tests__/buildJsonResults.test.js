@@ -196,11 +196,10 @@ describe('buildJsonResults', () => {
     const jsonResults = buildJsonResults(todoTestsReport, '/', constants.DEFAULT_OPTIONS);
 
     expect(jsonResults.testsuites[0]._attr.tests).toBe(2);
-    expect(jsonResults.testsuites[0]._attr.todos).toBe(1);
     expect(jsonResults.testsuites[1].testsuite[0]._attr.tests).toBe(1);
-    expect(jsonResults.testsuites[1].testsuite[0]._attr.todos).toBe(0);
+    expect(jsonResults.testsuites[1].testsuite[0]._attr.skipped).toBe(0);
     expect(jsonResults.testsuites[2].testsuite[0]._attr.tests).toBe(1);
-    expect(jsonResults.testsuites[2].testsuite[0]._attr.todos).toBe(1);
+    expect(jsonResults.testsuites[2].testsuite[0]._attr.skipped).toBe(1);
   });
 
   it('should support displayName template var for jest multi-project', () => {
