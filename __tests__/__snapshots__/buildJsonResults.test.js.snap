@@ -41,7 +41,7 @@ Object {
             Object {
               "_attr": Object {
                 "classname": "a thing should foo",
-                "name": "project1-foo",
+                "name": "project1-bar",
                 "time": 0.003,
               },
             },
@@ -79,7 +79,7 @@ Object {
             Object {
               "_attr": Object {
                 "classname": "another thing should foo",
-                "name": "project2-foo",
+                "name": "project2-bar",
                 "time": 0.001,
               },
             },

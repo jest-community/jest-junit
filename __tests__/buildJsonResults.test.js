@@ -216,7 +216,7 @@ describe('buildJsonResults', () => {
     jsonResults = buildJsonResults(multiProjectNoFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         suiteNameTemplate: "{displayName}-foo",
-        titleTemplate: "{displayName}-foo"
+        titleTemplate: "{displayName}-bar"
       }));
 
     expect(jsonResults).toMatchSnapshot();

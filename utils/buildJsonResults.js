@@ -66,9 +66,11 @@ module.exports = function (report, appDirectory, options) {
   // Iterate through outer testResults (test suites)
   report.testResults.forEach((suite) => {
     // Skip empty test suites
-    if (suite.testResults.length <= 0) {
+    if (suite.testResults.length === 0) {
       return;
     }
+
+    const suiteOptions = Object.assign({}, options);
 
     // Build variables for suite name
     const filepath = path.relative(appDirectory, suite.testFilePath);
@@ -90,7 +92,7 @@ module.exports = function (report, appDirectory, options) {
     let testSuite = {
       'testsuite': [{
         _attr: {
-          name: replaceVars(options.suiteNameTemplate, suiteNameVariables),
+          name: replaceVars(suiteOptions.suiteNameTemplate, suiteNameVariables),
           errors: 0, // not supported
           failures: suite.numFailingTests,
           skipped: suite.numPendingTests,
@@ -131,7 +133,7 @@ module.exports = function (report, appDirectory, options) {
 
     // Iterate through test cases
     suite.testResults.forEach((tc) => {
-      const classname = tc.ancestorTitles.join(options.ancestorSeparator);
+      const classname = tc.ancestorTitles.join(suiteOptions.ancestorSeparator);
       const testTitle = tc.title;
 
       // Build replacement map
@@ -146,14 +148,14 @@ module.exports = function (report, appDirectory, options) {
       let testCase = {
         'testcase': [{
           _attr: {
-            classname: replaceVars(options.classNameTemplate, testVariables),
-            name: replaceVars(options.titleTemplate, testVariables),
+            classname: replaceVars(suiteOptions.classNameTemplate, testVariables),
+            name: replaceVars(suiteOptions.titleTemplate, testVariables),
             time: tc.duration / 1000
           }
         }]
       };
 
-      if (options.addFileAttribute === 'true') {
+      if (suiteOptions.addFileAttribute === 'true') {
         testCase.testcase[0]._attr.file = filepath;
       }
 
@@ -179,7 +181,7 @@ module.exports = function (report, appDirectory, options) {
     });
 
     // Write stdout console output if available
-    if (options.includeConsoleOutput === 'true' && suite.console && suite.console.length) {
+    if (suiteOptions.includeConsoleOutput === 'true' && suite.console && suite.console.length) {
       // Stringify the entire console object
       // Easier this way because formatting in a readable way is tough with XML
       // And this can be parsed more easily
@@ -193,7 +195,7 @@ module.exports = function (report, appDirectory, options) {
     }
 
     // Write short stdout console output if available
-    if (options.includeShortConsoleOutput === 'true' && suite.console && suite.console.length) {
+    if (suiteOptions.includeShortConsoleOutput === 'true' && suite.console && suite.console.length) {
       // Extract and then Stringify the console message value
       // Easier this way because formatting in a readable way is tough with XML
       // And this can be parsed more easily
