@@ -34,6 +34,18 @@ const executionTime = function (startTime, endTime) {
   return (endTime - startTime) / 1000;
 }
 
+const addErrorTestResult = function (suite) {
+  suite.testResults.push({
+    "ancestorTitles": [],
+    "duration": 0,
+    "failureMessages": [
+      suite.testExecError
+    ],
+    "numPassingAsserts": 0,
+    "status": "error"
+  })
+}
+
 module.exports = function (report, appDirectory, options) {
   // Check if there is a junitProperties.js (or whatever they called it)
   const junitSuitePropertiesFilePath = path.join(process.cwd(), options.testSuitePropertiesFile);
@@ -55,6 +67,7 @@ module.exports = function (report, appDirectory, options) {
         'name': options.suiteName,
         'tests': 0,
         'failures': 0,
+        'errors': 0,
         // Overall execution time:
         // Since tests are typically executed in parallel this time can be significantly smaller
         // than the sum of the individual test suites
@@ -65,12 +78,20 @@ module.exports = function (report, appDirectory, options) {
 
   // Iterate through outer testResults (test suites)
   report.testResults.forEach((suite) => {
-    // Skip empty test suites
-    if (suite.testResults.length === 0) {
+    const noResults = suite.testResults.length === 0;
+    if (noResults && options.reportNoResultsAsError === 'false') {
       return;
     }
 
-    const suiteOptions = Object.assign({}, options);
+    const noResultOptions = noResults ? {
+      suiteNameTemplate: toTemplateTag(constants.FILEPATH_VAR),
+      titleTemplate: `Error while trying to run test file ${toTemplateTag(constants.FILEPATH_VAR)}`
+    } : {};
+
+    const suiteOptions = Object.assign({}, options, noResultOptions);
+    if (noResults) {
+      addErrorTestResult(suite);
+    }
 
     // Build variables for suite name
     const filepath = path.relative(appDirectory, suite.testFilePath);
@@ -89,11 +110,12 @@ module.exports = function (report, appDirectory, options) {
     const suiteNumTests = suite.numFailingTests + suite.numPassingTests + suite.numPendingTests;
     const suiteExecutionTime = executionTime(suite.perfStats.start, suite.perfStats.end);
 
+    const suiteErrors = noResults ? 1 : 0;
     let testSuite = {
       'testsuite': [{
         _attr: {
           name: replaceVars(suiteOptions.suiteNameTemplate, suiteNameVariables),
-          errors: 0, // not supported
+          errors: suiteErrors,
           failures: suite.numFailingTests,
           skipped: suite.numPendingTests,
           timestamp: (new Date(suite.perfStats.start)).toISOString().slice(0, -5),
@@ -105,6 +127,7 @@ module.exports = function (report, appDirectory, options) {
 
     // Update top level testsuites properties
     jsonResults.testsuites[0]._attr.failures += suite.numFailingTests;
+    jsonResults.testsuites[0]._attr.errors += suiteErrors;
     jsonResults.testsuites[0]._attr.tests += suiteNumTests;
 
     if (!ignoreSuitePropertiesCheck) {
@@ -161,10 +184,11 @@ module.exports = function (report, appDirectory, options) {
 
       // Write out all failure messages as <failure> tags
       // Nested underneath <testcase> tag
-      if (tc.status === 'failed') {
+      if (tc.status === 'failed'|| tc.status === 'error') {
         tc.failureMessages.forEach((failure) => {
+          const tagName = tc.status === 'failed' ? 'failure': 'error'
           testCase.testcase.push({
-            'failure': stripAnsi(failure)
+            [tagName]: stripAnsi(failure)
           });
         })
       }

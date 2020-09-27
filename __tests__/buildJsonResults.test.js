@@ -134,6 +134,43 @@ describe('buildJsonResults', () => {
       .toBe('function called with vars: filepath, filename, suitename, classname, title, displayName');
   });
 
+  it('should report no results as error', () => {
+    const failingTestsReport = require('../__mocks__/failing-compilation.json');
+
+    const jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
+        Object.assign({}, constants.DEFAULT_OPTIONS, {
+          reportNoResultsAsError: "true"
+        }));
+
+    const totals = jsonResults.testsuites[0]._attr;
+    expect(totals.tests).toEqual(1);
+    expect(totals.errors).toEqual(1);
+    expect(totals.failures).toEqual(0);
+
+    const suiteResult = jsonResults.testsuites[1].testsuite[0]._attr;
+    expect(suiteResult.name).toEqual('../spec/test.spec.ts')
+    expect(suiteResult.errors).toEqual(1);
+    expect(suiteResult.tests).toEqual(0);
+
+    const errorSuite = jsonResults.testsuites[1].testsuite[2];
+    expect(errorSuite.testcase[0]._attr.name).toEqual(`Error while trying to run test file ${suiteResult.name}`);
+    expect(errorSuite.testcase[1].error).toContain("Property 'hello' does not exist");
+
+  });
+
+  it('should honor templates when test has errors', () => {
+    const failingTestsReport = require('../__mocks__/failing-compilation.json');
+
+    const jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
+        Object.assign({}, constants.DEFAULT_OPTIONS, {
+          reportNoResultsAsError: "true",
+          suiteNameTemplate: "{displayName}-foo",
+          titleTemplate: "{title}-bar"
+        }));
+
+    expect(jsonResults.testsuites[2].testsuite[2].testcase[0]._attr.name).toEqual('should foo-bar');
+  });
+
   it('should return the proper filepath when titleTemplate is "{filepath}"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     jsonResults = buildJsonResults(noFailingTestsReport, '/',

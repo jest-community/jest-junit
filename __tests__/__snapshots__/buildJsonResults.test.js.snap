@@ -5,6 +5,7 @@ Object {
   "testsuites": Array [
     Object {
       "_attr": Object {
+        "errors": 0,
         "failures": 0,
         "name": "jest tests",
         "tests": 2,
