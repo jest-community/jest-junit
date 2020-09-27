@@ -39,6 +39,15 @@ module.exports = function (report, appDirectory, options) {
   const junitSuitePropertiesFilePath = path.join(process.cwd(), options.testSuitePropertiesFile);
   let ignoreSuitePropertiesCheck = !fs.existsSync(junitSuitePropertiesFilePath);
 
+  // If the usePathForSuiteName option is true and the
+  // suiteNameTemplate value is set to the default, overrides
+  // the suiteNameTemplate.
+  if (options.usePathForSuiteName === 'true' &&
+      options.suiteNameTemplate === toTemplateTag(constants.TITLE_VAR)) {
+
+    options.suiteNameTemplate = toTemplateTag(constants.FILEPATH_VAR);
+  }
+
   // Generate a single XML file for all jest tests
   let jsonResults = {
     'testsuites': [{
@@ -59,15 +68,6 @@ module.exports = function (report, appDirectory, options) {
     // Skip empty test suites
     if (suite.testResults.length <= 0) {
       return;
-    }
-
-    // If the usePathForSuiteName option is true and the
-    // suiteNameTemplate value is set to the default, overrides
-    // the suiteNameTemplate.
-    if (options.usePathForSuiteName === 'true' &&
-      options.suiteNameTemplate === toTemplateTag(constants.TITLE_VAR)) {
-
-      options.suiteNameTemplate = toTemplateTag(constants.FILEPATH_VAR);
     }
 
     // Build variables for suite name
