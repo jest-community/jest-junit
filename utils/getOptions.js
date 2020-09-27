@@ -21,8 +21,6 @@ function getEnvOptions() {
 }
 
 function getAppOptions(pathToResolve) {
-  const initialPath = pathToResolve;
-
   let traversing = true;
 
   // Find nearest package.json by traversing up directories until /
