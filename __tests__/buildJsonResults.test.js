@@ -158,6 +158,19 @@ describe('buildJsonResults', () => {
 
   });
 
+  it('should report failureMessage if testExecErrorNotSet ', () => {
+    const failingTestsReport = require('../__mocks__/failing-import.json');
+
+    const jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
+        Object.assign({}, constants.DEFAULT_OPTIONS, {
+          reportNoResultsAsError: "true"
+        }));
+
+    const errorSuite = jsonResults.testsuites[1].testsuite[2];
+    expect(errorSuite.testcase[0]._attr.name).toEqual(`Error while trying to run test file ../spec/test.spec.ts`);
+    expect(errorSuite.testcase[1].error).toContain("Cannot find module './mult'");
+  });
+
   it('should honor templates when test has errors', () => {
     const failingTestsReport = require('../__mocks__/failing-compilation.json');
 
