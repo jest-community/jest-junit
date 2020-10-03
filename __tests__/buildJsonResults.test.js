@@ -139,7 +139,7 @@ describe('buildJsonResults', () => {
 
     const jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
-          reportNoResultsAsError: "true"
+          reportTestSuiteErrors: "true"
         }));
 
     const totals = jsonResults.testsuites[0]._attr;
@@ -164,7 +164,7 @@ describe('buildJsonResults', () => {
 
     const jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
-          reportNoResultsAsError: "true"
+          reportTestSuiteErrors: "true"
         }));
 
     const errorSuite = jsonResults.testsuites[1].testsuite[2];
@@ -178,7 +178,7 @@ describe('buildJsonResults', () => {
 
     const jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
-          reportNoResultsAsError: "true",
+          reportTestSuiteErrors: "true",
           suiteNameTemplate: "{displayName}-foo",
           titleTemplate: "{title}-bar"
         }));

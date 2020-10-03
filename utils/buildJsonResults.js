@@ -79,7 +79,7 @@ module.exports = function (report, appDirectory, options) {
   // Iterate through outer testResults (test suites)
   report.testResults.forEach((suite) => {
     const noResults = suite.testResults.length === 0;
-    if (noResults && options.reportNoResultsAsError === 'false') {
+    if (noResults && options.reportTestSuiteErrors === 'false') {
       return;
     }
 

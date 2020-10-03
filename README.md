@@ -67,7 +67,7 @@ Reporter options should also be strings exception for suiteNameTemplate, classNa
 | `JEST_JUNIT_ADD_FILE_ATTRIBUTE` | `addFileAttribute` | Add file attribute to the output. This config is primarily for Circle CI. This setting provides richer details but may break on other CI platforms. Must be a string. | `"false"` | N/A
 | `JEST_JUNIT_INCLUDE_CONSOLE_OUTPUT` | `includeConsoleOutput` | Adds console output to any testSuite that generates stdout during a test run. | `false` | N/A
 | `JEST_JUNIT_INCLUDE_SHORT_CONSOLE_OUTPUT` | `includeShortConsoleOutput` | Adds short console output (only message value) to any testSuite that generates stdout during a test run. | `false` | N/A
-| `JEST_JUNIT_REPORT_NO_RESULTS_AS_ERROR` | `reportNoResultsAsError` | Reports test files that failed to execute altogether due to a syntax or typescript compilation error, as a suite with a single test with `error` result. | `false` | N/A
+| `JEST_JUNIT_REPORT_NO_RESULTS_AS_ERROR` | `reportTestSuiteErrors` | Reports test suites that failed to execute altogether as `error`. _Note:_ since the suite name cannot be determined from files that fail to load, it will default to file path.| `false` | N/A
 | `JEST_USE_PATH_FOR_SUITE_NAME` | `usePathForSuiteName` | **DEPRECATED. Use `suiteNameTemplate` instead.** Use file path as the `name` attribute of `<testsuite>` | `"false"` | N/A
 
 
