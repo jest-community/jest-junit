@@ -153,7 +153,8 @@ describe('buildJsonResults', () => {
     expect(suiteResult.tests).toEqual(0);
 
     const errorSuite = jsonResults.testsuites[1].testsuite[2];
-    expect(errorSuite.testcase[0]._attr.name).toEqual(`Error while trying to run test file ${suiteResult.name}`);
+    expect(errorSuite.testcase[0]._attr.name).toEqual(suiteResult.name);
+    expect(errorSuite.testcase[0]._attr.classname).toEqual('Test suite failed to run');
     expect(errorSuite.testcase[1].error).toContain("Property 'hello' does not exist");
 
   });
@@ -167,7 +168,8 @@ describe('buildJsonResults', () => {
         }));
 
     const errorSuite = jsonResults.testsuites[1].testsuite[2];
-    expect(errorSuite.testcase[0]._attr.name).toEqual(`Error while trying to run test file ../spec/test.spec.ts`);
+    expect(errorSuite.testcase[0]._attr.name).toEqual('../spec/test.spec.ts');
+    expect(errorSuite.testcase[0]._attr.classname).toEqual('Test suite failed to run');
     expect(errorSuite.testcase[1].error).toContain("Cannot find module './mult'");
   });
 

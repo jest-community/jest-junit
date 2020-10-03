@@ -85,7 +85,8 @@ module.exports = function (report, appDirectory, options) {
 
     const noResultOptions = noResults ? {
       suiteNameTemplate: toTemplateTag(constants.FILEPATH_VAR),
-      titleTemplate: `Error while trying to run test file ${toTemplateTag(constants.FILEPATH_VAR)}`
+      titleTemplate: toTemplateTag(constants.FILEPATH_VAR),
+      classNameTemplate: `Test suite failed to run`
     } : {};
 
     const suiteOptions = Object.assign({}, options, noResultOptions);
