@@ -1,0 +1,65 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 0,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 1,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 0,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1601808216222,
+  "success": false,
+  "testResults": [
+    {
+      "failureMessage": "  \u001b[1m● \u001b[22mTest suite failed to run\n\n    Your test suite must contain at least one test.\n\n      \u001b[2mat onResult (\u001b[22mnode_modules/@jest/core/build/TestScheduler.js\u001b[2m:175:18)\u001b[22m\n      \u001b[2mat testRunner.on (\u001b[22mnode_modules/@jest/core/build/TestScheduler.js\u001b[2m:304:17)\u001b[22m\n      \u001b[2mat Promise.all.staticListeners.map (\u001b[22mnode_modules/emittery/index.js\u001b[2m:260:13)\u001b[22m\n          at Array.map (<anonymous>)\n      \u001b[2mat Emittery.Typed.emit (\u001b[22mnode_modules/emittery/index.js\u001b[2m:258:23)\u001b[22m\n",
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 0,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 0,
+        "runtime": 0,
+        "slow": false,
+        "start": 0
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testExecError": {
+        "message": "Your test suite must contain at least one test.",
+        "stack": "Error: Your test suite must contain at least one test.\n    at onResult ../mpl-modules/test/docker/node_modules/@jest/core/build/TestScheduler.js:175:18)\n    at testRunner.on ../mpl-modules/test/docker/node_modules/@jest/core/build/TestScheduler.js:304:17)\n    at Promise.all.staticListeners.map ../mpl-modules/test/docker/node_modules/emittery/index.js:260:13)\n    at Array.map (<anonymous>)\n    at Emittery.Typed.emit ../mpl-modules/test/docker/node_modules/emittery/index.js:258:23)"
+      },
+      "testFilePath": "/path/to/spec/test.spec.ts",
+      "testResults": []
+    }
+  ],
+  "wasInterrupted": false
+}
