@@ -16,7 +16,9 @@ describe('buildJsonResults', () => {
 
     // Reset ignoreJunitErrors
     ignoreJunitErrors = false;
-  })
+    jsonResults = undefined;
+  });
+
   it('should contain number of tests in testSuite', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
