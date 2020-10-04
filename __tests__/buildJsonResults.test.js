@@ -137,7 +137,7 @@ describe('buildJsonResults', () => {
   it('should report no results as error', () => {
     const failingTestsReport = require('../__mocks__/failing-compilation.json');
 
-    const jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
+    jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           reportTestSuiteErrors: "true"
         }));
@@ -162,7 +162,7 @@ describe('buildJsonResults', () => {
   it('should report failureMessage if testExecErrorNotSet ', () => {
     const failingTestsReport = require('../__mocks__/failing-import.json');
 
-    const jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
+    jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           reportTestSuiteErrors: "true"
         }));
@@ -176,7 +176,7 @@ describe('buildJsonResults', () => {
   it('should honor templates when test has errors', () => {
     const failingTestsReport = require('../__mocks__/failing-compilation.json');
 
-    const jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
+    jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           reportTestSuiteErrors: "true",
           suiteNameTemplate: "{displayName}-foo",
