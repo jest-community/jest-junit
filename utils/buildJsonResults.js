@@ -39,7 +39,7 @@ const addErrorTestResult = function (suite) {
     "ancestorTitles": [],
     "duration": 0,
     "failureMessages": [
-      typeof suite.testExecError === "string" ? suite.testExecError : suite.failureMessage
+      suite.failureMessage
     ],
     "numPassingAsserts": 0,
     "status": "error"
