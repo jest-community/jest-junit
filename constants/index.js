@@ -13,6 +13,7 @@ module.exports = {
     JEST_JUNIT_ADD_FILE_ATTRIBUTE: 'addFileAttribute',
     JEST_JUNIT_INCLUDE_CONSOLE_OUTPUT: 'includeConsoleOutput',
     JEST_JUNIT_INCLUDE_SHORT_CONSOLE_OUTPUT: 'includeShortConsoleOutput',
+    JEST_JUNIT_REPORT_TEST_SUITE_ERRORS: 'reportTestSuiteErrors',
     JEST_USE_PATH_FOR_SUITE_NAME: 'usePathForSuiteName',
     JEST_JUNIT_TEST_SUITE_PROPERTIES_JSON_FILE: 'testSuitePropertiesFile'
   },
@@ -29,6 +30,7 @@ module.exports = {
     addFileAttribute: 'false',
     includeConsoleOutput: 'false',
     includeShortConsoleOutput: 'false',
+    reportTestSuiteErrors: 'false',
     testSuitePropertiesFile: 'junitProperties.js'
   },
   SUITENAME_VAR: 'suitename',

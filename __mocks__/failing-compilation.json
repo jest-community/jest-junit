@@ -1,0 +1,102 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 0,
+  "numPassedTests": 0,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 1,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 0,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1489712747092,
+  "success": false,
+  "testResults": [
+    {
+      "displayName": "",
+      "failureMessage": "  \u001b[1m● \u001b[22mTest suite failed to run\n\n    TypeScript diagnostics (customize using `[jest-config].globals.ts-jest.diagnostics` option):\n    \u001b[96mspec/test.spec.ts\u001b[0m:\u001b[93m10\u001b[0m:\u001b[93m35\u001b[0m - \u001b[91merror\u001b[0m\u001b[90m TS2339: \u001b[0mProperty 'hello' does not exist on type 'HelloScreamer'.\n\n    \u001b[7m10\u001b[0m         const screamed = screamer.hello();\n    \u001b[7m  \u001b[0m \u001b[91m                                  ~~~~~\u001b[0m\n",
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 0,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 1499904221109,
+        "start": 1499904215586
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "unmatched": 0,
+        "updated": 0
+      },
+      "sourceMaps": {},
+      "testExecError": "spec/test.spec.ts:10:35 - error TS2339: Property 'hello' does not exist on type 'HelloScreamer\n\n      10         const screamed = screamer.hello();\n~~~~~",
+      "testFilePath": "/path/to/spec/test.spec.ts",
+      "testResults": [],
+      "coverage": {
+      }
+    },
+    {
+      "console": [],
+      "failureMessage": null,
+      "numFailingTests": 0,
+      "numPassingTests": 1,
+      "numPendingTests": 0,
+      "perfStats": {
+        "end": 1518274351347,
+        "start": 1518274351274
+      },
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "unmatched": 0,
+        "updated": 0,
+        "uncheckedKeys": []
+      },
+      "testFilePath": "/path/to/project2/__tests__/test2.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "another thing"
+          ],
+          "duration": 1,
+          "failureMessages": [],
+          "fullName": "another thing should foo",
+          "location": null,
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "should foo"
+        }
+      ],
+      "sourceMaps": {},
+      "skipped": false,
+      "displayName": "project2",
+      "leaks": false
+    }
+  ],
+  "wasInterrupted": false
+}
