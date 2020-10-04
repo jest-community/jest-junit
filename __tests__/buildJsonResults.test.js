@@ -3,31 +3,46 @@
 const buildJsonResults = require('../utils/buildJsonResults');
 const constants = require('../constants/index');
 
+let jsonResults;
+let ignoreJunitErrors = false;
+
 describe('buildJsonResults', () => {
+  afterEach(() => {
+    if (ignoreJunitErrors !== true) {
+      // Verify each tests JSON output results in a
+      // compliant junit.xml file based on __tests__/lib/junit.xsd (jenkins xsd)
+      expect(jsonResults).toBeCompliantJUnit();
+    }
+
+    // Reset ignoreJunitErrors
+    ignoreJunitErrors = false;
+    jsonResults = undefined;
+  });
+
   it('should contain number of tests in testSuite', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
+    jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
 
     expect(jsonResults.testsuites[1].testsuite[0]._attr.tests).toBe(1);
   });
 
   it('should contain number of tests in testSuites', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
+    jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
 
     expect(jsonResults.testsuites[0]._attr.tests).toBe(1);
   });
 
   it('should return the proper name from ancestorTitles when usePathForSuiteName is "false"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
+    jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
 
     expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('foo');
   });
 
   it('should return the proper filename when suiteNameTemplate is "{filename}"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         suiteNameTemplate: "{filename}"
       }));
@@ -36,7 +51,7 @@ describe('buildJsonResults', () => {
 
   it('should support suiteNameTemplate as function', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         suiteNameTemplate: (vars) => {
           return 'function called with vars: ' + Object.keys(vars).join(', ');
@@ -48,7 +63,7 @@ describe('buildJsonResults', () => {
 
   it('should return the proper classname when classNameTemplate is "{classname}"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = buildJsonResults(noFailingTestsReport, '/',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           classNameTemplate: "{classname}"
         }));
@@ -58,7 +73,7 @@ describe('buildJsonResults', () => {
 
   it('should return the proper title when classNameTemplate is "{title}"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = buildJsonResults(noFailingTestsReport, '/',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           classNameTemplate: "{title}"
         }));
@@ -68,7 +83,7 @@ describe('buildJsonResults', () => {
 
   it('should return the proper filepath when classNameTemplate is "{filepath}"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = buildJsonResults(noFailingTestsReport, '/',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           classNameTemplate: "{filepath}"
         }));
@@ -78,7 +93,7 @@ describe('buildJsonResults', () => {
 
   it('should return the proper filename when classNameTemplate is "{filename}"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         classNameTemplate: "{filename}"
       }));
@@ -89,7 +104,7 @@ describe('buildJsonResults', () => {
   it('should return the proper displayName when classNameTemplate is {displayName}', () => {
     const multiProjectNoFailingTestsReport = require('../__mocks__/multi-project-no-failing-tests.json');
 
-    const jsonResults = buildJsonResults(multiProjectNoFailingTestsReport, '/',
+    jsonResults = buildJsonResults(multiProjectNoFailingTestsReport, '/',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           classNameTemplate: "{displayName}"
         }));
@@ -99,7 +114,7 @@ describe('buildJsonResults', () => {
 
   it('should return the proper suitename when classNameTemplate is "{suitename}"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = buildJsonResults(noFailingTestsReport, '/',
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           classNameTemplate: "{suitename}"
         }));
@@ -109,7 +124,7 @@ describe('buildJsonResults', () => {
 
   it('should support return the function result when classNameTemplate is a function', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         classNameTemplate: (vars) => {
           return 'function called with vars: ' + Object.keys(vars).join(', ');
@@ -121,7 +136,7 @@ describe('buildJsonResults', () => {
 
   it('should return the proper filepath when titleTemplate is "{filepath}"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         titleTemplate: "{filepath}"
       }));
@@ -130,7 +145,7 @@ describe('buildJsonResults', () => {
 
   it('should return the proper filepath when suiteNameTemplate is "{filepath}" and usePathForSuiteName is "false"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         suiteNameTemplate: "{filepath}"
       }));
@@ -139,7 +154,7 @@ describe('buildJsonResults', () => {
 
   it('should return the proper name from ancestorTitles when suiteNameTemplate is set to "{title}" and usePathForSuiteName is "true"', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         usePathForSuiteName: "true"
       }));
@@ -148,7 +163,7 @@ describe('buildJsonResults', () => {
 
   it('should return the proper name from testFilePath when usePathForSuiteName is "true"; no appDirectory set', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         usePathForSuiteName: "true"
       }));
@@ -157,7 +172,7 @@ describe('buildJsonResults', () => {
 
   it('should return the proper name from testFilePath when usePathForSuiteName is "true"; with appDirectory set', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/path/to/test',
+    jsonResults = buildJsonResults(noFailingTestsReport, '/path/to/test',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         usePathForSuiteName: "true"
       }));
@@ -166,14 +181,14 @@ describe('buildJsonResults', () => {
 
   it('should return the proper classname when ancestorSeparator is default', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS));
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('foo baz should bar');
   });
 
   it('should return the proper classname when ancestorSeparator is customized', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         ancestorSeparator: " › "
       }));
@@ -182,7 +197,7 @@ describe('buildJsonResults', () => {
 
   it('should parse failure messages for failing tests', () => {
     const failingTestsReport = require('../__mocks__/failing-tests.json');
-    const jsonResults = buildJsonResults(failingTestsReport, '/path/to/test', constants.DEFAULT_OPTIONS);
+    jsonResults = buildJsonResults(failingTestsReport, '/path/to/test', constants.DEFAULT_OPTIONS);
 
     const failureMsg = jsonResults.testsuites[1].testsuite[2].testcase[1].failure;
 
@@ -198,7 +213,7 @@ describe('buildJsonResults', () => {
     const startDate = new Date(multiProjectNoFailingTestsReport.startTime);
     spyOn(Date, 'now').and.returnValue(startDate.getTime() + 1234);
 
-    const jsonResults = buildJsonResults(multiProjectNoFailingTestsReport, '/',
+    jsonResults = buildJsonResults(multiProjectNoFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         suiteNameTemplate: "{displayName}-foo",
         titleTemplate: "{displayName}-foo"
@@ -209,13 +224,18 @@ describe('buildJsonResults', () => {
 
   it('should not return the file name by default', () => {
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
+    jsonResults = buildJsonResults(noFailingTestsReport, '/', constants.DEFAULT_OPTIONS);
     expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.file).toBe(undefined);
   });
 
   it('should return the file name when addFileAttribute is "true"', () => {
+    // Ignore junit errors for this attribute
+    // It is added for circle-ci and is known to not generate
+    // jenkins-compatible junit
+    ignoreJunitErrors = true;
+
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
-    const jsonResults = buildJsonResults(noFailingTestsReport, '/',
+    jsonResults = buildJsonResults(noFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         addFileAttribute: "true"
       }));
@@ -224,17 +244,17 @@ describe('buildJsonResults', () => {
 
   it('should show output of console if includeConsoleOutput is true', () => {
     const reportWithConsoleOutput = require('../__mocks__/test-with-console-output.json');
-    const jsonResults = buildJsonResults(reportWithConsoleOutput, '/',
+    jsonResults = buildJsonResults(reportWithConsoleOutput, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         includeConsoleOutput: "true"
       }));
 
-    expect(jsonResults.testsuites[1].testsuite[1]['system-out']).toBeDefined();
+    expect(jsonResults.testsuites[1].testsuite[3]['system-out']).toBeDefined();
   });
 
   it('should NOT show output of console if includeConsoleOutput is not set or false', () => {
     const reportWithConsoleOutput = require('../__mocks__/test-with-console-output.json');
-    const jsonResults = buildJsonResults(reportWithConsoleOutput, '/',
+    jsonResults = buildJsonResults(reportWithConsoleOutput, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         includeConsoleOutput: "false"
       }));
@@ -244,17 +264,17 @@ describe('buildJsonResults', () => {
 
   it('should show short console output if includeShortConsoleOutput is true', () => {
     const reportWithShortConsoleOutput = require('../__mocks__/test-with-console-output.json');
-    const jsonResults = buildJsonResults(reportWithShortConsoleOutput, '/',
+    jsonResults = buildJsonResults(reportWithShortConsoleOutput, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         includeShortConsoleOutput: "true"
       }));
 
-    expect(jsonResults.testsuites[1].testsuite[1]['system-out']._cdata).toEqual("[\n  \"I am bar\",\n  \"Some output here from a lib\"\n]");
+    expect(jsonResults.testsuites[1].testsuite[3]['system-out']._cdata).toEqual("[\n  \"I am bar\",\n  \"Some output here from a lib\"\n]");
   });
 
   it('should NOT show short console output if includeShortConsoleOutput is not set or false', () => {
     const reportWithShortConsoleOutput = require('../__mocks__/test-with-console-output.json');
-    const jsonResults = buildJsonResults(reportWithShortConsoleOutput, '/',
+    jsonResults = buildJsonResults(reportWithShortConsoleOutput, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         includeShortConsoleOutput: "false"
       }));
