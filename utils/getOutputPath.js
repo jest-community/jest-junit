@@ -7,7 +7,9 @@ module.exports = (options, jestRootDir)  => {
   if (!output) {
     // Set output to use new outputDirectory and fallback on original output
     const outputName = (options.uniqueOutputName === 'true') ? getOptions.getUniqueOutputName() : options.outputName
-    output = path.join(options.outputDirectory, outputName);  
+    output = getOptions.replaceRootDirInOutput(jestRootDir, options.outputDirectory);
+    const finalOutput = path.join(output, outputName);
+    return finalOutput;
   }
   
   const finalOutput = getOptions.replaceRootDirInOutput(jestRootDir, output);
