@@ -25,9 +25,9 @@ const processor = (report, reporterOptions = {}, jestRootDir = null) => {
 
   // Set output to use new outputDirectory and fallback on original output
   const outputName = (options.uniqueOutputName === 'true') ? getOptions.getUniqueOutputName() : options.outputName
-  const output = path.join(options.outputDirectory, outputName);
+  const output = getOptions.replaceRootDirInOutput(jestRootDir, options.outputDirectory);
 
-  const finalOutput = getOptions.replaceRootDirInOutput(jestRootDir, output);
+  const finalOutput = path.join(output, outputName);
 
   // Ensure output path exists
   mkdirp.sync(path.dirname(finalOutput));
