@@ -143,14 +143,14 @@ describe('buildJsonResults', () => {
         }));
 
     const totals = jsonResults.testsuites[0]._attr;
-    expect(totals.tests).toEqual(1);
+    expect(totals.tests).toEqual(2);
     expect(totals.errors).toEqual(1);
     expect(totals.failures).toEqual(0);
 
     const suiteResult = jsonResults.testsuites[1].testsuite[0]._attr;
     expect(suiteResult.name).toEqual('../spec/test.spec.ts')
     expect(suiteResult.errors).toEqual(1);
-    expect(suiteResult.tests).toEqual(0);
+    expect(suiteResult.tests).toEqual(1);
 
     const errorSuite = jsonResults.testsuites[1].testsuite[2];
     expect(errorSuite.testcase[0]._attr.name).toEqual(suiteResult.name);
@@ -167,6 +167,11 @@ describe('buildJsonResults', () => {
           reportTestSuiteErrors: "true"
         }));
 
+    const totals = jsonResults.testsuites[0]._attr;
+    expect(totals.tests).toEqual(1);
+    expect(totals.errors).toEqual(1);
+    expect(totals.failures).toEqual(0);
+
     const errorSuite = jsonResults.testsuites[1].testsuite[2];
     expect(errorSuite.testcase[0]._attr.name).toEqual('../spec/test.spec.ts');
     expect(errorSuite.testcase[0]._attr.classname).toEqual('Test suite failed to run');
@@ -180,6 +185,11 @@ describe('buildJsonResults', () => {
         Object.assign({}, constants.DEFAULT_OPTIONS, {
           reportTestSuiteErrors: "true"
         }));
+
+    const totals = jsonResults.testsuites[0]._attr;
+    expect(totals.tests).toEqual(1);
+    expect(totals.errors).toEqual(1);
+    expect(totals.failures).toEqual(0);
 
     const errorSuite = jsonResults.testsuites[1].testsuite[2];
     expect(errorSuite.testcase[0]._attr.name).toEqual('../spec/test.spec.ts');
