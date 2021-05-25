@@ -60,4 +60,32 @@ describe('jest-junit', () => {
     const xmlDoc = libxmljs.parseXml(fs.writeFileSync.mock.calls[0][1]);
     expect(xmlDoc).toBeTruthy();
   });
+
+
+  it('should generate xml at the output filepath defined by JEST_JUNIT_OUTPUT_FILE', () => {
+    process.env.JEST_JUNIT_OUTPUT_FILE = 'path_to_output/output_name.xml'
+    const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
+    testResultProcessor(noFailingTestsReport);
+
+    // Ensure fs.writeFileSync is called
+    expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
+
+    // Ensure file would have been generated
+    expect(fs.writeFileSync).toHaveBeenLastCalledWith(
+      expect.stringMatching(/path_to_output\S+\output_name.xml/), expect.any(String)
+    );
+  });
+
+  it('should generate xml at the output filepath defined by outputFile config', () => {
+    const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
+    testResultProcessor(noFailingTestsReport, {outputFile: 'path_to_output/output_name.xml' });
+
+    // Ensure fs.writeFileSync is called
+    expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
+
+    // Ensure file would have been generated
+    expect(fs.writeFileSync).toHaveBeenLastCalledWith(
+      expect.stringMatching(/path_to_output\S+\output_name.xml/), expect.any(String)
+    );
+  });
 });

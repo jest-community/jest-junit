@@ -7,6 +7,7 @@ const path = require('path');
 
 const buildJsonResults = require('./utils/buildJsonResults');
 const getOptions = require('./utils/getOptions');
+const getOutputPath = require('./utils/getOutputPath');
 
 // Store console results from onTestResult to later
 // append to result
@@ -23,17 +24,13 @@ const processor = (report, reporterOptions = {}, jestRootDir = null) => {
 
   const jsonResults = buildJsonResults(report, fs.realpathSync(process.cwd()), options);
 
-  // Set output to use new outputDirectory and fallback on original output
-  const outputName = (options.uniqueOutputName === 'true') ? getOptions.getUniqueOutputName() : options.outputName
-  const output = path.join(options.outputDirectory, outputName);
-
-  const finalOutput = getOptions.replaceRootDirInOutput(jestRootDir, output);
+  let outputPath = getOutputPath(options, jestRootDir);
 
   // Ensure output path exists
-  mkdirp.sync(path.dirname(finalOutput));
+  mkdirp.sync(path.dirname(outputPath));
 
   // Write data to file
-  fs.writeFileSync(finalOutput, xml(jsonResults, { indent: '  ', declaration: true }));
+  fs.writeFileSync(outputPath, xml(jsonResults, { indent: '  ', declaration: true }));
 
   // Jest 18 compatibility
   return report;

@@ -5,6 +5,7 @@ module.exports = {
     JEST_SUITE_NAME: 'suiteName',
     JEST_JUNIT_OUTPUT_DIR: 'outputDirectory',
     JEST_JUNIT_OUTPUT_NAME: 'outputName',
+    JEST_JUNIT_OUTPUT_FILE: 'outputFile',
     JEST_JUNIT_UNIQUE_OUTPUT_NAME: 'uniqueOutputName',
     JEST_JUNIT_CLASSNAME: 'classNameTemplate',
     JEST_JUNIT_SUITE_NAME: 'suiteNameTemplate',
