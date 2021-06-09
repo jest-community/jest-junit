@@ -22,7 +22,7 @@
   "dependencies": {
     "mkdirp": "^1.0.4",
     "strip-ansi": "^5.2.0",
-    "uuid": "^3.3.3",
+    "uuid": "^8.3.2",
     "xml": "^1.0.1"
   },
   "devDependencies": {
