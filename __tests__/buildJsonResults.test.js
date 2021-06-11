@@ -272,6 +272,54 @@ describe('buildJsonResults', () => {
 
   });
 
+  it('should parse messages without stack trace when notStackTrace set to true and jest >= 26.3.0', () => {
+    const failingTestsReport = require('../__mocks__/failing-tests-with-failure-details.json');
+    jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        noStackTrace: "true"
+      }));
+
+    const failureMsg = jsonResults.testsuites[1].testsuite[2].testcase[1].failure;
+
+    // Make sure no escape codes are there that exist in the mock
+    expect(failureMsg.includes('\u001b')).toBe(false);
+    expect(failureMsg).toMatch('Should fail');
+    expect(failureMsg).not.toMatch('at _callee$ (path/to/failing.test.js:26:15)');
+    expect(failureMsg).not.toMatch('at path/to/failing.test.js:2:554');
+
+  });
+
+  it('should parse messages with stack trace when notStackTrace set to false and jest >= 26.3.0', () => {
+    const failingTestsReport = require('../__mocks__/failing-tests-with-failure-details.json');
+    jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        noStackTrace: "false"
+      }));
+
+    const failureMsg = jsonResults.testsuites[1].testsuite[2].testcase[1].failure;
+
+    // Make sure no escape codes are there that exist in the mock
+    expect(failureMsg.includes('\u001b')).toBe(false);
+    expect(failureMsg).toMatch('Should fail');
+    expect(failureMsg).toMatch('at _callee$ (path/to/failing.test.js:26:15)');
+    expect(failureMsg).toMatch('at path/to/failing.test.js:2:554');
+
+  });
+
+  it('should parse failure messages for failing tests and not crash when notStackTrace set to true and jest < 26.3.0', () => {
+    const failingTestsReport = require('../__mocks__/failing-tests.json'); // no failure details
+    jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        noStackTrace: "true"
+      }));
+
+    const failureMsg = jsonResults.testsuites[1].testsuite[2].testcase[1].failure;
+
+    // Make sure no escape codes are there that exist in the mock
+    expect(failureMsg.includes('\u001b')).toBe(false);
+    expect(failureMsg).toMatch('Should fail');
+  });
+
   it('should support displayName template var for jest multi-project', () => {
     const multiProjectNoFailingTestsReport = require('../__mocks__/multi-project-no-failing-tests.json');
 

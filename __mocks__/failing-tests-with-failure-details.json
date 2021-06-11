@@ -1,0 +1,81 @@
+{
+  "numFailedTestSuites": 0,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 1,
+  "numPassedTests": 1,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 1,
+  "snapshot": {
+    "added": 0,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1489712747092,
+  "success": true,
+  "testResults": [
+    {
+      "console": [],
+      "failureMessage": "\u001b[1m\u001b[31m  \u001b[1m● \u001b[1mSample Failing Test › Should fail\u001b[39m\u001b[22m\n\n    foobar\n\u001b[2m      \n      \u001b[2mat _callee$ (\u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:26:15)\u001b[2m\n      \u001b[2mat tryCatch (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:64:40)\u001b[2m\n      \u001b[2mat GeneratorFunctionPrototype.invoke [as _invoke] (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:299:22)\u001b[2m\n      \u001b[2mat GeneratorFunctionPrototype.prototype.(anonymous function) [as next] (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:116:21)\u001b[2m\n      \u001b[2mat step (\u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:2:394)\u001b[2m\n      \u001b[2mat \u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:2:554\u001b[2m\u001b[22m\n",
+      "numFailingTests": 1,
+      "numPassingTests": 0,
+      "numPendingTests": 0,
+      "perfStats": {
+        "end": 1499904221109,
+        "start": 1499904215586
+      },
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "/path/to/failing.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "Sample Failing Test",
+            "Inner",
+            "Inner Inner"
+          ],
+          "duration": 3930,
+          "failureDetails": [
+            {
+              "error": {
+                "matcherResult": {
+                },
+                "message": "\u001b[1m\u001b[31m  \u001b[1m● \u001b[1mSample Failing Test › Inner › Inner Inner › Should fail\u001b[39m\u001b[22m\n\n    foobar\n\u001b[2m      \n      \u001b[2m",
+                "stack": "\u001b[1m\u001b[31m  \u001b[1m● \u001b[1mSample Failing Test › Inner › Inner Inner › Should fail\u001b[39m\u001b[22m\n\n    foobar\n\u001b[2m      \n      \u001b[2mat _callee$ (\u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:26:15)\u001b[2m\n      \u001b[2mat tryCatch (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:64:40)\u001b[2m\n      \u001b[2mat GeneratorFunctionPrototype.invoke [as _invoke] (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:299:22)\u001b[2m\n      \u001b[2mat GeneratorFunctionPrototype.prototype.(anonymous function) [as next] (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:116:21)\u001b[2m\n      \u001b[2mat step (\u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:2:394)\u001b[2m\n      \u001b[2mat \u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:2:554\u001b[2m\u001b[22m\n"
+              },
+              "message": "\u001b[1m\u001b[31m  \u001b[1m● \u001b[1mSample Failing Test › Inner › Inner Inner › Should fail\u001b[39m\u001b[22m\n\n    foobar\n\u001b[2m      \n      \u001b[2m",
+              "passed": false,
+              "stack": "\u001b[1m\u001b[31m  \u001b[1m● \u001b[1mSample Failing Test › Inner › Inner Inner › Should fail\u001b[39m\u001b[22m\n\n    foobar\n\u001b[2m      \n      \u001b[2mat _callee$ (\u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:26:15)\u001b[2m\n      \u001b[2mat tryCatch (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:64:40)\u001b[2m\n      \u001b[2mat GeneratorFunctionPrototype.invoke [as _invoke] (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:299:22)\u001b[2m\n      \u001b[2mat GeneratorFunctionPrototype.prototype.(anonymous function) [as next] (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:116:21)\u001b[2m\n      \u001b[2mat step (\u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:2:394)\u001b[2m\n      \u001b[2mat \u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:2:554\u001b[2m\u001b[22m\n"
+            }
+          ],
+          "failureMessages": [
+            "\u001b[1m\u001b[31m  \u001b[1m● \u001b[1mSample Failing Test › Inner › Inner Inner › Should fail\u001b[39m\u001b[22m\n\n    foobar\n\u001b[2m      \n      \u001b[2mat _callee$ (\u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:26:15)\u001b[2m\n      \u001b[2mat tryCatch (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:64:40)\u001b[2m\n      \u001b[2mat GeneratorFunctionPrototype.invoke [as _invoke] (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:299:22)\u001b[2m\n      \u001b[2mat GeneratorFunctionPrototype.prototype.(anonymous function) [as next] (\u001b[2m\u001b[0m\u001b[36mnode_modules/regenerator-runtime/runtime.js\u001b[39m\u001b[0m\u001b[2m:116:21)\u001b[2m\n      \u001b[2mat step (\u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:2:394)\u001b[2m\n      \u001b[2mat \u001b[2m\u001b[0m\u001b[36mpath/to/failing.test.js\u001b[39m\u001b[0m\u001b[2m:2:554\u001b[2m\u001b[22m\n"
+          ],
+          "fullName": "Sample Failing Test Inner Inner Inner Should fail",
+          "numPassingAsserts": 0,
+          "status": "failed",
+          "title": "Should fail"
+        }
+      ],
+      "sourceMaps": {},
+      "skipped": false
+    }
+  ],
+  "wasInterrupted": false
+}
