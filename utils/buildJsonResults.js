@@ -108,7 +108,7 @@ module.exports = function (report, appDirectory, options) {
     suiteNameVariables[constants.DISPLAY_NAME_VAR] = displayName;
 
     // Add <testsuite /> properties
-    const suiteNumTests = suite.numFailingTests + suite.numPassingTests + suite.numPendingTests;
+    const suiteNumTests = suite.numFailingTests + suite.numPassingTests + suite.numPendingTests + suite.numTodoTests;
     const suiteExecutionTime = executionTime(suite.perfStats.start, suite.perfStats.end);
 
     const suiteErrors = noResults ? 1 : 0;
@@ -118,7 +118,7 @@ module.exports = function (report, appDirectory, options) {
           name: replaceVars(suiteOptions.suiteNameTemplate, suiteNameVariables),
           errors: suiteErrors,
           failures: suite.numFailingTests,
-          skipped: suite.numPendingTests,
+          skipped: suite.numPendingTests + suite.numTodoTests,
           timestamp: (new Date(suite.perfStats.start)).toISOString().slice(0, -5),
           time: suiteExecutionTime,
           tests: suiteNumTests
@@ -196,7 +196,7 @@ module.exports = function (report, appDirectory, options) {
 
       // Write out a <skipped> tag if test is skipped
       // Nested underneath <testcase> tag
-      if (tc.status === 'pending') {
+      if (tc.status === 'pending' || tc.status === 'todo') {
         testCase.testcase.push({
           skipped: {}
         });
