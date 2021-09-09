@@ -98,7 +98,9 @@ module.exports = function (report, appDirectory, options) {
     const filepath = path.relative(appDirectory, suite.testFilePath);
     const filename = path.basename(filepath);
     const suiteTitle = suite.testResults[0].ancestorTitles[0];
-    const displayName = suite.displayName;
+    const displayName = typeof suite.displayName === 'object'
+      ? suite.displayName.name
+      : suite.displayName;
 
     // Build replacement map
     let suiteNameVariables = {};
