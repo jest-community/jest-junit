@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/jest-community/jest-junit.svg?branch=master)](https://travis-ci.org/jest-community/jest-junit)
+[![Actions Status](https://github.com/jest-community/jest-junit/actions/workflows/nodejs.yml/badge.svg?branch=master)](https://github.com/jest-community/jest-junit/actions)
 
 # jest-junit
 A Jest reporter that creates compatible junit xml files
