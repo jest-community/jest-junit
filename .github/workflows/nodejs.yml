@@ -33,8 +33,8 @@ jobs:
           cache: yarn
       - name: install with jest v${{ matrix.jest-version }}
         run: |
-          yarn
           yarn add --dev jest@${{ matrix.jest-version }} babel-jest@${{ matrix.jest-version }}
+          yarn
       - name: run tests
         run: yarn test
   test-os:
