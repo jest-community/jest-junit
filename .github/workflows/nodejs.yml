@@ -12,7 +12,7 @@ on:
 
 jobs:
   test-node:
-    name: Test on Node.js v${{ matrix.node-version }} and Jest v${{ matrix.eslint-version }}
+    name: Test on Node.js v${{ matrix.node-version }} and Jest v${{ matrix.jest-version }}
     strategy:
       fail-fast: false
       matrix:
