@@ -18,6 +18,10 @@ jobs:
       matrix:
         node-version: [10.x, 12.x, 13.x, 14.x, 16.x]
         jest-version: [24, 25, 26, 27]
+        exclude:
+          # jest@27 doesn't support node@13
+          - node-version: 13.x
+            jest-version: 27
     runs-on: ubuntu-latest
 
     steps:
