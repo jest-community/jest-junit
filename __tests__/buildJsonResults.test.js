@@ -89,7 +89,7 @@ describe('buildJsonResults', () => {
           classNameTemplate: "{filepath}"
         }));
 
-    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('path/to/test/__tests__/foo.test.js');
+    expect(slash(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
   it('should return the proper filename when classNameTemplate is "{filename}"', () => {
@@ -207,7 +207,7 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         titleTemplate: "{filepath}"
       }));
-    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.name).toBe('path/to/test/__tests__/foo.test.js');
+    expect(slash(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.name)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
   it('should return the proper filepath when suiteNameTemplate is "{filepath}" and usePathForSuiteName is "false"', () => {
@@ -216,7 +216,7 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         suiteNameTemplate: "{filepath}"
       }));
-    expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('path/to/test/__tests__/foo.test.js');
+    expect(slash(jsonResults.testsuites[1].testsuite[0]._attr.name)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
   it('should return the proper name from ancestorTitles when suiteNameTemplate is set to "{title}" and usePathForSuiteName is "true"', () => {
@@ -225,7 +225,7 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         usePathForSuiteName: "true"
       }));
-    expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('path/to/test/__tests__/foo.test.js');
+    expect(slash(jsonResults.testsuites[1].testsuite[0]._attr.name)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
   it('should return the proper name from testFilePath when usePathForSuiteName is "true"; no appDirectory set', () => {
