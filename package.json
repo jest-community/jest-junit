@@ -15,9 +15,7 @@
     "constants"
   ],
   "scripts": {
-    "test": "jest",
-    "pretest:ci": "npm uninstall jest babel-jest && npm install jest@$JEST_VERSION babel-jest@$JEST_VERSION --no-save",
-    "test:ci": "jest --ci"
+    "test": "jest"
   },
   "dependencies": {
     "mkdirp": "^1.0.4",

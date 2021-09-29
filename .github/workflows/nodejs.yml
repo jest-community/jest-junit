@@ -1,0 +1,53 @@
+name: Unit tests
+
+on:
+  push:
+    branches:
+      - master
+      - next
+  pull_request:
+    branches:
+      - master
+      - next
+
+jobs:
+  test-node:
+    name: Test on Node.js v${{ matrix.node-version }} and Jest v${{ matrix.jest-version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [10.x, 12.x, 13.x, 14.x, 16.x]
+        jest-version: [24, 25, 26]
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: yarn
+      - name: install with jest v${{ matrix.jest-version }}
+        run: |
+          yarn
+          yarn add --dev jest@${{ matrix.jest-version }} babel-jest@${{ matrix.jest-version }}
+      - name: run tests
+        run: yarn test
+  test-os:
+    name: Test on ${{ matrix.os }} using Node.js LTS
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+          cache: yarn
+      - name: install
+        run: yarn
+      - name: run tests
+        run: yarn test
