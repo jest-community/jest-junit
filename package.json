@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "jest": "26.0.1",
-    "libxmljs": "^0.19.7"
+    "libxmljs": "^0.19.7",
+    "slash": "^3.0.0"
   }
 }

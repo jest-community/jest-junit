@@ -1,5 +1,6 @@
 'use strict';
 
+const slash = require('slash');
 const buildJsonResults = require('../utils/buildJsonResults');
 const constants = require('../constants/index');
 
@@ -148,7 +149,7 @@ describe('buildJsonResults', () => {
     expect(totals.failures).toEqual(0);
 
     const suiteResult = jsonResults.testsuites[1].testsuite[0]._attr;
-    expect(suiteResult.name).toEqual('../spec/test.spec.ts')
+    expect(slash(suiteResult.name)).toEqual('../spec/test.spec.ts')
     expect(suiteResult.errors).toEqual(1);
     expect(suiteResult.tests).toEqual(0);
 
@@ -168,7 +169,7 @@ describe('buildJsonResults', () => {
         }));
 
     const errorSuite = jsonResults.testsuites[1].testsuite[2];
-    expect(errorSuite.testcase[0]._attr.name).toEqual('../spec/test.spec.ts');
+    expect(slash(errorSuite.testcase[0]._attr.name)).toEqual('../spec/test.spec.ts');
     expect(errorSuite.testcase[0]._attr.classname).toEqual('Test suite failed to run');
     expect(errorSuite.testcase[1].error).toContain("Cannot find module './mult'");
   });
@@ -182,7 +183,7 @@ describe('buildJsonResults', () => {
         }));
 
     const errorSuite = jsonResults.testsuites[1].testsuite[2];
-    expect(errorSuite.testcase[0]._attr.name).toEqual('../spec/test.spec.ts');
+    expect(slash(errorSuite.testcase[0]._attr.name)).toEqual('../spec/test.spec.ts');
     expect(errorSuite.testcase[0]._attr.classname).toEqual('Test suite failed to run');
     expect(errorSuite.testcase[1].error).toContain("Your test suite must contain at least one test");
   });
