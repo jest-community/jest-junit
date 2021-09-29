@@ -1,5 +1,6 @@
 'use strict';
 
+const slash = require('slash');
 const buildJsonResults = require('../utils/buildJsonResults');
 const constants = require('../constants/index');
 
@@ -88,7 +89,7 @@ describe('buildJsonResults', () => {
           classNameTemplate: "{filepath}"
         }));
 
-    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname).toBe('path/to/test/__tests__/foo.test.js');
+    expect(slash(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.classname)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
   it('should return the proper filename when classNameTemplate is "{filename}"', () => {
@@ -148,7 +149,7 @@ describe('buildJsonResults', () => {
     expect(totals.failures).toEqual(0);
 
     const suiteResult = jsonResults.testsuites[1].testsuite[0]._attr;
-    expect(suiteResult.name).toEqual('../spec/test.spec.ts')
+    expect(slash(suiteResult.name)).toEqual('../spec/test.spec.ts')
     expect(suiteResult.errors).toEqual(1);
     expect(suiteResult.tests).toEqual(0);
 
@@ -168,7 +169,7 @@ describe('buildJsonResults', () => {
         }));
 
     const errorSuite = jsonResults.testsuites[1].testsuite[2];
-    expect(errorSuite.testcase[0]._attr.name).toEqual('../spec/test.spec.ts');
+    expect(slash(errorSuite.testcase[0]._attr.name)).toEqual('../spec/test.spec.ts');
     expect(errorSuite.testcase[0]._attr.classname).toEqual('Test suite failed to run');
     expect(errorSuite.testcase[1].error).toContain("Cannot find module './mult'");
   });
@@ -182,7 +183,7 @@ describe('buildJsonResults', () => {
         }));
 
     const errorSuite = jsonResults.testsuites[1].testsuite[2];
-    expect(errorSuite.testcase[0]._attr.name).toEqual('../spec/test.spec.ts');
+    expect(slash(errorSuite.testcase[0]._attr.name)).toEqual('../spec/test.spec.ts');
     expect(errorSuite.testcase[0]._attr.classname).toEqual('Test suite failed to run');
     expect(errorSuite.testcase[1].error).toContain("Your test suite must contain at least one test");
   });
@@ -206,7 +207,7 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         titleTemplate: "{filepath}"
       }));
-    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.name).toBe('path/to/test/__tests__/foo.test.js');
+    expect(slash(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.name)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
   it('should return the proper filepath when suiteNameTemplate is "{filepath}" and usePathForSuiteName is "false"', () => {
@@ -215,7 +216,7 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         suiteNameTemplate: "{filepath}"
       }));
-    expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('path/to/test/__tests__/foo.test.js');
+    expect(slash(jsonResults.testsuites[1].testsuite[0]._attr.name)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
   it('should return the proper name from ancestorTitles when suiteNameTemplate is set to "{title}" and usePathForSuiteName is "true"', () => {
@@ -224,7 +225,7 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         usePathForSuiteName: "true"
       }));
-    expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('path/to/test/__tests__/foo.test.js');
+    expect(slash(jsonResults.testsuites[1].testsuite[0]._attr.name)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
   it('should return the proper name from testFilePath when usePathForSuiteName is "true"; no appDirectory set', () => {
@@ -233,7 +234,7 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         usePathForSuiteName: "true"
       }));
-    expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('path/to/test/__tests__/foo.test.js');
+    expect(slash(jsonResults.testsuites[1].testsuite[0]._attr.name)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
   it('should return the proper name from testFilePath when usePathForSuiteName is "true"; with appDirectory set', () => {
@@ -242,7 +243,7 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         usePathForSuiteName: "true"
       }));
-    expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('__tests__/foo.test.js');
+    expect(slash(jsonResults.testsuites[1].testsuite[0]._attr.name)).toBe('__tests__/foo.test.js');
   });
 
   it('should return the proper classname when ancestorSeparator is default', () => {
@@ -305,7 +306,7 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         addFileAttribute: "true"
       }));
-    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.file).toBe('path/to/test/__tests__/foo.test.js');
+    expect(slash(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.file)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
   it('should show output of console if includeConsoleOutput is true', () => {
