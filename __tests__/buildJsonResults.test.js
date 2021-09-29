@@ -234,7 +234,7 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         usePathForSuiteName: "true"
       }));
-    expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('path/to/test/__tests__/foo.test.js');
+    expect(slash(jsonResults.testsuites[1].testsuite[0]._attr.name)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
   it('should return the proper name from testFilePath when usePathForSuiteName is "true"; with appDirectory set', () => {
@@ -243,7 +243,7 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         usePathForSuiteName: "true"
       }));
-    expect(jsonResults.testsuites[1].testsuite[0]._attr.name).toBe('__tests__/foo.test.js');
+    expect(slash(jsonResults.testsuites[1].testsuite[0]._attr.name)).toBe('__tests__/foo.test.js');
   });
 
   it('should return the proper classname when ancestorSeparator is default', () => {
@@ -306,7 +306,7 @@ describe('buildJsonResults', () => {
       Object.assign({}, constants.DEFAULT_OPTIONS, {
         addFileAttribute: "true"
       }));
-    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.file).toBe('path/to/test/__tests__/foo.test.js');
+    expect(slash(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.file)).toBe('path/to/test/__tests__/foo.test.js');
   });
 
   it('should show output of console if includeConsoleOutput is true', () => {
