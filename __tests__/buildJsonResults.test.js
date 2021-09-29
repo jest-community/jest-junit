@@ -278,7 +278,7 @@ describe('buildJsonResults', () => {
 
     // Mock Date.now() to return a fixed later value
     const startDate = new Date(multiProjectNoFailingTestsReport.startTime);
-    spyOn(Date, 'now').and.returnValue(startDate.getTime() + 1234);
+    jest.spyOn(Date, 'now').mockImplementation(() => startDate.getTime() + 1234);
 
     jsonResults = buildJsonResults(multiProjectNoFailingTestsReport, '/',
       Object.assign({}, constants.DEFAULT_OPTIONS, {
