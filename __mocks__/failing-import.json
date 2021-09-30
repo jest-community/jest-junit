@@ -1,0 +1,63 @@
+{
+  "numFailedTestSuites": 1,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 1,
+  "numPassedTests": 1,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 1,
+  "numTodoTests": 0,
+  "numTotalTestSuites": 2,
+  "numTotalTests": 1,
+  "openHandles": [],
+  "snapshot": {
+    "added": 0,
+    "didUpdate": false,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1601544556519,
+  "success": false,
+  "testResults": [
+    {
+      "displayName": "",
+      "failureMessage": "  \u001b[1m● \u001b[22mTest suite failed to run\n\n    Cannot find module './mult' from 'mul.test.js'\n\n    \u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 1 | \u001b[39m\u001b[36mconst\u001b[39m mul \u001b[33m=\u001b[39m require(\u001b[32m'./mult'\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n    \u001b[0m \u001b[90m   | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n    \u001b[0m \u001b[90m 2 | \u001b[39m\u001b[0m\n    \u001b[0m \u001b[90m 3 | \u001b[39mtest(\u001b[32m'multplies 2 * 3 to equal 6'\u001b[39m\u001b[33m,\u001b[39m () \u001b[33m=>\u001b[39m {\u001b[0m\n    \u001b[0m \u001b[90m 4 | \u001b[39m    expect(mul(\u001b[35m2\u001b[39m\u001b[33m,\u001b[39m \u001b[35m3\u001b[39m))\u001b[33m.\u001b[39mtoBe(\u001b[35m6\u001b[39m)\u001b[33m;\u001b[39m\u001b[0m\n\n      \u001b[2mat Resolver.resolveModule (\u001b[22mnode_modules/jest-resolve/build/index.js\u001b[2m:259:17)\u001b[22m\n      \u001b[2mat Object.<anonymous> (\u001b[22m\u001b[0m\u001b[36msrc/mul.test.js\u001b[39m\u001b[0m\u001b[2m:1:1)\u001b[22m\n",
+      "leaks": false,
+      "numFailingTests": 0,
+      "numPassingTests": 0,
+      "numPendingTests": 0,
+      "numTodoTests": 0,
+      "openHandles": [],
+      "perfStats": {
+        "end": 0,
+        "start": 0
+      },
+      "skipped": false,
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "uncheckedKeys": [],
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testExecError": {
+        "code": "MODULE_NOT_FOUND"
+      },
+      "testFilePath": "/path/to/spec/test.spec.ts",
+      "testResults": []
+    }
+  ],
+  "wasInterrupted": false
+}

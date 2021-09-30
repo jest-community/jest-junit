@@ -34,10 +34,31 @@ const executionTime = function (startTime, endTime) {
   return (endTime - startTime) / 1000;
 }
 
+const addErrorTestResult = function (suite) {
+  suite.testResults.push({
+    "ancestorTitles": [],
+    "duration": 0,
+    "failureMessages": [
+      suite.failureMessage
+    ],
+    "numPassingAsserts": 0,
+    "status": "error"
+  })
+}
+
 module.exports = function (report, appDirectory, options) {
   // Check if there is a junitProperties.js (or whatever they called it)
   const junitSuitePropertiesFilePath = path.join(process.cwd(), options.testSuitePropertiesFile);
   let ignoreSuitePropertiesCheck = !fs.existsSync(junitSuitePropertiesFilePath);
+
+  // If the usePathForSuiteName option is true and the
+  // suiteNameTemplate value is set to the default, overrides
+  // the suiteNameTemplate.
+  if (options.usePathForSuiteName === 'true' &&
+      options.suiteNameTemplate === toTemplateTag(constants.TITLE_VAR)) {
+
+    options.suiteNameTemplate = toTemplateTag(constants.FILEPATH_VAR);
+  }
 
   // Generate a single XML file for all jest tests
   let jsonResults = {
@@ -46,6 +67,7 @@ module.exports = function (report, appDirectory, options) {
         'name': options.suiteName,
         'tests': 0,
         'failures': 0,
+        'errors': 0,
         // Overall execution time:
         // Since tests are typically executed in parallel this time can be significantly smaller
         // than the sum of the individual test suites
@@ -56,25 +78,29 @@ module.exports = function (report, appDirectory, options) {
 
   // Iterate through outer testResults (test suites)
   report.testResults.forEach((suite) => {
-    // Skip empty test suites
-    if (suite.testResults.length <= 0) {
+    const noResults = suite.testResults.length === 0;
+    if (noResults && options.reportTestSuiteErrors === 'false') {
       return;
     }
 
-    // If the usePathForSuiteName option is true and the
-    // suiteNameTemplate value is set to the default, overrides
-    // the suiteNameTemplate.
-    if (options.usePathForSuiteName === 'true' &&
-      options.suiteNameTemplate === toTemplateTag(constants.TITLE_VAR)) {
+    const noResultOptions = noResults ? {
+      suiteNameTemplate: toTemplateTag(constants.FILEPATH_VAR),
+      titleTemplate: toTemplateTag(constants.FILEPATH_VAR),
+      classNameTemplate: `Test suite failed to run`
+    } : {};
 
-      options.suiteNameTemplate = toTemplateTag(constants.FILEPATH_VAR);
+    const suiteOptions = Object.assign({}, options, noResultOptions);
+    if (noResults) {
+      addErrorTestResult(suite);
     }
 
     // Build variables for suite name
     const filepath = path.relative(appDirectory, suite.testFilePath);
     const filename = path.basename(filepath);
     const suiteTitle = suite.testResults[0].ancestorTitles[0];
-    const displayName = suite.displayName;
+    const displayName = typeof suite.displayName === 'object'
+      ? suite.displayName.name
+      : suite.displayName;
 
     // Build replacement map
     let suiteNameVariables = {};
@@ -87,11 +113,12 @@ module.exports = function (report, appDirectory, options) {
     const suiteNumTests = suite.numFailingTests + suite.numPassingTests + suite.numPendingTests + suite.numTodoTests;
     const suiteExecutionTime = executionTime(suite.perfStats.start, suite.perfStats.end);
 
+    const suiteErrors = noResults ? 1 : 0;
     let testSuite = {
       'testsuite': [{
         _attr: {
-          name: replaceVars(options.suiteNameTemplate, suiteNameVariables),
-          errors: 0, // not supported
+          name: replaceVars(suiteOptions.suiteNameTemplate, suiteNameVariables),
+          errors: suiteErrors,
           failures: suite.numFailingTests,
           skipped: suite.numPendingTests + suite.numTodoTests,
           timestamp: (new Date(suite.perfStats.start)).toISOString().slice(0, -5),
@@ -103,35 +130,8 @@ module.exports = function (report, appDirectory, options) {
 
     // Update top level testsuites properties
     jsonResults.testsuites[0]._attr.failures += suite.numFailingTests;
+    jsonResults.testsuites[0]._attr.errors += suiteErrors;
     jsonResults.testsuites[0]._attr.tests += suiteNumTests;
-
-    // Write stdout console output if available
-    if (options.includeConsoleOutput === 'true' && suite.console && suite.console.length) {
-      // Stringify the entire console object
-      // Easier this way because formatting in a readable way is tough with XML
-      // And this can be parsed more easily
-      let testSuiteConsole = {
-        'system-out': {
-          _cdata: JSON.stringify(suite.console, null, 2)
-        }
-      };
-
-      testSuite.testsuite.push(testSuiteConsole);
-    }
-
-    // Write short stdout console output if available
-    if (options.includeShortConsoleOutput === 'true' && suite.console && suite.console.length) {
-      // Extract and then Stringify the console message value
-      // Easier this way because formatting in a readable way is tough with XML
-      // And this can be parsed more easily
-      let testSuiteConsole = {
-        'system-out': {
-          _cdata: JSON.stringify(suite.console.map(item => item.message), null, 2)
-        }
-      };
-
-      testSuite.testsuite.push(testSuiteConsole);
-    }
 
     if (!ignoreSuitePropertiesCheck) {
       let junitSuiteProperties = require(junitSuitePropertiesFilePath)(suite);
@@ -159,7 +159,7 @@ module.exports = function (report, appDirectory, options) {
 
     // Iterate through test cases
     suite.testResults.forEach((tc) => {
-      const classname = tc.ancestorTitles.join(options.ancestorSeparator);
+      const classname = tc.ancestorTitles.join(suiteOptions.ancestorSeparator);
       const testTitle = tc.title;
 
       // Build replacement map
@@ -174,23 +174,24 @@ module.exports = function (report, appDirectory, options) {
       let testCase = {
         'testcase': [{
           _attr: {
-            classname: replaceVars(options.classNameTemplate, testVariables),
-            name: replaceVars(options.titleTemplate, testVariables),
+            classname: replaceVars(suiteOptions.classNameTemplate, testVariables),
+            name: replaceVars(suiteOptions.titleTemplate, testVariables),
             time: tc.duration / 1000
           }
         }]
       };
 
-      if (options.addFileAttribute === 'true') {
+      if (suiteOptions.addFileAttribute === 'true') {
         testCase.testcase[0]._attr.file = filepath;
       }
 
       // Write out all failure messages as <failure> tags
       // Nested underneath <testcase> tag
-      if (tc.status === 'failed') {
+      if (tc.status === 'failed'|| tc.status === 'error') {
         tc.failureMessages.forEach((failure) => {
+          const tagName = tc.status === 'failed' ? 'failure': 'error'
           testCase.testcase.push({
-            'failure': stripAnsi(failure)
+            [tagName]: stripAnsi(failure)
           });
         })
       }
@@ -205,6 +206,34 @@ module.exports = function (report, appDirectory, options) {
 
       testSuite.testsuite.push(testCase);
     });
+
+    // Write stdout console output if available
+    if (suiteOptions.includeConsoleOutput === 'true' && suite.console && suite.console.length) {
+      // Stringify the entire console object
+      // Easier this way because formatting in a readable way is tough with XML
+      // And this can be parsed more easily
+      let testSuiteConsole = {
+        'system-out': {
+          _cdata: JSON.stringify(suite.console, null, 2)
+        }
+      };
+
+      testSuite.testsuite.push(testSuiteConsole);
+    }
+
+    // Write short stdout console output if available
+    if (suiteOptions.includeShortConsoleOutput === 'true' && suite.console && suite.console.length) {
+      // Extract and then Stringify the console message value
+      // Easier this way because formatting in a readable way is tough with XML
+      // And this can be parsed more easily
+      let testSuiteConsole = {
+        'system-out': {
+          _cdata: JSON.stringify(suite.console.map(item => item.message), null, 2)
+        }
+      };
+
+      testSuite.testsuite.push(testSuiteConsole);
+    }
 
     jsonResults.testsuites.push(testSuite);
   });

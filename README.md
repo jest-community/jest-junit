@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/jest-community/jest-junit.svg?branch=master)](https://travis-ci.org/jest-community/jest-junit)
+[![Actions Status](https://github.com/jest-community/jest-junit/actions/workflows/nodejs.yml/badge.svg?branch=master)](https://github.com/jest-community/jest-junit/actions)
 
 # jest-junit
 A Jest reporter that creates compatible junit xml files
@@ -59,6 +59,7 @@ Reporter options should also be strings exception for suiteNameTemplate, classNa
 | `JEST_SUITE_NAME` | `suiteName` | `name` attribute of `<testsuites>` | `"jest tests"` | N/A
 | `JEST_JUNIT_OUTPUT_DIR` | `outputDirectory` | Directory to save the output. | `process.cwd()` | N/A
 | `JEST_JUNIT_OUTPUT_NAME` | `outputName` | File name for the output. | `"junit.xml"` | N/A
+| `JEST_JUNIT_OUTPUT_FILE` | `outputFile` | Fullpath for the output. If defined, `outputDirectory` and `outputName` will be overridden | `undefined` | N/A
 | `JEST_JUNIT_UNIQUE_OUTPUT_NAME` | `uniqueOutputName` | Create unique file name for the output `junit-${uuid}.xml`, overrides `outputName` | `false` | N/A
 | `JEST_JUNIT_SUITE_NAME` | `suiteNameTemplate` | Template string for `name` attribute of the `<testsuite>`. | `"{title}"` | `{title}`, `{filepath}`, `{filename}`, `{displayName}`
 | `JEST_JUNIT_CLASSNAME` | `classNameTemplate` | Template string for the `classname` attribute of `<testcase>`. | `"{classname} {title}"` | `{classname}`, `{title}`, `{suitename}`, `{filepath}`, `{filename}`, `{displayName}`
@@ -67,6 +68,7 @@ Reporter options should also be strings exception for suiteNameTemplate, classNa
 | `JEST_JUNIT_ADD_FILE_ATTRIBUTE` | `addFileAttribute` | Add file attribute to the output. This config is primarily for Circle CI. This setting provides richer details but may break on other CI platforms. Must be a string. | `"false"` | N/A
 | `JEST_JUNIT_INCLUDE_CONSOLE_OUTPUT` | `includeConsoleOutput` | Adds console output to any testSuite that generates stdout during a test run. | `false` | N/A
 | `JEST_JUNIT_INCLUDE_SHORT_CONSOLE_OUTPUT` | `includeShortConsoleOutput` | Adds short console output (only message value) to any testSuite that generates stdout during a test run. | `false` | N/A
+| `JEST_JUNIT_REPORT_TEST_SUITE_ERRORS` | `reportTestSuiteErrors` | Reports test suites that failed to execute altogether as `error`. _Note:_ since the suite name cannot be determined from files that fail to load, it will default to file path.| `false` | N/A
 | `JEST_USE_PATH_FOR_SUITE_NAME` | `usePathForSuiteName` | **DEPRECATED. Use `suiteNameTemplate` instead.** Use file path as the `name` attribute of `<testsuite>` | `"false"` | N/A
 
 

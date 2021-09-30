@@ -2,7 +2,7 @@
 
 const path = require('path');
 const fs = require('fs');
-const uuid = require('uuid/v1');
+const { v1: uuid } = require('uuid');
 
 const constants = require('../constants/index');
 
@@ -21,8 +21,6 @@ function getEnvOptions() {
 }
 
 function getAppOptions(pathToResolve) {
-  const initialPath = pathToResolve;
-
   let traversing = true;
 
   // Find nearest package.json by traversing up directories until /

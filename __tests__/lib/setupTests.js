@@ -7,8 +7,8 @@ const schemaPath = path.join(__dirname, 'junit.xsd');
 const schemaStr = fs.readFileSync(schemaPath);
 const schema = libxmljs.parseXmlString(schemaStr);
 
-expect.extend({
-  toConvertToXmlAndPassXsd(jsonResults) {
+global.expect.extend({
+  toBeCompliantJUnit(jsonResults) {
     const xmlStr = xml(jsonResults, { indent: '  '});
 
     const libxmljsObj = libxmljs.parseXmlString(xmlStr);
@@ -16,7 +16,7 @@ expect.extend({
 
     if (!isValid) {
       return {
-        message: () => libxmljsObj.validationErrors.join('\n'),
+        message: () => `${libxmljsObj.validationErrors.join('\n')}\n${xmlStr}`,
         pass: false
       }
     } else {
