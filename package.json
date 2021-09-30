@@ -1,6 +1,6 @@
 {
   "name": "jest-junit",
-  "version": "12.3.0",
+  "version": "12.3.1",
   "description": "A jest reporter that generates junit xml files",
   "main": "index.js",
   "repository": "https://github.com/jest-community/jest-junit",
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "mkdirp": "^1.0.4",
-    "strip-ansi": "^5.2.0",
+    "strip-ansi": "^6.0.1",
     "uuid": "^8.3.2",
     "xml": "^1.0.1"
   },
