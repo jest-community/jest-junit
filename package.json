@@ -1,6 +1,6 @@
 {
   "name": "jest-junit",
-  "version": "12.3.0",
+  "version": "13.0.0",
   "description": "A jest reporter that generates junit xml files",
   "main": "index.js",
   "repository": "https://github.com/jest-community/jest-junit",
