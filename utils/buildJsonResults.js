@@ -182,7 +182,13 @@ module.exports = function (report, appDirectory, options) {
       };
 
       if (suiteOptions.addFileAttribute === 'true') {
-        testCase.testcase[0]._attr.file = filepath;
+        let prefixedFilepath = filepath;
+        if(suiteOptions.addFileAttributePathPrefix) {
+          const prefix = suiteOptions.addFileAttributePathPrefix;
+          const prefixArray = Array.isArray(prefix) ? [...prefix] : [prefix];
+          prefixedFilepath = path.join(...prefixArray, filepath);
+        }
+        testCase.testcase[0]._attr.file = prefixedFilepath;
       }
 
       // Write out all failure messages as <failure> tags
