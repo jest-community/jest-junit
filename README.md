@@ -29,8 +29,11 @@ For your Continuous Integration you can simply do:
 jest --ci --reporters=default --reporters=jest-junit
 ```
 
-## Usage as testResultsProcessor
-In your jest config add the following entry:
+## Usage as testResultsProcessor (deprecated)
+The support for `testResultsProcessor` is only kept for [legacy reasons][test-results-processor] and might be removed in the future. 
+You should therefore prefer to configure `jest-junit` as a _reporter_.
+
+Should you still want to, add the following entry to your jest config:
 ```JSON
 {
   "testResultsProcessor": "jest-junit"
@@ -247,3 +250,5 @@ Will render
   </testsuite>
 </testsuites>
 ```
+
+[test-results-processor]: https://github.com/jest-community/jest-junit/discussions/158#discussioncomment-392985
