@@ -68,6 +68,10 @@ function JestJUnit (globalConfig, options) {
   this._globalConfig = globalConfig;
   this._options = options;
 
+  if (this._options.outputDirectory === undefined && this._globalConfig.coverageDirectory) {
+    this._options.outputDirectory = this._globalConfig.coverageDirectory;
+  }
+
   this.onTestResult = (test, testResult, aggregatedResult) => {
     if (testResult.console && testResult.console.length > 0) {
       consoleBuffer[testResult.testFilePath] = testResult.console;
