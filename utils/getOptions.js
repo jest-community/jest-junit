@@ -49,8 +49,9 @@ function replaceRootDirInOutput(rootDir, output) {
   return rootDir !== null ? replaceRootDirInPath(rootDir, output) : output;
 }
 
-function getUniqueOutputName() {
-  return `junit-${uuid()}.xml`
+function getUniqueOutputName(outputName) {
+  const outputPrefix = outputName ? outputName : 'junit'
+  return `${outputPrefix}-${uuid()}.xml`
 }
 
 module.exports = {
