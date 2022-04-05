@@ -1,6 +1,9 @@
 [![Actions Status](https://github.com/jest-community/jest-junit/actions/workflows/nodejs.yml/badge.svg?branch=master)](https://github.com/jest-community/jest-junit/actions)
 
 # jest-junit
+
+Testing testing
+
 A Jest reporter that creates compatible junit xml files
 
 Note: as of jest-junit 11.0.0 NodeJS >= 10.12.0 is required.
@@ -30,7 +33,7 @@ jest --ci --reporters=default --reporters=jest-junit
 ```
 
 ## Usage as testResultsProcessor (deprecated)
-The support for `testResultsProcessor` is only kept for [legacy reasons][test-results-processor] and might be removed in the future. 
+The support for `testResultsProcessor` is only kept for [legacy reasons][test-results-processor] and might be removed in the future.
 You should therefore prefer to configure `jest-junit` as a _reporter_.
 
 Should you still want to, add the following entry to your jest config:
@@ -72,7 +75,7 @@ Reporter options should also be strings exception for suiteNameTemplate, classNa
 | `JEST_JUNIT_INCLUDE_CONSOLE_OUTPUT` | `includeConsoleOutput` | Adds console output to any testSuite that generates stdout during a test run. | `false` | N/A
 | `JEST_JUNIT_INCLUDE_SHORT_CONSOLE_OUTPUT` | `includeShortConsoleOutput` | Adds short console output (only message value) to any testSuite that generates stdout during a test run. | `false` | N/A
 | `JEST_JUNIT_REPORT_TEST_SUITE_ERRORS` | `reportTestSuiteErrors` | Reports test suites that failed to execute altogether as `error`. _Note:_ since the suite name cannot be determined from files that fail to load, it will default to file path.| `false` | N/A
-| `JEST_JUNIT_NO_STACK_TRACE` | `noStackTrace` | Omit stack traces from test failure reports, similar to `jest --noStackTrace` | `false` | N/A 
+| `JEST_JUNIT_NO_STACK_TRACE` | `noStackTrace` | Omit stack traces from test failure reports, similar to `jest --noStackTrace` | `false` | N/A
 | `JEST_USE_PATH_FOR_SUITE_NAME` | `usePathForSuiteName` | **DEPRECATED. Use `suiteNameTemplate` instead.** Use file path as the `name` attribute of `<testsuite>` | `"false"` | N/A
 
 
