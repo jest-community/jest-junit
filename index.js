@@ -22,7 +22,12 @@ const processor = (report, reporterOptions = {}, jestRootDir = null) => {
     t.console = consoleBuffer[t.testFilePath];
   });
 
-  const jsonResults = buildJsonResults(report, fs.realpathSync(process.cwd()), options);
+  const jsonResults = buildJsonResults(
+    report,
+    fs.realpathSync(process.cwd()),
+    options,
+    jestRootDir
+  );
 
   let outputPath = getOutputPath(options, jestRootDir);
 
