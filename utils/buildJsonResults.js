@@ -4,6 +4,7 @@ const stripAnsi = require('strip-ansi');
 const constants = require('../constants/index');
 const path = require('path');
 const fs = require('fs');
+const getTestSuitePropertiesPath = require('./getTestSuitePropertiesPath');
 
 // Wrap the varName with template tags
 const toTemplateTag = function (varName) {
@@ -46,9 +47,12 @@ const addErrorTestResult = function (suite) {
   })
 }
 
-module.exports = function (report, appDirectory, options) {
+module.exports = function (report, appDirectory, options, rootDir = null) {
   // Check if there is a junitProperties.js (or whatever they called it)
-  const junitSuitePropertiesFilePath = path.join(process.cwd(), options.testSuitePropertiesFile);
+  const junitSuitePropertiesFilePath = getTestSuitePropertiesPath(
+    options,
+    rootDir,
+  );
   let ignoreSuitePropertiesCheck = !fs.existsSync(junitSuitePropertiesFilePath);
 
   // If the usePathForSuiteName option is true and the

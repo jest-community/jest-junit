@@ -17,7 +17,8 @@ module.exports = {
     JEST_JUNIT_REPORT_TEST_SUITE_ERRORS: 'reportTestSuiteErrors',
     JEST_JUNIT_NO_STACK_TRACE: "noStackTrace",
     JEST_USE_PATH_FOR_SUITE_NAME: 'usePathForSuiteName',
-    JEST_JUNIT_TEST_SUITE_PROPERTIES_JSON_FILE: 'testSuitePropertiesFile'
+    JEST_JUNIT_TEST_SUITE_PROPERTIES_JSON_FILE: 'testSuitePropertiesFile',
+    JEST_JUNIT_TEST_SUITE_PROPERTIES_DIR: 'testSuitePropertiesDirectory',
   },
   DEFAULT_OPTIONS: {
     suiteName: 'jest tests',
@@ -34,7 +35,8 @@ module.exports = {
     includeShortConsoleOutput: 'false',
     reportTestSuiteErrors: 'false',
     noStackTrace: 'false',
-    testSuitePropertiesFile: 'junitProperties.js'
+    testSuitePropertiesFile: 'junitProperties.js',
+    testSuitePropertiesDirectory: process.cwd(),
   },
   SUITENAME_VAR: 'suitename',
   CLASSNAME_VAR: 'classname',

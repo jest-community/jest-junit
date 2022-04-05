@@ -1,5 +1,6 @@
 'use strict';
 
+const fs = require('fs');
 const slash = require('slash');
 const buildJsonResults = require('../utils/buildJsonResults');
 const constants = require('../constants/index');
@@ -396,4 +397,47 @@ describe('buildJsonResults', () => {
 
     expect(jsonResults.testsuites[1].testsuite[2]['system-out']).not.toBeDefined();
   });
+
+  it('should get custom testsuite properties from specified file path', () => {
+    const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
+    jest.mock(
+      '/path/to/properties.js',
+      () => {
+        return jest.fn(() => {
+          return { 'best-tester': 'Johan' };
+        });
+      },
+      { virtual: true },
+    );
+
+    jest.spyOn(fs, 'existsSync');
+    fs.existsSync.mockReturnValue(true);
+
+    const options = {
+      ...constants.DEFAULT_OPTIONS,
+      testSuitePropertiesFile: 'properties.js',
+      testSuitePropertiesDirectory: '<rootDir>',
+    };
+
+    jsonResults = buildJsonResults(
+      noFailingTestsReport,
+      '/',
+      options,
+      '/path/to',
+    );
+
+    expect(jsonResults.testsuites[1].testsuite[1].properties).toEqual(
+      expect.arrayContaining([
+        {
+          property: expect.objectContaining({
+            _attr: expect.objectContaining({
+              name: 'best-tester',
+              value: 'Johan',
+            }),
+          }),
+        },
+      ]),
+    );
+  });
+
 });
