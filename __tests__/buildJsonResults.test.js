@@ -9,7 +9,13 @@ let jsonResults;
 let ignoreJunitErrors = false;
 
 describe('buildJsonResults', () => {
+  beforeEach(() => {
+    jest.spyOn(fs, 'existsSync');
+  })
+
   afterEach(() => {
+    jest.restoreAllMocks();
+
     if (ignoreJunitErrors !== true) {
       // Verify each tests JSON output results in a
       // compliant junit.xml file based on __tests__/lib/junit.xsd (jenkins xsd)
@@ -410,7 +416,6 @@ describe('buildJsonResults', () => {
       { virtual: true },
     );
 
-    jest.spyOn(fs, 'existsSync');
     fs.existsSync.mockReturnValue(true);
 
     const options = {
@@ -439,5 +444,4 @@ describe('buildJsonResults', () => {
       ]),
     );
   });
-
 });
