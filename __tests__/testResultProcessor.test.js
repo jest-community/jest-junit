@@ -47,14 +47,20 @@ describe('jest-junit', () => {
 
   it('should generate valid xml with unique name', () => {
     process.env.JEST_JUNIT_UNIQUE_OUTPUT_NAME = 'true'
+
+    const outputPrefix = "foo"
+
+    process.env.JEST_JUNIT_OUTPUT_NAME = outputPrefix;
     const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
     testResultProcessor(noFailingTestsReport);
 
     // Ensure fs.writeFileSync is called
     expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
 
+    const expectedOutputRegex = new RegExp(`${outputPrefix}-\\S+.xml`, "g")
+
     // Ensure file would have been generated
-    expect(fs.writeFileSync).toHaveBeenLastCalledWith(expect.stringMatching(/junit-\S+\.xml/), expect.any(String));
+    expect(fs.writeFileSync).toHaveBeenLastCalledWith(expect.stringMatching(expectedOutputRegex), expect.any(String));
 
     // Ensure generated file is valid xml
     const xmlDoc = libxmljs.parseXml(fs.writeFileSync.mock.calls[0][1]);

@@ -31,6 +31,23 @@ describe('getOptions', () => {
   });
 });
 
+describe('getUniqueOutputName', () =>{
+  const defaultPrefix = 'junit'
+
+  it(`should return default ${defaultPrefix} value if given no preferred prefix`, () => {
+    const uniqueOutput = getOptions.getUniqueOutputName()
+    expect(uniqueOutput).toContain(defaultPrefix)
+  })
+
+  it(`should return apply custom prefix value if given prefix`, () => {
+    const customPrefix = "foo"
+    const uniqueOutput = getOptions.getUniqueOutputName(customPrefix)
+    expect(uniqueOutput).not.toContain(defaultPrefix)
+    expect(uniqueOutput).toContain(customPrefix)
+  })
+
+})
+
 describe('replace <rootDir>', () => {
   it('should replace <rootDir> in output path', () => {
     const rootDir = 'testRootDir';
