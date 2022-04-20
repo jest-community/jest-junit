@@ -99,7 +99,7 @@ module.exports = function (report, appDirectory, options, rootDir = null) {
     }
 
     // Build variables for suite name
-    const filepath = path.relative(appDirectory, suite.testFilePath);
+    const filepath = path.join(suiteOptions.filePathPrefix, path.relative(appDirectory, suite.testFilePath));
     const filename = path.basename(filepath);
     const suiteTitle = suite.testResults[0].ancestorTitles[0];
     const displayName = typeof suite.displayName === 'object'
