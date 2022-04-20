@@ -21,7 +21,7 @@ jest.mock('fs', () => {
 });
 
 const fs = require('fs');
-const libxmljs = require('libxmljs');
+const libxmljs = require('libxmljs2');
 const path = require('path');
 
 const testResultProcessor = require('../');

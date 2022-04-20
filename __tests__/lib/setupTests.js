@@ -1,7 +1,7 @@
 const xml = require('xml');
 const path = require('path');
 const fs = require('fs');
-const libxmljs = require('libxmljs');
+const libxmljs = require('libxmljs2');
 
 const schemaPath = path.join(__dirname, 'junit.xsd');
 const schemaStr = fs.readFileSync(schemaPath);
