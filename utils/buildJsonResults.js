@@ -216,9 +216,22 @@ module.exports = function (report, appDirectory, options, rootDir = null) {
       testSuite.testsuite.push(testSuitePropertyMain);
     }
 
+    // We have all tests passed but a failure in a test hook like in the `beforeAll` method
     if (suite.numFailingTests === 0 && suite.testExecError !== undefined) {
-      const fakeTC = {status: testFailureStatus, failureMessages:[JSON.stringify(suite.testExecError)], classname: undefined, title:"Test execution failure"}
-      const testCase = generateTestCase(fakeTC, filepath, filename, suiteTitle, displayName);
+      const fakeTC = {
+        status: testFailureStatus,
+        failureMessages: [JSON.stringify(suite.testExecError)],
+        classname: undefined,
+        title: "Test hook execution failure",
+        duration: 0,
+      };
+      const testCase = generateTestCase(
+        fakeTC,
+        filepath,
+        filename,
+        suiteTitle,
+        displayName
+      );
       testSuite.testsuite.push(testCase);
     }
 
