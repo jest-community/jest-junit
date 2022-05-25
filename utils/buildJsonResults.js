@@ -35,6 +35,58 @@ const executionTime = function (startTime, endTime) {
   return (endTime - startTime) / 1000;
 }
 
+const generateTestCase = function(tc, filepath, filename, suiteTitle, displayName){
+  const classname = tc.ancestorTitles.join(suiteOptions.ancestorSeparator);
+  const testTitle = tc.title;
+
+  // Build replacement map
+  let testVariables = {};
+  testVariables[constants.FILEPATH_VAR] = filepath;
+  testVariables[constants.FILENAME_VAR] = filename;
+  testVariables[constants.SUITENAME_VAR] = suiteTitle;
+  testVariables[constants.CLASSNAME_VAR] = classname;
+  testVariables[constants.TITLE_VAR] = testTitle;
+  testVariables[constants.DISPLAY_NAME_VAR] = displayName;
+
+  let testCase = {
+    'testcase': [{
+      _attr: {
+        classname: replaceVars(suiteOptions.classNameTemplate, testVariables),
+        name: replaceVars(suiteOptions.titleTemplate, testVariables),
+        time: tc.duration / 1000
+      }
+    }]
+  };
+
+  if (suiteOptions.addFileAttribute === 'true') {
+    testCase.testcase[0]._attr.file = filepath;
+  }
+
+  // Write out all failure messages as <failure> tags
+  // Nested underneath <testcase> tag
+  if (tc.status === 'failed'|| tc.status === 'error') {
+    const failureMessages = options.noStackTrace === 'true' && tc.failureDetails ?
+        tc.failureDetails.map(detail => detail.message) : tc.failureMessages;
+
+    failureMessages.forEach((failure) => {
+      const tagName = tc.status === 'failed' ? 'failure': 'error'
+      testCase.testcase.push({
+        [tagName]: stripAnsi(failure)
+      });
+    })
+  }
+
+  // Write out a <skipped> tag if test is skipped
+  // Nested underneath <testcase> tag
+  if (tc.status === 'pending') {
+    testCase.testcase.push({
+      skipped: {}
+    });
+  }
+
+  return testCase;
+}
+
 const addErrorTestResult = function (suite) {
   suite.testResults.push({
     "ancestorTitles": [],
@@ -162,93 +214,14 @@ module.exports = function (report, appDirectory, options, rootDir = null) {
     }
 
     if (suite.numFailingTests === 0 && suite.testExecError !== undefined) {
-      try {
-        let testVariables = {};
-        testVariables[constants.FILEPATH_VAR] = filepath;
-        testVariables[constants.FILENAME_VAR] = filename;
-        testVariables[constants.SUITENAME_VAR] = suiteTitle;
-        testVariables[constants.CLASSNAME_VAR] = "testHookFailure";
-        testVariables[constants.TITLE_VAR] = "testHookFailure";
-        testVariables[constants.DISPLAY_NAME_VAR] = displayName;
-
-        let testCase = {
-          testcase: [
-            {
-              _attr: {
-                classname: replaceVars(
-                  suiteOptions.classNameTemplate,
-                  testVariables
-                ),
-                name: replaceVars(suiteOptions.titleTemplate, testVariables),
-                file: filepath,
-                time: 0,
-              },
-            },
-          ],
-        };
-
-        testCase.testcase.push({
-          failure: stripAnsi(JSON.stringify(suite.testExecError)),
-        });
-
-        testSuite.testsuite.push(testCase);
-      } catch (error) {
-        console.log(
-          `Unable to add junit result for test hook failure : ${suite.testExecError}`
-        );
-      }
+      const fakeTC = {status: "failure", failureMessages:[JSON.stringify(suite.testExecError)], classname: undefined, title:"Test execution failure"}
+      const testCase = generateTestCase(fakeTC, filepath, filename, suiteTitle, displayName);
+      testSuite.testsuite.push(testCase);
     }
 
     // Iterate through test cases
     suite.testResults.forEach((tc) => {
-      const classname = tc.ancestorTitles.join(suiteOptions.ancestorSeparator);
-      const testTitle = tc.title;
-
-      // Build replacement map
-      let testVariables = {};
-      testVariables[constants.FILEPATH_VAR] = filepath;
-      testVariables[constants.FILENAME_VAR] = filename;
-      testVariables[constants.SUITENAME_VAR] = suiteTitle;
-      testVariables[constants.CLASSNAME_VAR] = classname;
-      testVariables[constants.TITLE_VAR] = testTitle;
-      testVariables[constants.DISPLAY_NAME_VAR] = displayName;
-
-      let testCase = {
-        'testcase': [{
-          _attr: {
-            classname: replaceVars(suiteOptions.classNameTemplate, testVariables),
-            name: replaceVars(suiteOptions.titleTemplate, testVariables),
-            time: tc.duration / 1000
-          }
-        }]
-      };
-
-      if (suiteOptions.addFileAttribute === 'true') {
-        testCase.testcase[0]._attr.file = filepath;
-      }
-
-      // Write out all failure messages as <failure> tags
-      // Nested underneath <testcase> tag
-      if (tc.status === 'failed'|| tc.status === 'error') {
-        const failureMessages = options.noStackTrace === 'true' && tc.failureDetails ?
-            tc.failureDetails.map(detail => detail.message) : tc.failureMessages;
-
-        failureMessages.forEach((failure) => {
-          const tagName = tc.status === 'failed' ? 'failure': 'error'
-          testCase.testcase.push({
-            [tagName]: stripAnsi(failure)
-          });
-        })
-      }
-
-      // Write out a <skipped> tag if test is skipped
-      // Nested underneath <testcase> tag
-      if (tc.status === 'pending') {
-        testCase.testcase.push({
-          skipped: {}
-        });
-      }
-
+      const testCase = generateTestCase(tc, filepath, filename, suiteTitle, displayName)
       testSuite.testsuite.push(testCase);
     });
 
