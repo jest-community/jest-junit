@@ -181,20 +181,6 @@ describe('buildJsonResults', () => {
     expect(errorSuite.testcase[1].error).toContain("Cannot find module './mult'");
   });
 
-  it('should report empty suites as error', () => {
-    const failingTestsReport = require('../__mocks__/empty-suite.json');
-
-    jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
-        Object.assign({}, constants.DEFAULT_OPTIONS, {
-          reportTestSuiteErrors: "true"
-        }));
-
-    const errorSuite = jsonResults.testsuites[1].testsuite[2];
-    expect(slash(errorSuite.testcase[0]._attr.name)).toEqual('../spec/test.spec.ts');
-    expect(errorSuite.testcase[0]._attr.classname).toEqual('Test suite failed to run');
-    expect(errorSuite.testcase[1].error).toContain("Your test suite must contain at least one test");
-  });
-
     it('should include a failing testcase from a suite with passing testcases but  a failure from "testExec" ', () => {
     const failingTestsReport = require('../__mocks__/no-failing-tests-with-testexec-failure.json');
 
