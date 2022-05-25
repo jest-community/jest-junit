@@ -38,7 +38,7 @@ const executionTime = function (startTime, endTime) {
   return (endTime - startTime) / 1000;
 }
 
-const generateTestCase = function(tc, filepath, filename, suiteTitle, displayName){
+const generateTestCase = function(junitOptions, suiteOptions, tc, filepath, filename, suiteTitle, displayName){
   const classname = tc.ancestorTitles.join(suiteOptions.ancestorSeparator);
   const testTitle = tc.title;
 
@@ -68,7 +68,7 @@ const generateTestCase = function(tc, filepath, filename, suiteTitle, displayNam
   // Write out all failure messages as <failure> tags
   // Nested underneath <testcase> tag
   if (tc.status === testFailureStatus || tc.status === testErrorStatus) {
-    const failureMessages = options.noStackTrace === 'true' && tc.failureDetails ?
+    const failureMessages = junitOptions.noStackTrace === 'true' && tc.failureDetails ?
         tc.failureDetails.map(detail => detail.message) : tc.failureMessages;
 
     failureMessages.forEach((failure) => {
@@ -216,6 +216,12 @@ module.exports = function (report, appDirectory, options, rootDir = null) {
       testSuite.testsuite.push(testSuitePropertyMain);
     }
 
+    // Iterate through test cases
+    suite.testResults.forEach((tc) => {
+      const testCase = generateTestCase(options, suiteOptions, tc, filepath, filename, suiteTitle, displayName)
+      testSuite.testsuite.push(testCase);
+    });
+
     // We have all tests passed but a failure in a test hook like in the `beforeAll` method
     if (suite.numFailingTests === 0 && suite.testExecError !== undefined) {
       const fakeTC = {
@@ -223,9 +229,12 @@ module.exports = function (report, appDirectory, options, rootDir = null) {
         failureMessages: [JSON.stringify(suite.testExecError)],
         classname: undefined,
         title: "Test hook execution failure",
+        ancestorTitles: [""],
         duration: 0,
       };
       const testCase = generateTestCase(
+        options,
+        suiteOptions,
         fakeTC,
         filepath,
         filename,
@@ -234,12 +243,6 @@ module.exports = function (report, appDirectory, options, rootDir = null) {
       );
       testSuite.testsuite.push(testCase);
     }
-
-    // Iterate through test cases
-    suite.testResults.forEach((tc) => {
-      const testCase = generateTestCase(tc, filepath, filename, suiteTitle, displayName)
-      testSuite.testsuite.push(testCase);
-    });
 
     // Write stdout console output if available
     if (suiteOptions.includeConsoleOutput === 'true' && suite.console && suite.console.length) {
