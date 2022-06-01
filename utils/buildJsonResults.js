@@ -229,7 +229,7 @@ module.exports = function (report, appDirectory, options, rootDir = null) {
         status: testFailureStatus,
         failureMessages: [JSON.stringify(suite.testExecError)],
         classname: undefined,
-        title: "Test hook execution failure",
+        title: "Test execution failure: could be caused by test hooks like 'afterAll'.",
         ancestorTitles: [""],
         duration: 0,
       };
