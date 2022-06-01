@@ -188,7 +188,7 @@ describe('buildJsonResults', () => {
         Object.assign({}, constants.DEFAULT_OPTIONS, {}));
 
     const errorSuite = jsonResults.testsuites[1].testsuite[3];
-    expect(slash(errorSuite.testcase[0]._attr.name)).toContain('Test hook execution failure');
+    expect(slash(errorSuite.testcase[0]._attr.name)).toContain('Test execution failure');
     expect(errorSuite.testcase[1].failure).toContain("beforeAll has crashed");
   });
 
