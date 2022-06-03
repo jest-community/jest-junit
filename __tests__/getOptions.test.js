@@ -3,6 +3,18 @@ const path = require('path');
 
 const getOptions = require('../utils/getOptions.js');
 
+
+const rootPath = path.parse(process.cwd()).root
+const rootPackageJsonMock = path.join(rootPath, "package.json");
+
+const mockPackageJson = {
+  name: 'foo',
+  version: '1.0.0',
+  'jest-junit': {
+    suiteName: 'test suite'
+  }
+}
+
 jest.mock('fs', () => {
   return Object.assign(
     {},
@@ -15,19 +27,14 @@ jest.mock('fs', () => {
 
 // Mock return of require('/package.json')
 // Virtual because it doesn't actually exist
-jest.mock('/package.json', () => {
-  return {
-    name: 'foo',
-    version: '1.0.0',
-    'jest-junit': {
-      suiteName: 'test suite'
-    }
-  }
+jest.doMock(rootPackageJsonMock, () => {
+  return mockPackageJson
 }, {virtual: true});
 
 describe('getOptions', () => {
-  it ('should support package.json in /', () => {
-
+  it ('should support package.json in root directory', () => {
+    const options = getOptions.getAppOptions(rootPath)
+    expect(options).toBe(mockPackageJson['jest-junit'])
   });
 });
 

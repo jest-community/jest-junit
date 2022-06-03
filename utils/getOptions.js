@@ -23,14 +23,23 @@ function getEnvOptions() {
 function getAppOptions(pathToResolve) {
   let traversing = true;
 
-  // Find nearest package.json by traversing up directories until /
+  // Get the root dir to detect when we reached the end to our search
+  const rootDir = path.parse(pathToResolve).root
+
+  // Find nearest package.json by traversing up directories until root
   while(traversing) {
-    traversing = pathToResolve !== path.sep;
+    traversing = pathToResolve !== rootDir;
 
     const pkgpath = path.join(pathToResolve, 'package.json');
 
     if (fs.existsSync(pkgpath)) {
-      let options = (require(pkgpath) || {})['jest-junit'];
+      let options;
+
+      try {
+        options = (require(pkgpath) || {})['jest-junit'];
+      } catch (error) {
+        console.warn(`Unable to import package.json to get app Options : ${error}`)
+      }
 
       if (Object.prototype.toString.call(options) !== '[object Object]') {
         options = {};
