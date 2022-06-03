@@ -161,44 +161,6 @@ module.exports = function (report, appDirectory, options, rootDir = null) {
       testSuite.testsuite.push(testSuitePropertyMain);
     }
 
-    if (suite.numFailingTests === 0 && suite.testExecError !== undefined) {
-      try {
-        let testVariables = {};
-        testVariables[constants.FILEPATH_VAR] = filepath;
-        testVariables[constants.FILENAME_VAR] = filename;
-        testVariables[constants.SUITENAME_VAR] = suiteTitle;
-        testVariables[constants.CLASSNAME_VAR] = "testHookFailure";
-        testVariables[constants.TITLE_VAR] = "testHookFailure";
-        testVariables[constants.DISPLAY_NAME_VAR] = displayName;
-
-        let testCase = {
-          testcase: [
-            {
-              _attr: {
-                classname: replaceVars(
-                  suiteOptions.classNameTemplate,
-                  testVariables
-                ),
-                name: replaceVars(suiteOptions.titleTemplate, testVariables),
-                file: filepath,
-                time: 0,
-              },
-            },
-          ],
-        };
-
-        testCase.testcase.push({
-          failure: stripAnsi(JSON.stringify(suite.testExecError)),
-        });
-
-        testSuite.testsuite.push(testCase);
-      } catch (error) {
-        console.log(
-          `Unable to add junit result for test hook failure : ${suite.testExecError}`
-        );
-      }
-    }
-
     // Iterate through test cases
     suite.testResults.forEach((tc) => {
       const classname = tc.ancestorTitles.join(suiteOptions.ancestorSeparator);
