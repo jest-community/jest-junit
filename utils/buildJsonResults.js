@@ -11,6 +11,9 @@ const toTemplateTag = function (varName) {
   return "{" + varName + "}";
 }
 
+const testFailureStatus = 'failed';
+const testErrorStatus = 'error';
+
 // Replaces var using a template string or a function.
 // When strOrFunc is a template string replaces {varname} with the value from the variables map.
 // When strOrFunc is a function it returns the result of the function to which the variables are passed.
@@ -35,6 +38,58 @@ const executionTime = function (startTime, endTime) {
   return (endTime - startTime) / 1000;
 }
 
+const generateTestCase = function(junitOptions, suiteOptions, tc, filepath, filename, suiteTitle, displayName){
+  const classname = tc.ancestorTitles.join(suiteOptions.ancestorSeparator);
+  const testTitle = tc.title;
+
+  // Build replacement map
+  let testVariables = {};
+  testVariables[constants.FILEPATH_VAR] = filepath;
+  testVariables[constants.FILENAME_VAR] = filename;
+  testVariables[constants.SUITENAME_VAR] = suiteTitle;
+  testVariables[constants.CLASSNAME_VAR] = classname;
+  testVariables[constants.TITLE_VAR] = testTitle;
+  testVariables[constants.DISPLAY_NAME_VAR] = displayName;
+
+  let testCase = {
+    'testcase': [{
+      _attr: {
+        classname: replaceVars(suiteOptions.classNameTemplate, testVariables),
+        name: replaceVars(suiteOptions.titleTemplate, testVariables),
+        time: tc.duration / 1000
+      }
+    }]
+  };
+
+  if (suiteOptions.addFileAttribute === 'true') {
+    testCase.testcase[0]._attr.file = filepath;
+  }
+
+  // Write out all failure messages as <failure> tags
+  // Nested underneath <testcase> tag
+  if (tc.status === testFailureStatus || tc.status === testErrorStatus) {
+    const failureMessages = junitOptions.noStackTrace === 'true' && tc.failureDetails ?
+        tc.failureDetails.map(detail => detail.message) : tc.failureMessages;
+
+    failureMessages.forEach((failure) => {
+      const tagName = tc.status === testFailureStatus ? 'failure': testErrorStatus
+      testCase.testcase.push({
+        [tagName]: stripAnsi(failure)
+      });
+    })
+  }
+
+  // Write out a <skipped> tag if test is skipped
+  // Nested underneath <testcase> tag
+  if (tc.status === 'pending') {
+    testCase.testcase.push({
+      skipped: {}
+    });
+  }
+
+  return testCase;
+}
+
 const addErrorTestResult = function (suite) {
   suite.testResults.push({
     "ancestorTitles": [],
@@ -43,7 +98,7 @@ const addErrorTestResult = function (suite) {
       suite.failureMessage
     ],
     "numPassingAsserts": 0,
-    "status": "error"
+    "status": testErrorStatus
   })
 }
 
@@ -163,56 +218,32 @@ module.exports = function (report, appDirectory, options, rootDir = null) {
 
     // Iterate through test cases
     suite.testResults.forEach((tc) => {
-      const classname = tc.ancestorTitles.join(suiteOptions.ancestorSeparator);
-      const testTitle = tc.title;
-
-      // Build replacement map
-      let testVariables = {};
-      testVariables[constants.FILEPATH_VAR] = filepath;
-      testVariables[constants.FILENAME_VAR] = filename;
-      testVariables[constants.SUITENAME_VAR] = suiteTitle;
-      testVariables[constants.CLASSNAME_VAR] = classname;
-      testVariables[constants.TITLE_VAR] = testTitle;
-      testVariables[constants.DISPLAY_NAME_VAR] = displayName;
-
-      let testCase = {
-        'testcase': [{
-          _attr: {
-            classname: replaceVars(suiteOptions.classNameTemplate, testVariables),
-            name: replaceVars(suiteOptions.titleTemplate, testVariables),
-            time: tc.duration / 1000
-          }
-        }]
-      };
-
-      if (suiteOptions.addFileAttribute === 'true') {
-        testCase.testcase[0]._attr.file = filepath;
-      }
-
-      // Write out all failure messages as <failure> tags
-      // Nested underneath <testcase> tag
-      if (tc.status === 'failed'|| tc.status === 'error') {
-        const failureMessages = options.noStackTrace === 'true' && tc.failureDetails ?
-            tc.failureDetails.map(detail => detail.message) : tc.failureMessages;
-
-        failureMessages.forEach((failure) => {
-          const tagName = tc.status === 'failed' ? 'failure': 'error'
-          testCase.testcase.push({
-            [tagName]: stripAnsi(failure)
-          });
-        })
-      }
-
-      // Write out a <skipped> tag if test is skipped
-      // Nested underneath <testcase> tag
-      if (tc.status === 'pending') {
-        testCase.testcase.push({
-          skipped: {}
-        });
-      }
-
+      const testCase = generateTestCase(options, suiteOptions, tc, filepath, filename, suiteTitle, displayName)
       testSuite.testsuite.push(testCase);
     });
+
+    // We have all tests passed but a failure in a test hook like in the `beforeAll` method
+    // Make sure we log them since Jest still reports the suite as failed
+    if (suite.testExecError !== undefined) {
+      const fakeTC = {
+        status: testFailureStatus,
+        failureMessages: [JSON.stringify(suite.testExecError)],
+        classname: undefined,
+        title: "Test execution failure: could be caused by test hooks like 'afterAll'.",
+        ancestorTitles: [""],
+        duration: 0,
+      };
+      const testCase = generateTestCase(
+        options,
+        suiteOptions,
+        fakeTC,
+        filepath,
+        filename,
+        suiteTitle,
+        displayName
+      );
+      testSuite.testsuite.push(testCase);
+    }
 
     // Write stdout console output if available
     if (suiteOptions.includeConsoleOutput === 'true' && suite.console && suite.console.length) {
