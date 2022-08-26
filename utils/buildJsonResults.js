@@ -224,7 +224,7 @@ module.exports = function (report, appDirectory, options, rootDir = null) {
 
     // We have all tests passed but a failure in a test hook like in the `beforeAll` method
     // Make sure we log them since Jest still reports the suite as failed
-    if (suite.testExecError !== undefined) {
+    if (suite.testExecError != null) {
       const fakeTC = {
         status: testFailureStatus,
         failureMessages: [JSON.stringify(suite.testExecError)],

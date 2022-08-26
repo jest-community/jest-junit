@@ -181,7 +181,7 @@ describe('buildJsonResults', () => {
     expect(errorSuite.testcase[1].error).toContain("Cannot find module './mult'");
   });
 
-    it('should include a failing testcase from a suite with passing testcases but  a failure from "testExec" ', () => {
+  it('should include a failing testcase from a suite with passing testcases but a failure from "testExecError" ', () => {
     const failingTestsReport = require('../__mocks__/no-failing-tests-with-testexec-failure.json');
 
     jsonResults = buildJsonResults(failingTestsReport, '/path/to/test',
@@ -190,6 +190,16 @@ describe('buildJsonResults', () => {
     const errorSuite = jsonResults.testsuites[1].testsuite[3];
     expect(slash(errorSuite.testcase[0]._attr.name)).toContain('Test execution failure');
     expect(errorSuite.testcase[1].failure).toContain("beforeAll has crashed");
+  });
+
+  it('should not include a failing testcase from a suite with passing testcases but a null value from "testExecError" ', () => {
+    const notFailingTestsReport = require('../__mocks__/no-failing-tests-with-testexec-null.json');
+
+    jsonResults = buildJsonResults(notFailingTestsReport, '/path/to/test',
+        Object.assign({}, constants.DEFAULT_OPTIONS, {}));
+
+    expect(jsonResults.testsuites[1].testsuite[2].testcase.length).toBe(1);
+    expect(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.name).toEqual('foo baz should bar');
   });
 
   it('should report empty suites as error', () => {

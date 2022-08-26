@@ -1,0 +1,65 @@
+{
+  "numFailedTestSuites": 0,
+  "numFailedTests": 0,
+  "numPassedTestSuites": 1,
+  "numPassedTests": 1,
+  "numPendingTestSuites": 0,
+  "numPendingTests": 0,
+  "numRuntimeErrorTestSuites": 0,
+  "numTotalTestSuites": 1,
+  "numTotalTests": 1,
+  "snapshot": {
+    "added": 0,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "unmatched": 0,
+    "updated": 0
+  },
+  "startTime": 1489712747092,
+  "success": true,
+  "testResults": [
+    {
+      "console": null,
+      "failureMessage": null,
+      "testExecError": null,
+      "numFailingTests": 0,
+      "numPassingTests": 1,
+      "numPendingTests": 0,
+      "perfStats": {
+        "end": 1489712747644,
+        "start": 1489712747524
+      },
+      "snapshot": {
+        "added": 0,
+        "fileDeleted": false,
+        "matched": 0,
+        "unchecked": 0,
+        "unmatched": 0,
+        "updated": 0
+      },
+      "testFilePath": "/path/to/test/__tests__/foo.test.js",
+      "testResults": [
+        {
+          "ancestorTitles": [
+            "foo",
+            "baz"
+          ],
+          "duration": 1,
+          "failureMessages": [],
+          "fullName": "foo baz should bar",
+          "numPassingAsserts": 0,
+          "status": "passed",
+          "title": "should bar"
+        }
+      ],
+      "skipped": false
+    }
+  ],
+  "wasInterrupted": false
+}
