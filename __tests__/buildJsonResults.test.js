@@ -330,8 +330,8 @@ describe('buildJsonResults', () => {
     const failureMsg = jsonResults.testsuites[1].testsuite[2].testcase[1].failure;
 
     // Make sure no escape codes are there that exist in the mock
-    expect(failureMsg[0]._attr.message).toMatch('Should fail');
     expect(failureMsg[1].includes('\u001b')).toBe(false);
+    expect(failureMsg[0]._attr.message).toMatch('Should fail');
     expect(failureMsg[1]).toMatch('at _callee$ (path/to/failing.test.js:26:15)');
     expect(failureMsg[1]).toMatch('at path/to/failing.test.js:2:554');
 
