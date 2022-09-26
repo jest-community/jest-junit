@@ -71,13 +71,13 @@ const generateTestCase = function(junitOptions, suiteOptions, tc, filepath, file
     
     const failureMessages =  tc.failureDetails ? tc.failureDetails.map(detail => ({
       message: detail.message,
-      stack: junitOptions.noStackTrace === "true" ? "" : detail.stack,
+      stack: junitOptions.noStackTrace === "true" ? undefined : detail.stack,
     })) : tc.failureMessages;
 
     failureMessages.forEach((failure) => {
       const tagName = tc.status === testFailureStatus ? 'failure': testErrorStatus
       testCase.testcase.push({
-        [tagName]: typeof failure === "string" ? stripAnsi(failure): [{ _attr: {message: failure.message} }, stripAnsi(failure.stack)]
+        [tagName]: typeof failure === "string" ? stripAnsi(failure):  [{ _attr: {message: stripAnsi(failure.message)} }, stripAnsi(failure.stack)]
       });
     })
   }

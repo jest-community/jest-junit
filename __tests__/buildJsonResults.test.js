@@ -314,11 +314,10 @@ describe('buildJsonResults', () => {
     const failureStack = failureInstance[1]
 
     // Make sure no escape codes are there that exist in the mock
-    expect(failureStack.includes('\u001b')).toBe(false);
+    expect(failureStack).toBe(undefined);
     expect(failureMsg).toMatch('Should fail');
     expect(failureMsg).not.toMatch('at _callee$ (path/to/failing.test.js:26:15)');
     expect(failureMsg).not.toMatch('at path/to/failing.test.js:2:554');
-
   });
 
   it('should parse messages with stack trace when notStackTrace set to false and jest >= 26.3.0', () => {
