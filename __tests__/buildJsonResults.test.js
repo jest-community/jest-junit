@@ -308,14 +308,16 @@ describe('buildJsonResults', () => {
         noStackTrace: "true"
       }));
 
-    const failureMsg = jsonResults.testsuites[1].testsuite[2].testcase[1].failure;
+    const failureInstance = jsonResults.testsuites[1].testsuite[2].testcase[1].failure
+
+    const failureMsg = failureInstance[0]._attr.message;
+    const failureStack = failureInstance[1]
 
     // Make sure no escape codes are there that exist in the mock
-    expect(failureMsg.includes('\u001b')).toBe(false);
+    expect(failureStack).toBe(undefined);
     expect(failureMsg).toMatch('Should fail');
     expect(failureMsg).not.toMatch('at _callee$ (path/to/failing.test.js:26:15)');
     expect(failureMsg).not.toMatch('at path/to/failing.test.js:2:554');
-
   });
 
   it('should parse messages with stack trace when notStackTrace set to false and jest >= 26.3.0', () => {
@@ -328,10 +330,10 @@ describe('buildJsonResults', () => {
     const failureMsg = jsonResults.testsuites[1].testsuite[2].testcase[1].failure;
 
     // Make sure no escape codes are there that exist in the mock
-    expect(failureMsg.includes('\u001b')).toBe(false);
-    expect(failureMsg).toMatch('Should fail');
-    expect(failureMsg).toMatch('at _callee$ (path/to/failing.test.js:26:15)');
-    expect(failureMsg).toMatch('at path/to/failing.test.js:2:554');
+    expect(failureMsg[1].includes('\u001b')).toBe(false);
+    expect(failureMsg[0]._attr.message).toMatch('Should fail');
+    expect(failureMsg[1]).toMatch('at _callee$ (path/to/failing.test.js:26:15)');
+    expect(failureMsg[1]).toMatch('at path/to/failing.test.js:2:554');
 
   });
 

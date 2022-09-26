@@ -68,13 +68,16 @@ const generateTestCase = function(junitOptions, suiteOptions, tc, filepath, file
   // Write out all failure messages as <failure> tags
   // Nested underneath <testcase> tag
   if (tc.status === testFailureStatus || tc.status === testErrorStatus) {
-    const failureMessages = junitOptions.noStackTrace === 'true' && tc.failureDetails ?
-        tc.failureDetails.map(detail => detail.message) : tc.failureMessages;
+    
+    const failureMessages =  tc.failureDetails ? tc.failureDetails.map(detail => ({
+      message: detail.message,
+      stack: junitOptions.noStackTrace === "true" ? undefined : detail.stack,
+    })) : tc.failureMessages;
 
     failureMessages.forEach((failure) => {
       const tagName = tc.status === testFailureStatus ? 'failure': testErrorStatus
       testCase.testcase.push({
-        [tagName]: stripAnsi(failure)
+        [tagName]: typeof failure === "string" ? stripAnsi(failure):  [{ _attr: {message: stripAnsi(failure.message)} }, stripAnsi(failure.stack)]
       });
     })
   }
