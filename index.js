@@ -34,12 +34,8 @@ const processor = (report, reporterOptions = {}, jestRootDir = null) => {
   // Ensure output path exists
   mkdirp.sync(path.dirname(outputPath));
 
-  // Clean ESC character, which is invalid XML and some libraries include in error messages
-  const xmlString = xml(jsonResults, { indent: '  ', declaration: true });
-  const cleanedXmlString = xmlString.replace(/\u001b/g, '');
-
   // Write data to file
-  fs.writeFileSync(outputPath, cleanedXmlString);
+  fs.writeFileSync(outputPath, xml(jsonResults, { indent: '  ', declaration: true }));
 
   // Jest 18 compatibility
   return report;
