@@ -35,15 +35,13 @@ describe('jest-junit', () => {
   });
 
   afterEach(() => {
+    jest.clearAllMocks();
+
     for (let key in process.env) {
       if (key.startsWith('JEST_JUNIT')) {
         delete process.env[key];
       }
     }
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
   });
 
   it('should generate valid xml with default name', () => {
