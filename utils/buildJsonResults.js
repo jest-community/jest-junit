@@ -74,7 +74,7 @@ const generateTestCase = function(junitOptions, suiteOptions, tc, filepath, file
     failureMessages.forEach((failure) => {
       const tagName = tc.status === testFailureStatus ? 'failure': testErrorStatus
       testCase.testcase.push({
-        [tagName]: stripAnsi(failure)
+        [tagName]: strip(failure)
       });
     })
   }
@@ -100,6 +100,11 @@ const addErrorTestResult = function (suite) {
     "numPassingAsserts": 0,
     "status": testErrorStatus
   })
+}
+
+// Strips escape codes for readability and illegal XML characters to produce valid output.
+const strip = function (str) {
+  return stripAnsi(str).replace(/\u001b/g, '');
 }
 
 module.exports = function (report, appDirectory, options, rootDir = null) {
