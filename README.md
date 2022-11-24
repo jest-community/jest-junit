@@ -108,9 +108,9 @@ Or you can define your options in your reporter configuration.
 ```js
 // jest.config.js
 {
-	reporters: [
-      "default",
-    	[ "jest-junit", { suiteName: "jest tests" } ]
+  reporters: [
+    "default",
+    [ "jest-junit", { suiteName: "jest tests" } ]
   ]
 }
 ```
@@ -235,9 +235,9 @@ New feature as of jest-junit 11.0.0!
 Create a file in your project root directory named junitProperties.js:
 ```js
 module.exports = () => {
-    return {
-       key: "value"
-    }
+  return {
+    key: "value"
+  }
 });
 ```
 
@@ -246,7 +246,7 @@ Will render
 <testsuites name="jest tests">
   <testsuite name="addition" tests="1" errors="0" failures="0" skipped="0" timestamp="2017-07-13T09:42:28" time="0.161">
     <properties>
-        <property name="key" value="value" />
+      <property name="key" value="value" />
     </properties>
     <testcase classname="addition positive numbers should add up" name="addition positive numbers should add up" time="0.004">
     </testcase>
