@@ -51,13 +51,14 @@ const generateTestCase = function(junitOptions, suiteOptions, tc, filepath, file
   testVariables[constants.TITLE_VAR] = testTitle;
   testVariables[constants.DISPLAY_NAME_VAR] = displayName;
 
+  let tempTitle = replaceVars(suiteOptions.titleTemplate, testVariables)
   let testCase = {
     'testcase': [{
       _attr: {
         classname: replaceVars(suiteOptions.classNameTemplate, testVariables),
         name: replaceVars(suiteOptions.titleTemplate, testVariables),
         time: tc.duration / 1000,
-        properties: tc.testFilePath
+        properties: tempTitle.substring(0,tempTitle.indexOf("/"))
       }
     }]
   };
