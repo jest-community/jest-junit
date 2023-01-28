@@ -56,7 +56,8 @@ const generateTestCase = function(junitOptions, suiteOptions, tc, filepath, file
       _attr: {
         classname: replaceVars(suiteOptions.classNameTemplate, testVariables),
         name: replaceVars(suiteOptions.titleTemplate, testVariables),
-        time: tc.duration / 1000
+        time: tc.duration / 1000,
+        properties: tc.testFilePath
       }
     }]
   };
