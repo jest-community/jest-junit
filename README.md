@@ -257,7 +257,6 @@ Will render
 ```
 
 #### Adding custom testcase properties
-New feature as of jest-junit 11.0.0!
 
 Create a file in your project root directory named junitTestCaseProperties.js:
 ```js
