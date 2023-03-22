@@ -75,7 +75,9 @@ Reporter options should also be strings exception for suiteNameTemplate, classNa
 | `JEST_JUNIT_REPORT_TEST_SUITE_ERRORS` | `reportTestSuiteErrors` | Reports test suites that failed to execute altogether as `error`. _Note:_ since the suite name cannot be determined from files that fail to load, it will default to file path.| `false` | N/A
 | `JEST_JUNIT_NO_STACK_TRACE` | `noStackTrace` | Omit stack traces from test failure reports, similar to `jest --noStackTrace` | `false` | N/A
 | `JEST_USE_PATH_FOR_SUITE_NAME` | `usePathForSuiteName` | **DEPRECATED. Use `suiteNameTemplate` instead.** Use file path as the `name` attribute of `<testsuite>` | `"false"` | N/A
-| `JEST_JUNIT_TEST_SUITE_PROPERTIES_JSON_FILE` | `testSuitePropertiesFile` | Name of the custom testsuite properties file | `"junitProperties.js"` | N/A
+| `JEST_JUNIT_TEST_CASE_PROPERTIES_JSON_FILE` | `testCasePropertiesFile` | Name of the custom testcase properties file | `"junitProperties.js"` | N/A
+| `JEST_JUNIT_TEST_CASE_PROPERTIES_DIR` | `testCasePropertiesDirectory` | Location of the custom testcase properties file | `process.cwd()` | N/A
+| `JEST_JUNIT_TEST_SUITE_PROPERTIES_JSON_FILE` | `testSuitePropertiesFile` | Name of the custom testsuite properties file | `"junitTestCaseProperties.js"` | N/A
 | `JEST_JUNIT_TEST_SUITE_PROPERTIES_DIR` | `testSuitePropertiesDirectory` | Location of the custom testsuite properties file | `process.cwd()` | N/A
 
 
@@ -236,9 +238,9 @@ Create a file in your project root directory named junitProperties.js:
 ```js
 module.exports = () => {
   return {
-    key: "value"
-  }
-});
+    key: "value",
+  };
+};
 ```
 
 Will render
@@ -253,5 +255,33 @@ Will render
   </testsuite>
 </testsuites>
 ```
+
+#### Adding custom testcase properties
+New feature as of jest-junit 11.0.0!
+
+Create a file in your project root directory named junitTestCaseProperties.js:
+```js
+module.exports = (testResult) => {
+  return {
+    "dd_tags[test.invocations]": testResult.invocations,
+  };
+};
+```
+
+Will render
+```xml
+<testsuites name="jest tests">
+  <testsuite name="addition" tests="1" errors="0" failures="0" skipped="0" timestamp="2017-07-13T09:42:28" time="0.161">
+    <testcase classname="addition positive numbers should add up" name="addition positive numbers should add up" time="0.004">
+      <properties>
+        <property name="dd_tags[test.invocations]" value="1" />
+      </properties>
+    </testcase>
+  </testsuite>
+</testsuites>
+```
+
+WARNING: Properties for testcases is not following standard JUnit XML schema.
+However, other consumers may support properties for testcases like [DataDog metadata through `<property>` elements](https://docs.datadoghq.com/continuous_integration/tests/junit_upload/?tab=jenkins#providing-metadata-through-property-elements)
 
 [test-results-processor]: https://github.com/jest-community/jest-junit/discussions/158#discussioncomment-392985
