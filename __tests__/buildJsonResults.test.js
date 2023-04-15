@@ -439,4 +439,84 @@ describe('buildJsonResults', () => {
 
     expect(jsonResults.testsuites[1].testsuite[2]['system-out']).not.toBeDefined();
   });
+
+  it("should add properties to testcase (non standard)", () => {
+    const retriedTestsReport = require("../__mocks__/retried-tests.json");
+    // <properties> in <testcase> is not compatible JUnit but can be consumed by some e.g. DataDog
+    ignoreJunitErrors = true;
+    // Mock Date.now() to return a fixed later value
+    const startDate = new Date(retriedTestsReport.startTime);
+    jest.spyOn(Date, 'now').mockImplementation(() => startDate.getTime() + 1234);
+
+    jsonResults = buildJsonResults(retriedTestsReport, "/", {
+      ...constants.DEFAULT_OPTIONS,
+      testCasePropertiesFile: "junitDataDogInvocationsProperties.js",
+    });
+  
+    expect(jsonResults).toMatchInlineSnapshot(`
+      Object {
+        "testsuites": Array [
+          Object {
+            "_attr": Object {
+              "errors": 0,
+              "failures": 0,
+              "name": "jest tests",
+              "tests": 1,
+              "time": 1.234,
+            },
+          },
+          Object {
+            "testsuite": Array [
+              Object {
+                "_attr": Object {
+                  "errors": 0,
+                  "failures": 0,
+                  "name": "foo",
+                  "skipped": 0,
+                  "tests": 1,
+                  "time": 0.12,
+                  "timestamp": "2017-03-17T01:05:47",
+                },
+              },
+              Object {
+                "properties": Array [
+                  Object {
+                    "property": Object {
+                      "_attr": Object {
+                        "name": "best-tester",
+                        "value": "Jason Palmer",
+                      },
+                    },
+                  },
+                ],
+              },
+              Object {
+                "testcase": Array [
+                  Object {
+                    "_attr": Object {
+                      "classname": "foo baz should bar",
+                      "name": "foo baz should bar",
+                      "time": 0.001,
+                    },
+                  },
+                  Object {
+                    "properties": Array [
+                      Object {
+                        "property": Object {
+                          "_attr": Object {
+                            "name": "dd_tags[test.invocations]",
+                            "value": 2,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      }
+      `)
+  });
 });

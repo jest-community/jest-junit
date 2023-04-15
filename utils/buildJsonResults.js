@@ -5,6 +5,7 @@ const constants = require('../constants/index');
 const path = require('path');
 const fs = require('fs');
 const getTestSuitePropertiesPath = require('./getTestSuitePropertiesPath');
+const replaceRootDirInOutput = require('./getOptions').replaceRootDirInOutput;
 
 // Wrap the varName with template tags
 const toTemplateTag = function (varName) {
@@ -38,7 +39,21 @@ const executionTime = function (startTime, endTime) {
   return (endTime - startTime) / 1000;
 }
 
-const generateTestCase = function(junitOptions, suiteOptions, tc, filepath, filename, suiteTitle, displayName){
+const getTestCasePropertiesPath = (options, rootDir = null) => {
+  const testCasePropertiesPath = replaceRootDirInOutput(
+    rootDir,
+    path.join(
+      options.testCasePropertiesDirectory,
+      options.testCasePropertiesFile,
+    ),
+  );
+
+  return path.isAbsolute(testCasePropertiesPath)
+    ? testCasePropertiesPath
+    : path.resolve(testCasePropertiesPath);
+};
+
+const generateTestCase = function(junitOptions, suiteOptions, tc, filepath, filename, suiteTitle, displayName, getGetCaseProperties){
   const classname = tc.ancestorTitles.join(suiteOptions.ancestorSeparator);
   const testTitle = tc.title;
 
@@ -87,6 +102,30 @@ const generateTestCase = function(junitOptions, suiteOptions, tc, filepath, file
     });
   }
 
+  if (getGetCaseProperties !== null) {
+    let junitCaseProperties = getGetCaseProperties(tc);
+
+    // Add any test suite properties
+    let testCasePropertyMain = {
+      'properties': []
+    };
+
+    Object.keys(junitCaseProperties).forEach((p) => {
+      let testSuiteProperty = {
+        'property': {
+          _attr: {
+            name: p,
+            value: junitCaseProperties[p]
+          }
+        }
+      };
+
+      testCasePropertyMain.properties.push(testSuiteProperty);
+    });
+
+    testCase.testcase.push(testCasePropertyMain);
+  }
+
   return testCase;
 }
 
@@ -114,6 +153,9 @@ module.exports = function (report, appDirectory, options, rootDir = null) {
     rootDir,
   );
   let ignoreSuitePropertiesCheck = !fs.existsSync(junitSuitePropertiesFilePath);
+
+  const testCasePropertiesPath = getTestCasePropertiesPath(options, rootDir)
+  const getTestCaseProperties = fs.existsSync(testCasePropertiesPath) ? require(testCasePropertiesPath) : null
 
   // If the usePathForSuiteName option is true and the
   // suiteNameTemplate value is set to the default, overrides
@@ -223,7 +265,16 @@ module.exports = function (report, appDirectory, options, rootDir = null) {
 
     // Iterate through test cases
     suite.testResults.forEach((tc) => {
-      const testCase = generateTestCase(options, suiteOptions, tc, filepath, filename, suiteTitle, displayName)
+      const testCase = generateTestCase(
+        options,
+        suiteOptions,
+        tc,
+        filepath,
+        filename,
+        suiteTitle,
+        displayName,
+        getTestCaseProperties
+      );
       testSuite.testsuite.push(testCase);
     });
 
@@ -237,6 +288,7 @@ module.exports = function (report, appDirectory, options, rootDir = null) {
         title: "Test execution failure: could be caused by test hooks like 'afterAll'.",
         ancestorTitles: [""],
         duration: 0,
+        invocations: 1,
       };
       const testCase = generateTestCase(
         options,
@@ -245,7 +297,8 @@ module.exports = function (report, appDirectory, options, rootDir = null) {
         filepath,
         filename,
         suiteTitle,
-        displayName
+        displayName,
+        getTestCaseProperties
       );
       testSuite.testsuite.push(testCase);
     }
