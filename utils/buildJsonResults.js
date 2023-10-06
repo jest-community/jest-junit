@@ -226,7 +226,7 @@ module.exports = function (report, appDirectory, options, rootDir = null) {
     suiteNameVariables[constants.DISPLAY_NAME_VAR] = displayName;
 
     // Add <testsuite /> properties
-    const suiteNumTests = suite.numFailingTests + suite.numPassingTests + suite.numPendingTests;
+    const suiteNumTests = suite.numFailingTests + suite.numPassingTests + suite.numPendingTests + (suite.numTodoTests ? suite.numTodoTests : 0);
     const suiteExecutionTime = executionTime(suite.perfStats.start, suite.perfStats.end);
 
     const suiteErrors = noResults ? 1 : 0;

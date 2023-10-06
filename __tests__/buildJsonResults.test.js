@@ -447,6 +447,13 @@ describe('buildJsonResults', () => {
     expect(jsonResults.testsuites[1].testsuite[0]._attr.skipped).toBe(1);
   });
 
+  it('should include number of todo tests in testSuite total count', () => {
+    const noFailingTestsWithTodoReport = require('../__mocks__/no-failing-tests-with-todo.json');
+    jsonResults = buildJsonResults(noFailingTestsWithTodoReport, '/', constants.DEFAULT_OPTIONS);
+
+    expect(jsonResults.testsuites[1].testsuite[0]._attr.tests).toBe(2);
+  });
+
   it('should include a skipped tag when outputting todo tests', () => {
     const noFailingTestsWithTodoReport = require('../__mocks__/no-failing-tests-with-todo.json');
     jsonResults = buildJsonResults(noFailingTestsWithTodoReport, '/', constants.DEFAULT_OPTIONS);
