@@ -440,6 +440,25 @@ describe('buildJsonResults', () => {
     expect(jsonResults.testsuites[1].testsuite[2]['system-out']).not.toBeDefined();
   });
 
+  it('should include number of todo tests in testSuite skipped count', () => {
+    const noFailingTestsWithTodoReport = require('../__mocks__/no-failing-tests-with-todo.json');
+    jsonResults = buildJsonResults(noFailingTestsWithTodoReport, '/', constants.DEFAULT_OPTIONS);
+
+    expect(jsonResults.testsuites[1].testsuite[0]._attr.skipped).toBe(1);
+  });
+
+  it('should include a skipped tag when outputting todo tests', () => {
+    const noFailingTestsWithTodoReport = require('../__mocks__/no-failing-tests-with-todo.json');
+    jsonResults = buildJsonResults(noFailingTestsWithTodoReport, '/', constants.DEFAULT_OPTIONS);
+    expect(jsonResults.testsuites[1].testsuite[3].testcase[1]).toEqual({
+      "skipped": {
+        "_attr": {
+          "message": "todo"
+        }
+      }
+    });
+  });
+
   it("should add properties to testcase (non standard)", () => {
     const retriedTestsReport = require("../__mocks__/retried-tests.json");
     // <properties> in <testcase> is not compatible JUnit but can be consumed by some e.g. DataDog
@@ -452,7 +471,7 @@ describe('buildJsonResults', () => {
       ...constants.DEFAULT_OPTIONS,
       testCasePropertiesFile: "junitDataDogInvocationsProperties.js",
     });
-  
+
     expect(jsonResults).toMatchInlineSnapshot(`
       Object {
         "testsuites": Array [

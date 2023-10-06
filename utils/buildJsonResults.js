@@ -102,6 +102,16 @@ const generateTestCase = function(junitOptions, suiteOptions, tc, filepath, file
     });
   }
 
+  if (tc.status === 'todo') {
+    testCase.testcase.push({
+      skipped: {
+        _attr: {
+          message: "todo"
+        }
+      }
+    });
+  }
+
   if (getGetCaseProperties !== null) {
     let junitCaseProperties = getGetCaseProperties(tc);
 
@@ -226,7 +236,7 @@ module.exports = function (report, appDirectory, options, rootDir = null) {
           name: replaceVars(suiteOptions.suiteNameTemplate, suiteNameVariables),
           errors: suiteErrors,
           failures: suite.numFailingTests,
-          skipped: suite.numPendingTests,
+          skipped: suite.numPendingTests + (suite.numTodoTests ? suite.numTodoTests : 0),
           timestamp: (new Date(suite.perfStats.start)).toISOString().slice(0, -5),
           time: suiteExecutionTime,
           tests: suiteNumTests
