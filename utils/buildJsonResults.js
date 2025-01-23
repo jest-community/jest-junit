@@ -110,18 +110,26 @@ const generateTestCase = function(junitOptions, suiteOptions, tc, filepath, file
       'properties': []
     };
 
-    Object.keys(junitCaseProperties).forEach((p) => {
-      let testSuiteProperty = {
-        'property': {
-          _attr: {
-            name: p,
-            value: junitCaseProperties[p]
-          }
-        }
-      };
-
-      testCasePropertyMain.properties.push(testSuiteProperty);
-    });
+    if (Array.isArray(junitCaseProperties)) {
+      junitCaseProperties.forEach((property) => {
+        let testSuiteProperty = {
+          property: property,
+        };
+        testCasePropertyMain.properties.push(testSuiteProperty);
+      });
+    } else {
+      Object.keys(junitCaseProperties).forEach((p) => {
+        let testSuiteProperty = {
+          property: {
+            _attr: {
+              name: p,
+              value: junitCaseProperties[p],
+            },
+          },
+        };
+        testCasePropertyMain.properties.push(testSuiteProperty);
+      });
+    }
 
     testCase.testcase.push(testCasePropertyMain);
   }
