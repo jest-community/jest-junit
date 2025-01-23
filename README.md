@@ -267,6 +267,7 @@ module.exports = (testResult) => {
 };
 ```
 
+
 Will render
 ```xml
 <testsuites name="jest tests">
@@ -279,6 +280,49 @@ Will render
   </testsuite>
 </testsuites>
 ```
+
+For custom attributes or sections (like CDATA) use an array of objects:
+```js
+module.exports = (testResult) => {
+    const properties = [
+      {
+        _attr: {
+          name: 'testName1',
+          value: 'testValue1',
+        },
+      },
+      {
+        _attr: {
+          name: 'testName2',
+          value: 'testValue2',
+        },
+      },
+      {
+        _attr: {
+          name: 'testName3',
+          value: 'testValue3',
+        },
+        _cdata: 'testCData 3',
+      },
+    ];
+  return properties;
+};
+```
+
+Will render:
+```xml
+<testsuites name="jest tests">
+  <testsuite name="addition" tests="1" errors="0" failures="0" skipped="0" timestamp="2017-07-13T09:42:28" time="0.161">
+    <testcase classname="addition positive numbers should add up" name="addition positive numbers should add up" time="0.004">
+      <properties>
+        <property name="testName1" value="testValue1"/>
+        <property name="testName2" value="testValue2"/>
+        <property name="testName3" value="testValue3"><![CDATA[testCData 3]]></property>
+      </properties>
+    </testcase>
+  </testsuite>
+</testsuites>
+
 
 WARNING: Properties for testcases is not following standard JUnit XML schema.
 However, other consumers may support properties for testcases like [DataDog metadata through `<property>` elements](https://docs.datadoghq.com/continuous_integration/tests/junit_upload/?tab=jenkins#providing-metadata-through-property-elements)
