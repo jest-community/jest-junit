@@ -1,7 +1,6 @@
 'use strict';
 
 const xml = require('xml');
-const mkdirp = require('mkdirp');
 const fs = require('fs');
 const path = require('path');
 
@@ -32,7 +31,7 @@ const processor = (report, reporterOptions = {}, jestRootDir = null) => {
   let outputPath = getOutputPath(options, jestRootDir);
 
   // Ensure output path exists
-  mkdirp.sync(path.dirname(outputPath));
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
 
   // Write data to file
   fs.writeFileSync(outputPath, xml(jsonResults, { indent: '  ', declaration: true }));

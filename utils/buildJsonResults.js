@@ -1,6 +1,6 @@
 'use strict';
 
-const stripAnsi = require('strip-ansi');
+const { stripVTControlCharacters } = require('node:util');
 const constants = require('../constants/index');
 const path = require('path');
 const fs = require('fs');
@@ -143,7 +143,7 @@ const addErrorTestResult = function (suite) {
 
 // Strips escape codes for readability and illegal XML characters to produce valid output.
 const strip = function (str) {
-  return stripAnsi(str).replace(/\u001b/g, '');
+  return stripVTControlCharacters(str).replace(/\u001b/g, '');
 }
 
 module.exports = function (report, appDirectory, options, rootDir = null) {

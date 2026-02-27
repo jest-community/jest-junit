@@ -2,7 +2,7 @@
 
 const path = require('path');
 const fs = require('fs');
-const { v1: uuid } = require('uuid');
+const { randomUUID } = require('node:crypto');
 
 const constants = require('../constants/index');
 
@@ -60,7 +60,7 @@ function replaceRootDirInOutput(rootDir, output) {
 
 function getUniqueOutputName(outputName) {
   const outputPrefix = outputName ? outputName : 'junit'
-  return `${outputPrefix}-${uuid()}.xml`
+  return `${outputPrefix}-${randomUUID()}.xml`
 }
 
 module.exports = {

@@ -1,20 +1,11 @@
 'use strict';
 
-jest.mock('mkdirp', () => {
-  return Object.assign(
-    {},
-    jest.requireActual('mkdirp'),
-    {
-      sync: jest.fn()
-    }
-  )
-});
-
 jest.mock('fs', () => {
   return Object.assign(
     {},
     jest.requireActual('fs'),
     {
+      mkdirSync: jest.fn(),
       writeFileSync: jest.fn()
     }
   )
