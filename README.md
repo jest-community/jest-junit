@@ -70,10 +70,10 @@ Reporter options should also be strings exception for suiteNameTemplate, classNa
 | `JEST_JUNIT_ANCESTOR_SEPARATOR` | `ancestorSeparator` | Character(s) used to join the `describe` blocks. | `" "` | N/A
 | `JEST_JUNIT_ADD_FILE_ATTRIBUTE` | `addFileAttribute` | Add file attribute to the output (validated on CIRCLE CI and GitLab CI). Must be a string. | `"false"` | N/A
 | `JEST_JUNIT_FILE_PATH_PREFIX` | `filePathPrefix` | Prefix to add to the test suite file path. The value will be prefixed using `path.join`. Useful in case of monorepo | `""` | N/A
-| `JEST_JUNIT_INCLUDE_CONSOLE_OUTPUT` | `includeConsoleOutput` | Adds console output to any testSuite that generates stdout during a test run. | `false` | N/A
-| `JEST_JUNIT_INCLUDE_SHORT_CONSOLE_OUTPUT` | `includeShortConsoleOutput` | Adds short console output (only message value) to any testSuite that generates stdout during a test run. | `false` | N/A
-| `JEST_JUNIT_REPORT_TEST_SUITE_ERRORS` | `reportTestSuiteErrors` | Reports test suites that failed to execute altogether as `error`. _Note:_ since the suite name cannot be determined from files that fail to load, it will default to file path.| `false` | N/A
-| `JEST_JUNIT_NO_STACK_TRACE` | `noStackTrace` | Omit stack traces from test failure reports, similar to `jest --noStackTrace` | `false` | N/A
+| `JEST_JUNIT_INCLUDE_CONSOLE_OUTPUT` | `includeConsoleOutput` | Adds console output to any testSuite that generates stdout during a test run. | `"false"` | N/A
+| `JEST_JUNIT_INCLUDE_SHORT_CONSOLE_OUTPUT` | `includeShortConsoleOutput` | Adds short console output (only message value) to any testSuite that generates stdout during a test run. | `"false"` | N/A
+| `JEST_JUNIT_REPORT_TEST_SUITE_ERRORS` | `reportTestSuiteErrors` | Reports test suites that failed to execute altogether as `error`. _Note:_ since the suite name cannot be determined from files that fail to load, it will default to file path.| `"false"` | N/A
+| `JEST_JUNIT_NO_STACK_TRACE` | `noStackTrace` | Omit stack traces from test failure reports, similar to `jest --noStackTrace` | `"false"` | N/A
 | `JEST_USE_PATH_FOR_SUITE_NAME` | `usePathForSuiteName` | **DEPRECATED. Use `suiteNameTemplate` instead.** Use file path as the `name` attribute of `<testsuite>` | `"false"` | N/A
 | `JEST_JUNIT_TEST_CASE_PROPERTIES_JSON_FILE` | `testCasePropertiesFile` | Name of the custom testcase properties file | `"junitProperties.js"` | N/A
 | `JEST_JUNIT_TEST_CASE_PROPERTIES_DIR` | `testCasePropertiesDirectory` | Location of the custom testcase properties file | `process.cwd()` | N/A
