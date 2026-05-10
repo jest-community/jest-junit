@@ -400,6 +400,21 @@ describe('buildJsonResults', () => {
     expect(slash(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.file)).toBe('packages/foobar/path/to/test/__tests__/foo.test.js');
   });
 
+  it('should expand <rootDir> in filePathPrefix', () => {
+    // Ignore junit errors for this attribute
+    // It is added for circle-ci and is known to not generate
+    // jenkins-compatible junit
+    ignoreJunitErrors = true;
+
+    const noFailingTestsReport = require('../__mocks__/no-failing-tests.json');
+    jsonResults = buildJsonResults(noFailingTestsReport, '/',
+      Object.assign({}, constants.DEFAULT_OPTIONS, {
+        addFileAttribute: "true",
+        filePathPrefix: "<rootDir>/packages/foobar"
+      }), '/tmp/project');
+    expect(slash(jsonResults.testsuites[1].testsuite[2].testcase[0]._attr.file)).toBe('/tmp/project/packages/foobar/path/to/test/__tests__/foo.test.js');
+  });
+
   it('should show output of console if includeConsoleOutput is true', () => {
     const reportWithConsoleOutput = require('../__mocks__/test-with-console-output.json');
     jsonResults = buildJsonResults(reportWithConsoleOutput, '/',
