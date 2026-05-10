@@ -200,8 +200,10 @@ module.exports = function (report, appDirectory, options, rootDir = null) {
       addErrorTestResult(suite);
     }
 
+    const filePathPrefix = replaceRootDirInOutput(rootDir, suiteOptions.filePathPrefix);
+
     // Build variables for suite name
-    const filepath = path.join(suiteOptions.filePathPrefix, path.relative(appDirectory, suite.testFilePath));
+    const filepath = path.join(filePathPrefix, path.relative(appDirectory, suite.testFilePath));
     const filename = path.basename(filepath);
     const suiteTitle = suite.testResults[0].ancestorTitles[0];
     const displayName = typeof suite.displayName === 'object'
