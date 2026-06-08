@@ -1,11 +1,11 @@
 'use strict';
 
-jest.mock('mkdirp', () => {
+jest.mock('node:fs/promises', () => {
   return Object.assign(
     {},
-    jest.requireActual('mkdirp'),
+    jest.requireActual('node:fs/promises'),
     {
-      sync: jest.fn()
+      mkdir: jest.fn()
     }
   )
 });

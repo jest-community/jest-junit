@@ -1,7 +1,7 @@
 'use strict';
 
 const xml = require('xml');
-const mkdirp = require('mkdirp');
+const { mkdir } = require('node:fs/promises');
 const fs = require('fs');
 const path = require('path');
 
@@ -32,7 +32,7 @@ const processor = async (report, reporterOptions = {}, jestRootDir = null) => {
   let outputPath = await getOutputPath(options, jestRootDir);
 
   // Ensure output path exists
-  mkdirp.sync(path.dirname(outputPath));
+  await mkdir(path.dirname(outputPath), { recursive: true });
 
   // Write data to file
   fs.writeFileSync(outputPath, xml(jsonResults, { indent: '  ', declaration: true }));
