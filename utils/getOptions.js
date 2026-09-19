@@ -6,14 +6,7 @@ const fs = require('fs');
 const constants = require('../constants/index');
 
 const { replaceRootDirInPath } = require('./replaceRootDirInPath');
-
-let uuidV1Promise;
-function loadUuidV1() {
-  if (!uuidV1Promise) {
-    uuidV1Promise = import('uuid').then((mod) => mod.v1);
-  }
-  return uuidV1Promise;
-}
+const { randomUUID } = require('crypto');
 
 function getEnvOptions() {
   const options = {};
@@ -65,10 +58,9 @@ function replaceRootDirInOutput(rootDir, output) {
   return rootDir !== null ? replaceRootDirInPath(rootDir, output) : output;
 }
 
-async function getUniqueOutputName(outputName) {
-  const v1 = await loadUuidV1();
+function getUniqueOutputName(outputName) {
   const outputPrefix = outputName ? outputName : 'junit'
-  return `${outputPrefix}-${v1()}.xml`
+  return `${outputPrefix}-${randomUUID()}.xml`
 }
 
 module.exports = {
